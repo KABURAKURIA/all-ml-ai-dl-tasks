@@ -1,19 +1,22 @@
 # AI Inference Notebooks
 
-This folder contains **51** Jupyter Notebooks, each dedicated to a specific AI/ML task using open-source models.
+This folder contains **52** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
-**No programming experience is required!** The notebooks are documented and explain every step.
+**Features:**
+- **No programming experience required**: Each step is explained.
+- **In-Depth**: Covers installation, library imports, data loading (using `datasets` or real URLs), model loading, inference, and analysis.
+- **Visual**: Includes image displays, audio playback, and structured outputs.
 
 ## Categories
 
 ### Multimodal
 1.  `Multimodal_01_Speech_Translation.ipynb`: Speech Translation (Whisper).
 2.  `Multimodal_02_Document_Question_Answering.ipynb`: Document QA (Donut).
-3.  `Multimodal_03_Document_Layout_Analysis.ipynb`: Document Layout (LayoutLMv3).
+3.  `Multimodal_03_Document_Layout_Analysis.ipynb`: Document Layout (DiT).
 4.  `Multimodal_04_Image_Captioning.ipynb`: Image-to-Text.
 5.  `Multimodal_05_Image_Editing.ipynb`: InstructPix2Pix.
-6.  `Multimodal_06_Image_to_Video.ipynb`: Stable Video Diffusion (Img2Vid).
-7.  `Multimodal_07_Video_Captioning.ipynb`: Video Content Analysis.
+6.  `Multimodal_06_Image_to_Video.ipynb`: Stable Video Diffusion.
+7.  `Multimodal_07_Video_Content_Analysis.ipynb`: VideoMAE.
 8.  `Multimodal_08_Visual_Question_Answering.ipynb`: VQA.
 9.  `Multimodal_09_Text_to_Video.ipynb`: Text-to-Video Generation.
 
@@ -22,34 +25,34 @@ This folder contains **51** Jupyter Notebooks, each dedicated to a specific AI/M
 2.  `NLP_02_Fill_Mask.ipynb`: Masked Language Modeling.
 3.  `NLP_03_Question_Answering.ipynb`: Extractive QA.
 4.  `NLP_04_Sentence_Similarity.ipynb`: Semantic Similarity.
-5.  `NLP_05_Summarization.ipynb`: Text Summarization.
-6.  `NLP_06_Table_Question_Answering.ipynb`: Table QA.
-7.  `NLP_07_Sentiment_Analysis.ipynb`: Sentiment Classification.
-8.  `NLP_08_Topic_Classification.ipynb`: Topic Classification.
-9.  `NLP_09_Text_Generation.ipynb`: LLM Generation.
-10. `NLP_10_Text_Ranking.ipynb`: Document Ranking.
-11. `NLP_11_NER.ipynb`: Named Entity Recognition.
-12. `NLP_12_POS_Tagging.ipynb`: Part-of-Speech Tagging.
+5.  `NLP_05_Summarization.ipynb`: Text Summarization (CNN/DailyMail).
+6.  `NLP_06_Table_Question_Answering.ipynb`: Table QA (TAPAS).
+7.  `NLP_07_Sentiment_Analysis.ipynb`: Sentiment Classification (IMDB).
+8.  `NLP_08_Topic_Classification.ipynb`: Zero-Shot Topic Classification.
+9.  `NLP_09_Text_Generation.ipynb`: LLM Generation (GPT-2).
+10. `NLP_10_Text_Ranking.ipynb`: Re-Ranking (Cross-Encoder).
+11. `NLP_11_Named_Entity_Recognition.ipynb`: NER.
+12. `NLP_12_POS_Tagging.ipynb`: POS Tagging.
 13. `NLP_13_Translation_En_Fr.ipynb`: English to French.
 14. `NLP_14_Translation_En_De.ipynb`: English to German.
-15. `NLP_15_Zero_Shot_Classification.ipynb`: Zero-Shot Text Classification.
+15. `NLP_15_Intent_Classification_Zero_Shot.ipynb`: Intent Classification.
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Monocular Depth.
-2.  `CV_02_Image_Classification.ipynb`: Image Classification.
+2.  `CV_02_Image_Classification.ipynb`: Image Classification (ResNet).
 3.  `CV_03_Image_Feature_Extraction.ipynb`: ViT Features.
 4.  `CV_04_Semantic_Segmentation.ipynb`: Pixel Classification (SegFormer).
 5.  `CV_05_Instance_Segmentation.ipynb`: Object Segmentation (MaskFormer).
 6.  `CV_06_Style_Transfer.ipynb`: Style Transfer (InstructPix2Pix).
 7.  `CV_07_OCR.ipynb`: Text Recognition (TrOCR).
 8.  `CV_08_Image_to_Video.ipynb`: Image Animation (SVD).
-9.  `CV_09_Pose_Estimation.ipynb`: Pose/Keypoints (YOLO).
+9.  `CV_09_Pose_Estimation.ipynb`: Pose/Keypoints (YOLOv8).
 10. `CV_10_Mask_Generation.ipynb`: SAM (Segment Anything).
-11. `CV_11_Object_Detection.ipynb`: Bounding Boxes.
-12. `CV_12_Video_Classification.ipynb`: Action Recognition.
+11. `CV_11_Object_Detection.ipynb`: Bounding Boxes (DETR).
+12. `CV_12_Video_Classification.ipynb`: Action Recognition (VideoMAE).
 13. `CV_13_Text_to_Image.ipynb`: Stable Diffusion.
 14. `CV_14_Text_to_Video.ipynb`: Video Generation.
-15. `CV_15_Unconditional_Generation.ipynb`: DDPM.
+15. `CV_15_Unconditional_Generation.ipynb`: DDPM Faces.
 16. `CV_16_Video_to_Video.ipynb`: Video Transformation (Concept).
 17. `CV_17_Zero_Shot_Image_Classification.ipynb`: CLIP.
 18. `CV_18_Zero_Shot_Object_Detection.ipynb`: OwlViT.
@@ -57,16 +60,16 @@ This folder contains **51** Jupyter Notebooks, each dedicated to a specific AI/M
 20. `CV_20_Image_to_3D.ipynb`: Image to 3D (Shap-E).
 
 ### Audio
-1.  `Audio_01_Classification.ipynb`: Audio Event Detection.
+1.  `Audio_01_Classification.ipynb`: Audio Keyword Spotting (SUPERB).
 2.  `Audio_02_Audio_Separation.ipynb`: Speech Separation (SpeechBrain).
-3.  `Audio_03_ASR.ipynb`: Speech Recognition (Wav2Vec2).
+3.  `Audio_03_ASR.ipynb`: Speech Recognition (LibriSpeech).
 4.  `Audio_04_TTS.ipynb`: Text-to-Speech (Bark).
 
 ### Tabular & RL
-1.  `Tabular_01_Classification.ipynb`: Tabular Classification (Sklearn).
-2.  `Tabular_02_Regression.ipynb`: Tabular Regression (Sklearn).
-3.  `RL_01_Reinforcement_Learning.ipynb`: Reinforcement Learning (PPO).
+1.  `Tabular_01_Classification.ipynb`: Tabular Classification (Iris).
+2.  `Tabular_02_Regression.ipynb`: Tabular Regression.
+3.  `RL_01_Reinforcement_Learning.ipynb`: Reinforcement Learning (CartPole PPO).
 
-## How to use
-Run `pip install -q transformers diffusers torch accelerate sentencepiece librosa soundfile pillow` (and others as needed per notebook).
-Most notebooks include an installation cell at the top.
+## Usage
+Run the installation cell at the top of each notebook.
+Most notebooks require a GPU for optimal performance (especially Video and Image generation tasks).
