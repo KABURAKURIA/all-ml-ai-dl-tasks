@@ -29,7 +29,7 @@ with gr.Blocks(theme=gr.themes.Glass(), css="""
 
     with gr.Row():
         inp = gr.Textbox(lines=5, label="Input Text", placeholder="Enter your text here...")
-        out = gr.Textbox(lines=5, label="Output", interact=False)
+        out = gr.Textbox(lines=5, label="Output", interactive=False)
 
     btn = gr.Button("Run Synthesis")
     btn.click(fn=process_input, inputs=inp, outputs=out)
