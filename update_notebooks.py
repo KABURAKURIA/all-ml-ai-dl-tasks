@@ -66,10 +66,16 @@ def update_model_loading(source_list):
     # Generic function to inject args into from_pretrained
     def inject_arg(text, model_name, arg_str):
         if model_name in text and arg_str not in text:
-            # Regex to find from_pretrained(..., "model_name", ...)
-            # We want to insert arg_str after the model name string
-            pattern = re.compile(f'({re.escape(model_name)}[\'"])')
-            text = pattern.sub(f'\\1, {arg_str}', text)
+            # Iterate lines to safely inject only in pipeline/from_pretrained calls
+            lines = text.splitlines(keepends=True)
+            new_lines = []
+            for line in lines:
+                if model_name in line and ("from_pretrained" in line or "pipeline" in line):
+                    # Inject arg
+                    pattern = re.compile(f'({re.escape(model_name)}[\'"])')
+                    line = pattern.sub(f'\\1, {arg_str}', line)
+                new_lines.append(line)
+            return "".join(new_lines)
         return text
 
     # SVD
@@ -121,8 +127,8 @@ for nb_file in sorted(notebooks):
         if cell.get("cell_type") == "code":
             source = cell.get("source", [])
 
-            # 2. Fix CV_08 Cleaning
-            if nb_file == "CV_08_Image_to_Video.ipynb":
+            # 2. Fix SVD Cleaning
+            if nb_file in ["CV_08_Image_to_Video.ipynb", "Multimodal_06_Image_to_Video.ipynb"]:
                 source_str = "".join(source)
                 if "image.resize((224, 224))" in source_str:
                     new_source = source_str.replace("image.resize((224, 224))", "image.resize((1024, 576))")
@@ -136,6 +142,15 @@ for nb_file in sorted(notebooks):
                      new_source = source_str.replace("print('Image resized to (224, 224)", "print('Image resized to (1024, 576)")
                      cell["source"] = new_source.splitlines(keepends=True)
                      print("  - Fixed SVD print statement")
+
+            # 2.1 Fix Corrupted Model ID in Multimodal_06
+            if nb_file == "Multimodal_06_Image_to_Video.ipynb":
+                source_str = "".join(source)
+                corrupted_pattern = 'model_id = "stabilityai/stable-video-diffusion-img2vid-xt", torch_dtype=torch.float16'
+                if corrupted_pattern in source_str:
+                    new_source = source_str.replace(corrupted_pattern, 'model_id = "stabilityai/stable-video-diffusion-img2vid-xt"')
+                    cell["source"] = new_source.splitlines(keepends=True)
+                    print("  - Fixed corrupted model_id")
 
             # 3. Fix Save Results
             if "with open(" in "".join(source) and ", 'w') as f:" in "".join(source):

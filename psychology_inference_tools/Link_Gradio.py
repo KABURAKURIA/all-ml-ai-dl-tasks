@@ -21,11 +21,9 @@ def process_input(text):
         return f"Error: {e}"
 
 # Interface
-with gr.Blocks(theme=gr.themes.Glass(), css="""
-        .gradio-container { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; }
-        """) as app:
+with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Link\n**Field:** Rehabilitation Psychology\n\nCreate recovery plans and motivational support.")
+        gr.Markdown(f"# Link\n**Field:** Positive Psychology\n\nGenerate gratitude prompts and positive affirmations.")
 
     with gr.Row():
         inp = gr.Textbox(lines=5, label="Input Text", placeholder="Enter your text here...")
@@ -35,4 +33,6 @@ with gr.Blocks(theme=gr.themes.Glass(), css="""
     btn.click(fn=process_input, inputs=inp, outputs=out)
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(theme=gr.themes.Glass(), css="""
+        .gradio-container { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; }
+        """)

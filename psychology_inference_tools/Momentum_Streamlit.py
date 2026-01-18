@@ -54,7 +54,7 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Momentum</h1><p><b>Field:</b> Clinical Psychology</p><p>Simulate therapeutic responses or generate coping strategies.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Momentum</h1><p><b>Field:</b> Positive Psychology</p><p>Generate gratitude prompts and positive affirmations.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -95,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Momentum - A tool for Clinical Psychology*")
+st.markdown(f"*Momentum - A tool for Positive Psychology*")
