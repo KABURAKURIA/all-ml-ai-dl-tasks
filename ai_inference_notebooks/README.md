@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **52** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -36,6 +36,9 @@ This folder contains **52** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 13. `NLP_13_Translation_En_Fr.ipynb`: English to French.
 14. `NLP_14_Translation_En_De.ipynb`: English to German.
 15. `NLP_15_Intent_Classification_Zero_Shot.ipynb`: Intent Classification.
+16. `NLP_16_LLM_Fine_Tuning.ipynb`: LLM Fine-Tuning (QLoRA).
+17. `NLP_17_RAG.ipynb`: Retrieval Augmented Generation (RAG).
+18. `NLP_18_Agents.ipynb`: AI Agents (smolagents).
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Monocular Depth.
@@ -64,6 +67,7 @@ This folder contains **52** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 2.  `Audio_02_Audio_Separation.ipynb`: Speech Separation (SpeechBrain).
 3.  `Audio_03_ASR.ipynb`: Speech Recognition (LibriSpeech).
 4.  `Audio_04_TTS.ipynb`: Text-to-Speech (Bark).
+5.  `Audio_05_Music_Generation.ipynb`: Text-to-Music (MusicGen).
 
 ### Tabular & RL
 1.  `Tabular_01_Classification.ipynb`: Tabular Classification (Iris).
