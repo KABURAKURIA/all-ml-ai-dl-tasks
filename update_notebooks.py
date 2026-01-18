@@ -25,8 +25,11 @@ def update_save_cell(source_list):
 
     # We replace any save cell with our master robust block to ensure all variables are covered.
     # But we check if it's already the master block to avoid unnecessary writes.
-    if "summary" in source_text and "translation" in source_text and "answers" in source_text:
-         return source_list
+    # Updated to check for more variables
+    if "summary" in source_text and "translation" in source_text and "answers" in source_text and "generated_text" in source_text:
+         # Check if 'text' is at the end (roughly) to confirm it's the updated version
+         if source_text.find("'text' in locals()") > source_text.find("'image' in locals()"):
+             return source_list
 
     # Master robust save block
     new_code = [
@@ -49,10 +52,14 @@ def update_save_cell(source_list):
         "        f.write(str(answers))\n",
         "    elif 'conversation' in locals():\n",
         "        f.write(str(conversation))\n",
+        "    elif 'generated_text' in locals():\n",
+        "        f.write(str(generated_text))\n",
         "    elif 'frames' in locals():\n",
         "        f.write(\"Video generated.\")\n",
         "    elif 'image' in locals():\n",
         "        f.write(\"Image generated.\")\n",
+        "    elif 'text' in locals():\n",
+        "        f.write(str(text))\n",
         "    else:\n",
         "        f.write(\"Task completed.\")\n",
         f"print('Results saved to {filename}')\n"
@@ -119,6 +126,9 @@ for nb_file in sorted(notebooks):
             break
 
     if not has_license:
+        # If the first cell is a markdown title, insert after it (index 1), else insert at top (index 0)
+        # But instructions say "dedicated Markdown cell at the beginning".
+        # If index 0 is title, it usually stays at 0.
         cells.insert(1, license_cell)
         print("  - Added License cell")
 
@@ -126,10 +136,17 @@ for nb_file in sorted(notebooks):
     for cell in cells:
         if cell.get("cell_type") == "code":
             source = cell.get("source", [])
+            source_str = "".join(source)
+
+            # Check for Gradio 'interact' issue in case it appears in code cells
+            if "interact=" in source_str and "gradio" in source_str.lower():
+                new_source = source_str.replace("interact=", "interactive=")
+                cell["source"] = new_source.splitlines(keepends=True)
+                print("  - Fixed Gradio 'interact' argument")
 
             # 2. Fix SVD Cleaning
             if nb_file in ["CV_08_Image_to_Video.ipynb", "Multimodal_06_Image_to_Video.ipynb"]:
-                source_str = "".join(source)
+                source_str = "".join(cell["source"]) # Reload source in case it changed
                 if "image.resize((224, 224))" in source_str:
                     new_source = source_str.replace("image.resize((224, 224))", "image.resize((1024, 576))")
                     # Update cell source
@@ -145,7 +162,7 @@ for nb_file in sorted(notebooks):
 
             # 2.1 Fix Corrupted Model ID in Multimodal_06
             if nb_file == "Multimodal_06_Image_to_Video.ipynb":
-                source_str = "".join(source)
+                source_str = "".join(cell["source"])
                 corrupted_pattern = 'model_id = "stabilityai/stable-video-diffusion-img2vid-xt", torch_dtype=torch.float16'
                 if corrupted_pattern in source_str:
                     new_source = source_str.replace(corrupted_pattern, 'model_id = "stabilityai/stable-video-diffusion-img2vid-xt"')
@@ -153,8 +170,9 @@ for nb_file in sorted(notebooks):
                     print("  - Fixed corrupted model_id")
 
             # 3. Fix Save Results
-            if "with open(" in "".join(source) and ", 'w') as f:" in "".join(source):
-                cell["source"] = update_save_cell(source)
+            source_str = "".join(cell["source"])
+            if "with open(" in source_str and ", 'w') as f:" in source_str:
+                cell["source"] = update_save_cell(cell["source"])
 
             # 4. Optimize Models
             cell["source"] = update_model_loading(cell["source"])
