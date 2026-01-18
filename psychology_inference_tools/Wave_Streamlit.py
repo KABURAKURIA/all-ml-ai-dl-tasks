@@ -54,12 +54,12 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Wave</h1><p><b>Field:</b> Industrial-Organizational Psychology</p><p>Generate professional feedback or workplace scenarios.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Wave</h1><p><b>Field:</b> Social Psychology</p><p>Analyze social tone and emotional valence in text.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 pipe = load_model()
 
@@ -73,10 +73,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "text-generation" == "text-generation":
+                    if "sentiment-analysis" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "text-generation" == "zero-shot-classification":
+                    elif "sentiment-analysis" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -95,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Wave - A tool for Industrial-Organizational Psychology*")
+st.markdown(f"*Wave - A tool for Social Psychology*")

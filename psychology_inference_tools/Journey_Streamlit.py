@@ -54,12 +54,12 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Journey</h1><p><b>Field:</b> Cognitive Psychology</p><p>Summarize complex texts to aid memory and comprehension.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Journey</h1><p><b>Field:</b> Neuropsychology</p><p>Explain brain functions and neurological phenomena.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("summarization", model="facebook/bart-large-cnn")
+    return pipeline("text-generation", model="gpt2")
 
 pipe = load_model()
 
@@ -73,10 +73,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "summarization" == "text-generation":
+                    if "text-generation" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "summarization" == "zero-shot-classification":
+                    elif "text-generation" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -95,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Journey - A tool for Cognitive Psychology*")
+st.markdown(f"*Journey - A tool for Neuropsychology*")

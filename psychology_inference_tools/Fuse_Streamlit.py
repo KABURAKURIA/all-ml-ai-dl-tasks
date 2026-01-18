@@ -44,12 +44,12 @@ h1, h2, h3, p, label {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Fuse</h1><p><b>Field:</b> Social Psychology</p><p>Analyze social tone and emotional valence in text.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Fuse</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological concepts across languages (Simulated).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    return pipeline("translation_en_to_fr", model="t5-small")
 
 pipe = load_model()
 
@@ -63,10 +63,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "sentiment-analysis" == "text-generation":
+                    if "translation_en_to_fr" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "sentiment-analysis" == "zero-shot-classification":
+                    elif "translation_en_to_fr" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -85,4 +85,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Fuse - A tool for Social Psychology*")
+st.markdown(f"*Fuse - A tool for Cross-Cultural Psychology*")

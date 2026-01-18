@@ -4,39 +4,49 @@ from transformers import pipeline
 # Configuration
 st.set_page_config(page_title="Origin", layout="centered")
 
-# Style: Glassmorphic
+# Style: Neobrutalistic
 st.markdown("""
 <style>
 .stApp {
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-color: #FFDEE9;
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    border-radius: 15px;
+    background-color: #fff;
+    border: 3px solid black;
+    box-shadow: 5px 5px 0px 0px #000000;
+    border-radius: 0px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
 }
 .stButton > button {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    border-radius: 15px;
-    padding: 10px 20px;
-    font-weight: bold;
+    background-color: #FF9A8B;
+    border: 3px solid black;
+    box-shadow: 5px 5px 0px 0px #000000;
+    color: black;
+    font-weight: 900;
+    border-radius: 0px;
+    text-transform: uppercase;
 }
-h1, h2, h3, p, label {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+.stButton > button:hover {
+    box-shadow: 2px 2px 0px 0px #000000;
+    transform: translate(3px, 3px);
 }
-.glass-container {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+h1, h2, h3 {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: 3px solid black;
+    padding: 10px;
+    background-color: #FBAB7E;
+    box-shadow: 5px 5px 0px 0px #000000;
+    color: black;
+    display: inline-block;
+}
+.neo-container {
+    background-color: #8BC6EC;
+    border: 3px solid black;
+    box-shadow: 8px 8px 0px 0px #000000;
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -44,7 +54,7 @@ h1, h2, h3, p, label {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Origin</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe impact of environment on well-being.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Origin</h1><p><b>Field:</b> Family Psychology</p><p>Address family dynamics and conflict resolution.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -55,7 +65,7 @@ pipe = load_model()
 
 # User Input
 with st.container():
-    st.markdown('<div class="glass-container">', unsafe_allow_html=True)
+    st.markdown('<div class="neo-container">', unsafe_allow_html=True)
     user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Origin"):
@@ -85,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Origin - A tool for Environmental Psychology*")
+st.markdown(f"*Origin - A tool for Family Psychology*")

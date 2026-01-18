@@ -54,12 +54,12 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Valence</h1><p><b>Field:</b> Educational Psychology</p><p>Simplify concepts for better learning.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Valence</h1><p><b>Field:</b> Developmental Psychology</p><p>Provide parenting advice or developmental milestone descriptions.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text2text-generation", model="t5-small")
+    return pipeline("text-generation", model="gpt2")
 
 pipe = load_model()
 
@@ -73,10 +73,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "text2text-generation" == "text-generation":
+                    if "text-generation" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "text2text-generation" == "zero-shot-classification":
+                    elif "text-generation" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -95,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Valence - A tool for Educational Psychology*")
+st.markdown(f"*Valence - A tool for Developmental Psychology*")

@@ -44,12 +44,12 @@ h1, h2, h3, p, label {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Trace</h1><p><b>Field:</b> Clinical Psychology</p><p>Simulate therapeutic responses or generate coping strategies.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Trace</h1><p><b>Field:</b> Forensic Psychology</p><p>Classify statements for potential deception or risk markers.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 pipe = load_model()
 
@@ -63,10 +63,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "text-generation" == "text-generation":
+                    if "zero-shot-classification" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "text-generation" == "zero-shot-classification":
+                    elif "zero-shot-classification" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -85,4 +85,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Trace - A tool for Clinical Psychology*")
+st.markdown(f"*Trace - A tool for Forensic Psychology*")

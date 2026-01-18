@@ -4,49 +4,39 @@ from transformers import pipeline
 # Configuration
 st.set_page_config(page_title="Logic", layout="centered")
 
-# Style: Neobrutalistic
+# Style: Glassmorphic
 st.markdown("""
 <style>
 .stApp {
-    background-color: #FFDEE9;
-    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
-    background-color: #fff;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    border-radius: 0px;
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
 }
 .stButton > button {
-    background-color: #FF9A8B;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    font-weight: 900;
-    border-radius: 0px;
-    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
 }
-.stButton > button:hover {
-    box-shadow: 2px 2px 0px 0px #000000;
-    transform: translate(3px, 3px);
+h1, h2, h3, p, label {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
-h1, h2, h3 {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    text-transform: uppercase;
-    border: 3px solid black;
-    padding: 10px;
-    background-color: #FBAB7E;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    display: inline-block;
-}
-.neo-container {
-    background-color: #8BC6EC;
-    border: 3px solid black;
-    box-shadow: 8px 8px 0px 0px #000000;
+.glass-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 20px;
     margin-bottom: 20px;
 }
@@ -54,18 +44,18 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Logic</h1><p><b>Field:</b> Social Psychology</p><p>Analyze social tone and emotional valence in text.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Logic</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe impact of environment on well-being.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    return pipeline("text-generation", model="gpt2")
 
 pipe = load_model()
 
 # User Input
 with st.container():
-    st.markdown('<div class="neo-container">', unsafe_allow_html=True)
+    st.markdown('<div class="glass-container">', unsafe_allow_html=True)
     user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Logic"):
@@ -73,10 +63,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "sentiment-analysis" == "text-generation":
+                    if "text-generation" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "sentiment-analysis" == "zero-shot-classification":
+                    elif "text-generation" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -95,4 +85,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Logic - A tool for Social Psychology*")
+st.markdown(f"*Logic - A tool for Environmental Psychology*")

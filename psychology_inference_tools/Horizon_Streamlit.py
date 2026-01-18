@@ -54,12 +54,12 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Horizon</h1><p><b>Field:</b> Consumer Psychology</p><p>Analyze consumer sentiment and reaction to products.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Horizon</h1><p><b>Field:</b> Developmental Psychology</p><p>Provide parenting advice or developmental milestone descriptions.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    return pipeline("text-generation", model="gpt2")
 
 pipe = load_model()
 
@@ -73,10 +73,10 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
                     # Adjust parameters based on task for better results
-                    if "sentiment-analysis" == "text-generation":
+                    if "text-generation" == "text-generation":
                         result = pipe(user_input, max_length=150, num_return_sequences=1)
                         output = result[0]['generated_text']
-                    elif "sentiment-analysis" == "zero-shot-classification":
+                    elif "text-generation" == "zero-shot-classification":
                         labels = ["positive", "negative", "neutral", "urgent", "informational"]
                         result = pipe(user_input, candidate_labels=labels)
                         output = str(result)
@@ -95,4 +95,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Horizon - A tool for Consumer Psychology*")
+st.markdown(f"*Horizon - A tool for Developmental Psychology*")

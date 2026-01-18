@@ -44,7 +44,7 @@ h1, h2, h3, p, label {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Zeta</h1><p><b>Field:</b> Neuropsychology</p><p>Explain brain functions and neurological phenomena.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Zeta</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe impact of environment on well-being.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -85,4 +85,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Zeta - A tool for Neuropsychology*")
+st.markdown(f"*Zeta - A tool for Environmental Psychology*")

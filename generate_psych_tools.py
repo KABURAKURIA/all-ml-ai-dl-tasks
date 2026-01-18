@@ -1,6 +1,8 @@
 import os
 import random
 
+random.seed(42)
+
 TOOLS_DIR = "psychology_inference_tools"
 os.makedirs(TOOLS_DIR, exist_ok=True)
 
@@ -229,19 +231,19 @@ def process_input(text):
         return f"Error: {{e}}"
 
 # Interface
-with gr.Blocks(theme={theme}, css=\"\"\"{css}\"\"\") as app:
+with gr.Blocks() as app:
     with gr.Row():
         gr.Markdown(f"# {name}\\n**Field:** {field}\\n\\n{description}")
 
     with gr.Row():
         inp = gr.Textbox(lines=5, label="Input Text", placeholder="Enter your text here...")
-        out = gr.Textbox(lines=5, label="Output", interact=False)
+        out = gr.Textbox(lines=5, label="Output", interactive=False)
 
     btn = gr.Button("Run {name}")
     btn.click(fn=process_input, inputs=inp, outputs=out)
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(theme={theme}, css=\"\"\"{css}\"\"\")
 """
     return code
 
