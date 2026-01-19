@@ -10,6 +10,7 @@ st.markdown("""
 .stApp {
     background-color: #FFDEE9;
     background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-attachment: fixed;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
     background-color: #fff;
@@ -18,6 +19,7 @@ st.markdown("""
     border-radius: 0px;
     color: black;
     font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 .stButton > button {
     background-color: #FF9A8B;
@@ -27,6 +29,8 @@ st.markdown("""
     font-weight: 900;
     border-radius: 0px;
     text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.1s;
 }
 .stButton > button:hover {
     box-shadow: 2px 2px 0px 0px #000000;
@@ -42,6 +46,7 @@ h1, h2, h3 {
     box-shadow: 5px 5px 0px 0px #000000;
     color: black;
     display: inline-block;
+    margin-bottom: 20px;
 }
 .neo-container {
     background-color: #8BC6EC;
@@ -49,17 +54,23 @@ h1, h2, h3 {
     box-shadow: 8px 8px 0px 0px #000000;
     padding: 20px;
     margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p, label, .stMarkdown {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Gamma</h1><p><b>Field:</b> Sports Psychology</p><p>Generate motivational speeches and focus techniques.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Gamma</h1><p><b>Field:</b> Educational Psychology</p><p>Simplify complex psychological concepts into easy-to-understand language for students.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("text2text-generation", model="google/flan-t5-small")
 
 pipe = load_model()
 
@@ -72,27 +83,29 @@ with st.container():
         if user_input:
             with st.spinner("Processing..."):
                 try:
-                    # Adjust parameters based on task for better results
-                    if "text-generation" == "text-generation":
-                        result = pipe(user_input, max_length=150, num_return_sequences=1)
-                        output = result[0]['generated_text']
-                    elif "text-generation" == "zero-shot-classification":
-                        labels = ["positive", "negative", "neutral", "urgent", "informational"]
-                        result = pipe(user_input, candidate_labels=labels)
-                        output = str(result)
+
+                    result = pipe(user_input, max_length=200, num_return_sequences=1)
+                    if isinstance(result, list):
+                        if 'generated_text' in result[0]:
+                            output = result[0]['generated_text']
+                        elif 'summary_text' in result[0]:
+                            output = result[0]['summary_text']
+                        else:
+                            output = str(result[0])
                     else:
-                        result = pipe(user_input)
                         output = str(result)
 
-                    st.success("Completed!")
-                    st.markdown("### Result:")
-                    st.write(output)
+
+                    if output:
+                        st.success("Completed!")
+                        st.markdown("### Result:")
+                        st.write(output)
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
-            st.warning("Please enter some text.")
+            st.warning("Please provide the required input.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Gamma - A tool for Sports Psychology*")
+st.markdown(f"*Gamma - A tool for Educational Psychology*")

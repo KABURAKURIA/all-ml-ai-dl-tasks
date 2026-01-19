@@ -9,6 +9,8 @@ st.markdown("""
 <style>
 .stApp {
     background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-attachment: fixed;
+    background-size: cover;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
     background: rgba(255, 255, 255, 0.2);
@@ -25,64 +27,71 @@ st.markdown("""
     border-radius: 15px;
     padding: 10px 20px;
     font-weight: bold;
+    transition: all 0.3s ease;
 }
-h1, h2, h3, p, label {
-    color: white;
+.stButton > button:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+h1, h2, h3, p, label, .stMarkdown {
+    color: white !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 .glass-container {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 25px;
+    margin-bottom: 25px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Forge</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe impact of environment on well-being.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Forge</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("question-answering", model="deepset/roberta-base-squad2")
 
 pipe = load_model()
 
 # User Input
 with st.container():
     st.markdown('<div class="glass-container">', unsafe_allow_html=True)
-    user_input = st.text_area("Enter text for analysis/generation:", height=150)
+
+    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
+    question = st.text_input("Enter Question:")
+    user_input = context and question # simple check
+
 
     if st.button("Run Forge"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
-                    # Adjust parameters based on task for better results
-                    if "text-generation" == "text-generation":
-                        result = pipe(user_input, max_length=150, num_return_sequences=1)
-                        output = result[0]['generated_text']
-                    elif "text-generation" == "zero-shot-classification":
-                        labels = ["positive", "negative", "neutral", "urgent", "informational"]
-                        result = pipe(user_input, candidate_labels=labels)
-                        output = str(result)
-                    else:
-                        result = pipe(user_input)
-                        output = str(result)
 
-                    st.success("Completed!")
-                    st.markdown("### Result:")
-                    st.write(output)
+                    if context and question:
+                        result = pipe(question=question, context=context)
+                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
+                    else:
+                        st.warning("Please enter both context and question.")
+                        output = None
+
+
+                    if output:
+                        st.success("Completed!")
+                        st.markdown("### Result:")
+                        st.write(output)
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
-            st.warning("Please enter some text.")
+            st.warning("Please provide the required input.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Forge - A tool for Environmental Psychology*")
+st.markdown(f"*Forge - A tool for Neuropsychology*")

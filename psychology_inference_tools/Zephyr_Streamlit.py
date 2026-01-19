@@ -10,6 +10,7 @@ st.markdown("""
 .stApp {
     background-color: #FFDEE9;
     background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-attachment: fixed;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
     background-color: #fff;
@@ -18,6 +19,7 @@ st.markdown("""
     border-radius: 0px;
     color: black;
     font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 .stButton > button {
     background-color: #FF9A8B;
@@ -27,6 +29,8 @@ st.markdown("""
     font-weight: 900;
     border-radius: 0px;
     text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.1s;
 }
 .stButton > button:hover {
     box-shadow: 2px 2px 0px 0px #000000;
@@ -42,6 +46,7 @@ h1, h2, h3 {
     box-shadow: 5px 5px 0px 0px #000000;
     color: black;
     display: inline-block;
+    margin-bottom: 20px;
 }
 .neo-container {
     background-color: #8BC6EC;
@@ -49,17 +54,23 @@ h1, h2, h3 {
     box-shadow: 8px 8px 0px 0px #000000;
     padding: 20px;
     margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p, label, .stMarkdown {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Zephyr</h1><p><b>Field:</b> Psychometrics</p><p>Categorize personality traits from descriptions.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Zephyr</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological survey items or concepts to ensure cross-cultural validity (English to French).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    return pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
 
 pipe = load_model()
 
@@ -72,27 +83,21 @@ with st.container():
         if user_input:
             with st.spinner("Processing..."):
                 try:
-                    # Adjust parameters based on task for better results
-                    if "zero-shot-classification" == "text-generation":
-                        result = pipe(user_input, max_length=150, num_return_sequences=1)
-                        output = result[0]['generated_text']
-                    elif "zero-shot-classification" == "zero-shot-classification":
-                        labels = ["positive", "negative", "neutral", "urgent", "informational"]
-                        result = pipe(user_input, candidate_labels=labels)
-                        output = str(result)
-                    else:
-                        result = pipe(user_input)
-                        output = str(result)
 
-                    st.success("Completed!")
-                    st.markdown("### Result:")
-                    st.write(output)
+                    result = pipe(user_input)
+                    output = result[0]['translation_text']
+
+
+                    if output:
+                        st.success("Completed!")
+                        st.markdown("### Result:")
+                        st.write(output)
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
-            st.warning("Please enter some text.")
+            st.warning("Please provide the required input.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Zephyr - A tool for Psychometrics*")
+st.markdown(f"*Zephyr - A tool for Cross-Cultural Psychology*")

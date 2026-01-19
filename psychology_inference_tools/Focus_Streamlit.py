@@ -9,6 +9,8 @@ st.markdown("""
 <style>
 .stApp {
     background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-attachment: fixed;
+    background-size: cover;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
     background: rgba(255, 255, 255, 0.2);
@@ -25,31 +27,36 @@ st.markdown("""
     border-radius: 15px;
     padding: 10px 20px;
     font-weight: bold;
+    transition: all 0.3s ease;
 }
-h1, h2, h3, p, label {
-    color: white;
+.stButton > button:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+h1, h2, h3, p, label, .stMarkdown {
+    color: white !important;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 .glass-container {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    margin-bottom: 20px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 25px;
+    margin-bottom: 25px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Focus</h1><p><b>Field:</b> Educational Psychology</p><p>Simplify concepts for better learning.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Focus</h1><p><b>Field:</b> Crisis Intervention</p><p>Rapidly identify the dominant emotion in a crisis text to inform immediate response.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text2text-generation", model="t5-small")
+    return pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
 
 pipe = load_model()
 
@@ -62,27 +69,32 @@ with st.container():
         if user_input:
             with st.spinner("Processing..."):
                 try:
-                    # Adjust parameters based on task for better results
-                    if "text2text-generation" == "text-generation":
-                        result = pipe(user_input, max_length=150, num_return_sequences=1)
-                        output = result[0]['generated_text']
-                    elif "text2text-generation" == "zero-shot-classification":
-                        labels = ["positive", "negative", "neutral", "urgent", "informational"]
-                        result = pipe(user_input, candidate_labels=labels)
-                        output = str(result)
-                    else:
-                        result = pipe(user_input)
-                        output = str(result)
 
-                    st.success("Completed!")
-                    st.markdown("### Result:")
-                    st.write(output)
+                    result = pipe(user_input)
+                    # Handle list of lists or single list
+                    if isinstance(result, list) and isinstance(result[0], list):
+                        result = result[0]
+
+                    # Sort by score if multiple
+                    result = sorted(result, key=lambda x: x['score'], reverse=True)
+
+                    output = "### Predictions:\n"
+                    for res in result:
+                        label = res['label']
+                        score = res['score']
+                        output += f"- **{label}**: {score:.4f}\n"
+
+
+                    if output:
+                        st.success("Completed!")
+                        st.markdown("### Result:")
+                        st.write(output)
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
-            st.warning("Please enter some text.")
+            st.warning("Please provide the required input.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Focus - A tool for Educational Psychology*")
+st.markdown(f"*Focus - A tool for Crisis Intervention*")
