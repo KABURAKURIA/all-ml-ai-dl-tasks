@@ -4,95 +4,94 @@ from transformers import pipeline
 # Configuration
 st.set_page_config(page_title="Tide", layout="centered")
 
-# Style: Neobrutalistic
+# Style: Glassmorphic
 st.markdown("""
 <style>
 .stApp {
-    background-color: #FFDEE9;
-    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-attachment: fixed;
+    background-size: cover;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
-    background-color: #fff;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    border-radius: 0px;
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
 }
 .stButton > button {
-    background-color: #FF9A8B;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    font-weight: 900;
-    border-radius: 0px;
-    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 .stButton > button:hover {
-    box-shadow: 2px 2px 0px 0px #000000;
-    transform: translate(3px, 3px);
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
 }
-h1, h2, h3 {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    text-transform: uppercase;
-    border: 3px solid black;
-    padding: 10px;
-    background-color: #FBAB7E;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    display: inline-block;
+h1, h2, h3, p, label, .stMarkdown {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
-.neo-container {
-    background-color: #8BC6EC;
-    border: 3px solid black;
-    box-shadow: 8px 8px 0px 0px #000000;
-    padding: 20px;
-    margin-bottom: 20px;
+.glass-container {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 25px;
+    margin-bottom: 25px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Tide</h1><p><b>Field:</b> Social Psychology</p><p>Analyze social tone and emotional valence in text.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Tide</h1><p><b>Field:</b> Clinical Psychology</p><p>Simulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    return pipeline("text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
 # User Input
 with st.container():
-    st.markdown('<div class="neo-container">', unsafe_allow_html=True)
+    st.markdown('<div class="glass-container">', unsafe_allow_html=True)
     user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Tide"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
-                    # Adjust parameters based on task for better results
-                    if "sentiment-analysis" == "text-generation":
-                        result = pipe(user_input, max_length=150, num_return_sequences=1)
-                        output = result[0]['generated_text']
-                    elif "sentiment-analysis" == "zero-shot-classification":
-                        labels = ["positive", "negative", "neutral", "urgent", "informational"]
-                        result = pipe(user_input, candidate_labels=labels)
-                        output = str(result)
+
+                    result = pipe(user_input, max_length=200, num_return_sequences=1)
+                    if isinstance(result, list):
+                        if 'generated_text' in result[0]:
+                            output = result[0]['generated_text']
+                        elif 'summary_text' in result[0]:
+                            output = result[0]['summary_text']
+                        else:
+                            output = str(result[0])
                     else:
-                        result = pipe(user_input)
                         output = str(result)
 
-                    st.success("Completed!")
-                    st.markdown("### Result:")
-                    st.write(output)
+
+                    if output:
+                        st.success("Completed!")
+                        st.markdown("### Result:")
+                        st.write(output)
                 except Exception as e:
                     st.error(f"Error: {e}")
         else:
-            st.warning("Please enter some text.")
+            st.warning("Please provide the required input.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Tide - A tool for Social Psychology*")
+st.markdown(f"*Tide - A tool for Clinical Psychology*")

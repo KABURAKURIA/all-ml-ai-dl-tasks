@@ -2,37 +2,40 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="gpt2")
+pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "text-generation" == "text-generation":
-            result = pipe(text, max_length=150, num_return_sequences=1)
-            return result[0]['generated_text']
-        elif "text-generation" == "zero-shot-classification":
-            labels = ["positive", "negative", "neutral", "urgent", "informational"]
-            result = pipe(text, candidate_labels=labels)
-            return str(result)
-        else:
-            return str(pipe(text))
+        labels = ["risk", "safety", "neutral", "positive", "negative"]
+        result = pipe(text, candidate_labels=labels)
+        output = "Predictions:\n"
+        for label, score in zip(result['labels'], result['scores']):
+            output += f"- {label}: {score:.4f}\n"
+        return output
     except Exception as e:
         return f"Error: {e}"
 
+
 # Interface
-with gr.Blocks(theme=gr.themes.Glass(), css="""
-        .gradio-container { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; }
-        """) as app:
+with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Aura\n**Field:** Biopsychology\n\nDiscuss biological underpinnings of behavior.")
+        gr.Markdown(f"# Aura\n**Field:** Forensic Psychology\n\nClassify statements for potential risk markers (e.g., deception, aggression, distress).")
 
     with gr.Row():
-        inp = gr.Textbox(lines=5, label="Input Text", placeholder="Enter your text here...")
+        inp = gr.Textbox(label='Input Text', lines=5)
         out = gr.Textbox(lines=5, label="Output", interactive=False)
 
     btn = gr.Button("Run Aura")
     btn.click(fn=process_input, inputs=inp, outputs=out)
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(theme=gr.themes.Glass(), css="""
+        .gradio-container { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; }
+        button { background: rgba(255, 255, 255, 0.3) !important; backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.5) !important; color: white !important; }
+        label, span, p, h1 { color: white !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .prose { color: white !important; }
+        input, textarea { background: rgba(255, 255, 255, 0.1) !important; color: white !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; }
+        """)
