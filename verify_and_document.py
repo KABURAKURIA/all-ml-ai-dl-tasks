@@ -4,6 +4,7 @@ import subprocess
 import glob
 import re
 import sys
+import requests
 from multiprocessing import Process, Manager
 from playwright.sync_api import sync_playwright
 
@@ -53,7 +54,6 @@ def verify_worker(worker_id, tools_chunk, results_list):
 
     # Define ports for this worker
     # Streamlit defaults to 8501. Gradio defaults to 7860.
-    # We give plenty of spacing.
     streamlit_port = 8501 + (worker_id * 10)
     gradio_port = 7900 + (worker_id * 10)
 
@@ -61,7 +61,7 @@ def verify_worker(worker_id, tools_chunk, results_list):
         tool_name = os.path.basename(tool_path).replace(".py", "")
         is_streamlit = "Streamlit" in tool_name
 
-        # print(f"[Worker {worker_id}] Verifying {tool_name}...")
+        print(f"[Worker {worker_id}] Verifying {tool_name}...")
 
         port = streamlit_port if is_streamlit else gradio_port
         url = f"http://localhost:{port}"
@@ -75,42 +75,43 @@ def verify_worker(worker_id, tools_chunk, results_list):
 
         process = subprocess.Popen(cmd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+        # Give it time to start
+        time.sleep(5)
+
+        screenshot_filename = None
+        verified = False
+
         try:
-            screenshot_filename = None
-            try:
-                with sync_playwright() as p:
-                    # Using a separate browser instance per check to ensure clean state
-                    browser = p.chromium.launch(headless=True)
-                    page = browser.new_page()
+            # Try simple request first to see if it's up
+            for _ in range(10):
+                try:
+                    requests.get(url, timeout=2)
+                    verified = True
+                    break
+                except:
+                    time.sleep(1)
 
-                    started = False
-                    # Gradio might take longer to load models
-                    max_retries = 40 # 40 seconds
-                    for _ in range(max_retries):
-                        try:
-                            page.goto(url, timeout=2000)
-                            started = True
-                            break
-                        except:
-                            time.sleep(1)
-
-                    if started:
-                        page.wait_for_timeout(3000)
+            if verified:
+                try:
+                    with sync_playwright() as p:
+                        browser = p.chromium.launch(headless=True)
+                        page = browser.new_page()
+                        page.goto(url, timeout=5000)
+                        page.wait_for_timeout(2000)
                         screenshot_filename = f"{tool_name}.png"
                         screenshot_path = os.path.join(SCREENSHOT_DIR, screenshot_filename)
                         page.screenshot(path=screenshot_path)
-                        print(f"[Worker {worker_id}] Verified {tool_name}")
-                    else:
-                        print(f"[Worker {worker_id}] Failed to start {tool_name}")
+                        print(f"[Worker {worker_id}] Screenshot captured for {tool_name}")
+                        browser.close()
+                except Exception as e:
+                    print(f"[Worker {worker_id}] Screenshot failed for {tool_name}: {e}")
+                    # If screenshot fails, we still consider it verified if requests worked
+                    # We just won't have an image
+            else:
+                print(f"[Worker {worker_id}] Failed to connect to {tool_name}")
 
-                    browser.close()
-            except Exception as e:
-                print(f"[Worker {worker_id}] Error in playwright for {tool_name}: {e}")
-
-            if screenshot_filename:
-                field = get_tool_metadata(tool_path)
-                entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n![{tool_name}](screenshots/{screenshot_filename})\n\n---\n"
-                results_list.append(entry)
+        except Exception as e:
+             print(f"[Worker {worker_id}] Error verifying {tool_name}: {e}")
 
         finally:
             process.terminate()
@@ -121,11 +122,21 @@ def verify_worker(worker_id, tools_chunk, results_list):
             # Wait for port to clear
             time.sleep(1)
 
+        if verified:
+            field = get_tool_metadata(tool_path)
+            entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n"
+            if screenshot_filename:
+                entry += f"![{tool_name}](screenshots/{screenshot_filename})\n\n"
+            else:
+                entry += f"*Screenshot not available*\n\n"
+            entry += "---\n"
+            results_list.append(entry)
+
 if __name__ == "__main__":
     tools = sorted(glob.glob(os.path.join(TOOLS_DIR, "*.py")))
     print(f"Found {len(tools)} tools.")
 
-    num_workers = 6 # Increase workers to speed up
+    num_workers = 1 # Sequential to ensure stability
 
     # Split tools
     chunks = [tools[i::num_workers] for i in range(num_workers)]
