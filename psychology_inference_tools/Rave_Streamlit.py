@@ -51,7 +51,7 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Rave</h1><p><b>Field:</b> Sports Psychology</p><p>Generate visualization scripts, motivational speeches, or focus techniques for athletes.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Rave</h1><p><b>Field:</b> Developmental Psychology</p><p>Provide descriptions of developmental milestones or parenting advice for specific age groups.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -94,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Rave - A tool for Sports Psychology*")
+st.markdown(f"*Rave - A tool for Developmental Psychology*")

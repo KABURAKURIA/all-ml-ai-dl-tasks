@@ -51,35 +51,35 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Quiet</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Quiet</h1><p><b>Field:</b> Developmental Psychology</p><p>Provide descriptions of developmental milestones or parenting advice for specific age groups.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("question-answering", model="deepset/roberta-base-squad2")
+    return pipeline("text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
 # User Input
 with st.container():
     st.markdown('<div class="glass-container">', unsafe_allow_html=True)
-
-    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
-    question = st.text_input("Enter Question:")
-    user_input = context and question # simple check
-
+    user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Quiet"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
 
-                    if context and question:
-                        result = pipe(question=question, context=context)
-                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
+                    result = pipe(user_input, max_length=200, num_return_sequences=1)
+                    if isinstance(result, list):
+                        if 'generated_text' in result[0]:
+                            output = result[0]['generated_text']
+                        elif 'summary_text' in result[0]:
+                            output = result[0]['summary_text']
+                        else:
+                            output = str(result[0])
                     else:
-                        st.warning("Please enter both context and question.")
-                        output = None
+                        output = str(result)
 
 
                     if output:
@@ -94,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Quiet - A tool for Neuropsychology*")
+st.markdown(f"*Quiet - A tool for Developmental Psychology*")

@@ -84,7 +84,8 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input)
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
                     # Handle list of lists or single list
                     if isinstance(result, list) and isinstance(result[0], list):
                         result = result[0]

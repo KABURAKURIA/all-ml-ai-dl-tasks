@@ -2,14 +2,14 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
+pipe = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        result = pipe(text)
+        result = pipe(text, top_k=5)
         if isinstance(result, list) and isinstance(result[0], list):
              result = result[0]
         # Sort
@@ -25,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Vigil\n**Field:** Consumer Psychology\n\nAnalyze consumer reviews to determine sentiment towards products or services.")
+        gr.Markdown(f"# Vigil\n**Field:** Behavioral Psychology\n\nDetermine basic positive or negative reinforcement cues in text.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

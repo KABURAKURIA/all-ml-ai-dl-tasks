@@ -51,7 +51,7 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Will</h1><p><b>Field:</b> Clinical Psychology</p><p>Simulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Will</h1><p><b>Field:</b> Geropsychology</p><p>Generate cognitive exercises or reminiscence therapy prompts for older adults.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -94,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Will - A tool for Clinical Psychology*")
+st.markdown(f"*Will - A tool for Geropsychology*")

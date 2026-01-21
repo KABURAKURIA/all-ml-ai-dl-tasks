@@ -2,21 +2,18 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
+pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        result = pipe(text)
-        if isinstance(result, list) and isinstance(result[0], list):
-             result = result[0]
-        # Sort
-        result = sorted(result, key=lambda x: x['score'], reverse=True)
+        labels = ["risk", "safety", "neutral", "positive", "negative"]
+        result = pipe(text, candidate_labels=labels)
         output = "Predictions:\n"
-        for res in result:
-             output += f"- {res['label']}: {res['score']:.4f}\n"
+        for label, score in zip(result['labels'], result['scores']):
+            output += f"- {label}: {score:.4f}\n"
         return output
     except Exception as e:
         return f"Error: {e}"
@@ -25,7 +22,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Mode\n**Field:** Cyberpsychology\n\nAnalyze online interactions for toxic sentiment or cyberbullying indicators.")
+        gr.Markdown(f"# Mode\n**Field:** Media Psychology\n\nAnalyze media content for themes like violence, prosocial behavior, or consumerism.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

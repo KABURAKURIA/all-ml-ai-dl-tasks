@@ -38,6 +38,8 @@ domains = [
     ("Cognitive Psychology", "summarization", "facebook/bart-large-cnn", "Summarize complex psychological texts or patient notes to aid in memory retention and comprehension."),
     ("Social Psychology (Sentiment)", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue."),
     ("Social Psychology (Emotion)", "text-classification", "j-hartmann/emotion-english-distilroberta-base", "Detect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions."),
+    ("Social Psychology (Complex Emotions)", "text-classification", "SamLowe/roberta-base-go_emotions", "Analyze text for a wide range of nuanced emotional states (27 categories)."),
+    ("Behavioral Psychology", "text-classification", "distilbert-base-uncased-finetuned-sst-2-english", "Determine basic positive or negative reinforcement cues in text."),
     ("Industrial-Organizational Psychology", "text-generation", "gpt2", "Generate professional feedback, leadership scenarios, or workplace conflict resolution scripts."),
     ("Developmental Psychology", "text-generation", "google/flan-t5-large", "Provide descriptions of developmental milestones or parenting advice for specific age groups."),
     ("Forensic Psychology", "zero-shot-classification", "facebook/bart-large-mnli", "Classify statements for potential risk markers (e.g., deception, aggression, distress)."),
@@ -187,7 +189,8 @@ def generate_streamlit_code(name, field, task, model, description, style_css, st
         """
     elif task == "text-classification":
          run_logic = f"""
-                    result = pipe(user_input)
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
                     # Handle list of lists or single list
                     if isinstance(result, list) and isinstance(result[0], list):
                         result = result[0]
@@ -360,7 +363,7 @@ def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        result = pipe(text)
+        result = pipe(text, top_k=5)
         if isinstance(result, list) and isinstance(result[0], list):
              result = result[0]
         # Sort

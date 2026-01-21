@@ -2,29 +2,22 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
+pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "translation_en_to_fr" == "summarization":
-             result = pipe(text, max_length=150, min_length=30, do_sample=False)
-        else:
-             result = pipe(text, max_length=200, num_return_sequences=1)
-
-        if isinstance(result, list):
-            if 'generated_text' in result[0]:
-                return result[0]['generated_text']
-            elif 'summary_text' in result[0]:
-                return result[0]['summary_text']
-            elif 'translation_text' in result[0]:
-                return result[0]['translation_text']
-            else:
-                return str(result[0])
-        else:
-            return str(result)
+        result = pipe(text, top_k=5)
+        if isinstance(result, list) and isinstance(result[0], list):
+             result = result[0]
+        # Sort
+        result = sorted(result, key=lambda x: x['score'], reverse=True)
+        output = "Predictions:\n"
+        for res in result:
+             output += f"- {res['label']}: {res['score']:.4f}\n"
+        return output
     except Exception as e:
         return f"Error: {e}"
 
@@ -32,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Zenith\n**Field:** Cross-Cultural Psychology\n\nTranslate psychological survey items or concepts to ensure cross-cultural validity (English to French).")
+        gr.Markdown(f"# Zenith\n**Field:** Consumer Psychology\n\nAnalyze consumer reviews to determine sentiment towards products or services.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

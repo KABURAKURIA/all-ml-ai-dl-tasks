@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Hush</h1><p><b>Field:</b> Media Psychology</p><p>Analyze media content for themes like violence, prosocial behavior, or consumerism.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Hush</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological survey items or concepts to ensure cross-cultural validity (English to French).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    return pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
 
 pipe = load_model()
 
@@ -84,12 +84,8 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
-                    result = pipe(user_input, candidate_labels=labels)
-
-                    output = "### Predictions:\n"
-                    for label, score in zip(result['labels'], result['scores']):
-                        output += f"- **{label}**: {score:.4f}\n"
+                    result = pipe(user_input)
+                    output = result[0]['translation_text']
 
 
                     if output:
@@ -104,4 +100,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Hush - A tool for Media Psychology*")
+st.markdown(f"*Hush - A tool for Cross-Cultural Psychology*")

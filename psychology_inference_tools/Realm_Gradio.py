@@ -2,29 +2,22 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("summarization", model="facebook/bart-large-cnn")
+pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "summarization" == "summarization":
-             result = pipe(text, max_length=150, min_length=30, do_sample=False)
-        else:
-             result = pipe(text, max_length=200, num_return_sequences=1)
-
-        if isinstance(result, list):
-            if 'generated_text' in result[0]:
-                return result[0]['generated_text']
-            elif 'summary_text' in result[0]:
-                return result[0]['summary_text']
-            elif 'translation_text' in result[0]:
-                return result[0]['translation_text']
-            else:
-                return str(result[0])
-        else:
-            return str(result)
+        result = pipe(text, top_k=5)
+        if isinstance(result, list) and isinstance(result[0], list):
+             result = result[0]
+        # Sort
+        result = sorted(result, key=lambda x: x['score'], reverse=True)
+        output = "Predictions:\n"
+        for res in result:
+             output += f"- {res['label']}: {res['score']:.4f}\n"
+        return output
     except Exception as e:
         return f"Error: {e}"
 
@@ -32,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Realm\n**Field:** Cognitive Psychology\n\nSummarize complex psychological texts or patient notes to aid in memory retention and comprehension.")
+        gr.Markdown(f"# Realm\n**Field:** Cyberpsychology\n\nAnalyze online interactions for toxic sentiment or cyberbullying indicators.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

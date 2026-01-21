@@ -9,7 +9,7 @@ def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        result = pipe(text)
+        result = pipe(text, top_k=5)
         if isinstance(result, list) and isinstance(result[0], list):
              result = result[0]
         # Sort
@@ -25,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Valence\n**Field:** Social Psychology (Emotion)\n\nDetect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.")
+        gr.Markdown(f"# Valence\n**Field:** Crisis Intervention\n\nRapidly identify the dominant emotion in a crisis text to inform immediate response.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

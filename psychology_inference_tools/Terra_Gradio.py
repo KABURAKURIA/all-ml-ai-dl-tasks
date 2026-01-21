@@ -2,14 +2,14 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="gpt2")
+pipe = pipeline("text2text-generation", model="google/flan-t5-small")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "text-generation" == "summarization":
+        if "text2text-generation" == "summarization":
              result = pipe(text, max_length=150, min_length=30, do_sample=False)
         else:
              result = pipe(text, max_length=200, num_return_sequences=1)
@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Terra\n**Field:** Positive Psychology\n\nGenerate gratitude prompts, positive affirmations, or strengths-based interventions.")
+        gr.Markdown(f"# Terra\n**Field:** Educational Psychology\n\nSimplify complex psychological concepts into easy-to-understand language for students.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

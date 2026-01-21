@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Synergy\n**Field:** Biopsychology\n\nExplain the biological and hormonal underpinnings of specific emotional states.")
+        gr.Markdown(f"# Synergy\n**Field:** Evolutionary Psychology\n\nGenerate hypotheses about the evolutionary origins of specific human behaviors.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

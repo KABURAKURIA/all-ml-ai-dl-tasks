@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Momentum</h1><p><b>Field:</b> Cyberpsychology</p><p>Analyze online interactions for toxic sentiment or cyberbullying indicators.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Momentum</h1><p><b>Field:</b> Crisis Intervention</p><p>Rapidly identify the dominant emotion in a crisis text to inform immediate response.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
+    return pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
 
 pipe = load_model()
 
@@ -70,7 +70,8 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input)
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
                     # Handle list of lists or single list
                     if isinstance(result, list) and isinstance(result[0], list):
                         result = result[0]
@@ -97,4 +98,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Momentum - A tool for Cyberpsychology*")
+st.markdown(f"*Momentum - A tool for Crisis Intervention*")

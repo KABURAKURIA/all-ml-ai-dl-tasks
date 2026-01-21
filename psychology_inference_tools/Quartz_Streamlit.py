@@ -65,35 +65,39 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Quartz</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Quartz</h1><p><b>Field:</b> Social Psychology (Emotion)</p><p>Detect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("question-answering", model="deepset/roberta-base-squad2")
+    return pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
 
 pipe = load_model()
 
 # User Input
 with st.container():
     st.markdown('<div class="neo-container">', unsafe_allow_html=True)
-
-    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
-    question = st.text_input("Enter Question:")
-    user_input = context and question # simple check
-
+    user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Quartz"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
 
-                    if context and question:
-                        result = pipe(question=question, context=context)
-                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
-                    else:
-                        st.warning("Please enter both context and question.")
-                        output = None
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
+                    # Handle list of lists or single list
+                    if isinstance(result, list) and isinstance(result[0], list):
+                        result = result[0]
+
+                    # Sort by score if multiple
+                    result = sorted(result, key=lambda x: x['score'], reverse=True)
+
+                    output = "### Predictions:\n"
+                    for res in result:
+                        label = res['label']
+                        score = res['score']
+                        output += f"- **{label}**: {score:.4f}\n"
 
 
                     if output:
@@ -108,4 +112,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Quartz - A tool for Neuropsychology*")
+st.markdown(f"*Quartz - A tool for Social Psychology (Emotion)*")

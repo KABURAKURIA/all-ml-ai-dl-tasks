@@ -65,31 +65,35 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Peak</h1><p><b>Field:</b> Psychometrics</p><p>Categorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Peak</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    return pipeline("question-answering", model="deepset/roberta-base-squad2")
 
 pipe = load_model()
 
 # User Input
 with st.container():
     st.markdown('<div class="neo-container">', unsafe_allow_html=True)
-    user_input = st.text_area("Enter text for analysis/generation:", height=150)
+
+    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
+    question = st.text_input("Enter Question:")
+    user_input = context and question # simple check
+
 
     if st.button("Run Peak"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
 
-                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
-                    result = pipe(user_input, candidate_labels=labels)
-
-                    output = "### Predictions:\n"
-                    for label, score in zip(result['labels'], result['scores']):
-                        output += f"- **{label}**: {score:.4f}\n"
+                    if context and question:
+                        result = pipe(question=question, context=context)
+                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
+                    else:
+                        st.warning("Please enter both context and question.")
+                        output = None
 
 
                     if output:
@@ -104,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Peak - A tool for Psychometrics*")
+st.markdown(f"*Peak - A tool for Neuropsychology*")

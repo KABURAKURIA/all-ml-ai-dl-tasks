@@ -65,7 +65,7 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Drive</h1><p><b>Field:</b> Family Psychology</p><p>Generate scripts for addressing family dynamics and conflict resolution using systemic approaches.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Drive</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe the potential psychological impact of different environmental settings on well-being.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -108,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Drive - A tool for Family Psychology*")
+st.markdown(f"*Drive - A tool for Environmental Psychology*")
