@@ -59,6 +59,15 @@ def verify_worker(worker_id, tools_chunk, results_list):
 
     for tool_path in tools_chunk:
         tool_name = os.path.basename(tool_path).replace(".py", "")
+        screenshot_path = os.path.join(SCREENSHOT_DIR, f"{tool_name}.png")
+
+        if os.path.exists(screenshot_path):
+             print(f"[Worker {worker_id}] Skipping {tool_name}, already verified.")
+             field = get_tool_metadata(tool_path)
+             entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n![{tool_name}](screenshots/{tool_name}.png)\n\n---\n"
+             results_list.append(entry)
+             continue
+
         is_streamlit = "Streamlit" in tool_name
 
         print(f"[Worker {worker_id}] Verifying {tool_name}...")
@@ -76,14 +85,14 @@ def verify_worker(worker_id, tools_chunk, results_list):
         process = subprocess.Popen(cmd, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
         # Give it time to start
-        time.sleep(5)
+        # time.sleep(5)
 
         screenshot_filename = None
         verified = False
 
         try:
             # Try simple request first to see if it's up
-            for _ in range(10):
+            for _ in range(120):
                 try:
                     requests.get(url, timeout=2)
                     verified = True
@@ -97,7 +106,7 @@ def verify_worker(worker_id, tools_chunk, results_list):
                         browser = p.chromium.launch(headless=True)
                         page = browser.new_page()
                         page.goto(url, timeout=5000)
-                        page.wait_for_timeout(2000)
+                        page.wait_for_timeout(1000)
                         screenshot_filename = f"{tool_name}.png"
                         screenshot_path = os.path.join(SCREENSHOT_DIR, screenshot_filename)
                         page.screenshot(path=screenshot_path)
