@@ -44,32 +44,29 @@ def get_tool_metadata(tool_path):
         return "Unknown"
 
 def generate_manual():
-    print("Generating manual from existing screenshots...")
+    print("Generating manual from tools...")
 
-    screenshots = sorted(glob.glob(os.path.join(SCREENSHOT_DIR, "*.png")))
+    tools = sorted(glob.glob(os.path.join(TOOLS_DIR, "*.py")))
     catalog_entries = []
 
-    for screenshot in screenshots:
-        filename = os.path.basename(screenshot)
-        tool_name = filename.replace(".png", "")
+    for tool_path in tools:
+        tool_filename = os.path.basename(tool_path)
+        tool_name = tool_filename.replace(".py", "")
 
-        # Find corresponding tool file
-        # We need to guess the extension or try both?
-        # The tool name in screenshot usually matches the python file name prefix?
-        # My verification script names screenshot as `{tool_name}.png` where tool_name is filename without .py.
-        # So `Aether_Gradio.png` corresponds to `Aether_Gradio.py`.
-
-        tool_path = os.path.join(TOOLS_DIR, f"{tool_name}.py")
-        if not os.path.exists(tool_path):
-            print(f"Warning: Tool file not found for {tool_name}")
-            continue
+        screenshot_filename = f"{tool_name}.png"
+        screenshot_path = os.path.join(SCREENSHOT_DIR, screenshot_filename)
 
         field = get_tool_metadata(tool_path)
 
         entry = f"## {tool_name}\n"
         entry += f"**Field:** {field}\n\n"
         entry += f"**File:** `{tool_path}`\n\n"
-        entry += f"![{tool_name}](screenshots/{filename})\n\n"
+
+        if os.path.exists(screenshot_path):
+             entry += f"![{tool_name}](screenshots/{screenshot_filename})\n\n"
+        else:
+             entry += f"*Screenshot not available*\n\n"
+
         entry += "---\n"
         catalog_entries.append(entry)
 
