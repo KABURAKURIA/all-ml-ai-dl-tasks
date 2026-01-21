@@ -1,6 +1,6 @@
 # AI Inference Notebooks & Tools
 
-This repository contains a comprehensive collection of **55+** Jupyter Notebooks and generated Python tools for AI/ML inference. The content covers a wide range of domains including Computer Vision, Natural Language Processing, Audio, Multimodal tasks, Reinforcement Learning, and Tabular data.
+This repository contains a comprehensive collection of **60+** Jupyter Notebooks and generated Python tools for AI/ML inference. The content covers a wide range of domains including Computer Vision, Natural Language Processing, Audio, Multimodal tasks, Reinforcement Learning, and Tabular data.
 
 ## 🚀 Key Features
 

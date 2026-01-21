@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **61** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -19,6 +19,7 @@ This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 7.  `Multimodal_07_Video_Content_Analysis.ipynb`: VideoMAE.
 8.  `Multimodal_08_Visual_Question_Answering.ipynb`: VQA.
 9.  `Multimodal_09_Text_to_Video.ipynb`: Text-to-Video Generation.
+10. `Multimodal_10_Vision_Language_Chat.ipynb`: Vision Language Chat (Moondream2).
 
 ### Natural Language Processing (NLP)
 1.  `NLP_01_Feature_Extraction.ipynb`: Text Embeddings.
@@ -29,7 +30,7 @@ This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 6.  `NLP_06_Table_Question_Answering.ipynb`: Table QA (TAPAS).
 7.  `NLP_07_Sentiment_Analysis.ipynb`: Sentiment Classification (IMDB).
 8.  `NLP_08_Topic_Classification.ipynb`: Zero-Shot Topic Classification.
-9.  `NLP_09_Text_Generation.ipynb`: LLM Generation (GPT-2).
+9.  `NLP_09_Text_Generation.ipynb`: LLM Generation (SmolLM2).
 10. `NLP_10_Text_Ranking.ipynb`: Re-Ranking (Cross-Encoder).
 11. `NLP_11_Named_Entity_Recognition.ipynb`: NER.
 12. `NLP_12_POS_Tagging.ipynb`: POS Tagging.
@@ -39,6 +40,8 @@ This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 16. `NLP_16_LLM_Fine_Tuning.ipynb`: LLM Fine-Tuning (QLoRA).
 17. `NLP_17_RAG.ipynb`: Retrieval Augmented Generation (RAG).
 18. `NLP_18_Agents.ipynb`: AI Agents (smolagents).
+19. `NLP_19_Advanced_RAG.ipynb`: Advanced RAG with Re-ranking.
+20. `NLP_20_Reasoning.ipynb`: Chain-of-Thought Reasoning (CoT).
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Monocular Depth.
@@ -61,6 +64,7 @@ This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 18. `CV_18_Zero_Shot_Object_Detection.ipynb`: OwlViT.
 19. `CV_19_Text_to_3D.ipynb`: 3D Generation (Shap-E).
 20. `CV_20_Image_to_3D.ipynb`: Image to 3D (Shap-E).
+21. `CV_21_Fast_Image_Generation_LCM.ipynb`: Fast Image Generation (LCM).
 
 ### Audio
 1.  `Audio_01_Classification.ipynb`: Audio Keyword Spotting (SUPERB).
@@ -69,10 +73,12 @@ This folder contains **55** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 4.  `Audio_04_TTS.ipynb`: Text-to-Speech (Bark).
 5.  `Audio_05_Music_Generation.ipynb`: Text-to-Music (MusicGen).
 
-### Tabular & RL
+### Tabular, Graphs & RL
 1.  `Tabular_01_Classification.ipynb`: Tabular Classification (Iris).
 2.  `Tabular_02_Regression.ipynb`: Tabular Regression.
-3.  `RL_01_Reinforcement_Learning.ipynb`: Reinforcement Learning (CartPole PPO).
+3.  `Tabular_03_Time_Series_Forecasting.ipynb`: Time Series (Chronos).
+4.  `Graph_01_Node_Classification.ipynb`: Graph Neural Networks (GCN).
+5.  `RL_01_Reinforcement_Learning.ipynb`: Reinforcement Learning (CartPole PPO).
 
 ## Usage
 Run the installation cell at the top of each notebook.
