@@ -288,6 +288,11 @@ st.markdown(f"*{name} - A tool for {field}*")
 """
     return code
 
+def clean_whitespace(code):
+    lines = code.split('\n')
+    cleaned_lines = [line.rstrip() for line in lines]
+    return '\n'.join(cleaned_lines)
+
 def generate_gradio_code(name, field, task, model, description, style_type):
     # Determine theme
     if style_type == "Glassmorphic":
@@ -447,6 +452,8 @@ for i in range(len(names)):
         content = generate_streamlit_code(name, field, task, model, description, css, style)
     else:
         content = generate_gradio_code(name, field, task, model, description, style)
+
+    content = clean_whitespace(content)
 
     with open(filepath, "w") as f:
         f.write(content)
