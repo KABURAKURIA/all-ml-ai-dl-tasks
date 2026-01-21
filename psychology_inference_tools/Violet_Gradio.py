@@ -2,15 +2,22 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("question-answering", model="deepset/roberta-base-squad2")
+pipe = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 
-def process_input(context, question):
-    if not context or not question:
-        return "Please enter both context and question."
+def process_input(text):
+    if not text:
+        return "Please enter text."
     try:
-        result = pipe(question=question, context=context)
-        return f"Answer: {result['answer']}\nScore: {result['score']:.4f}"
+        result = pipe(text, top_k=5)
+        if isinstance(result, list) and isinstance(result[0], list):
+             result = result[0]
+        # Sort
+        result = sorted(result, key=lambda x: x['score'], reverse=True)
+        output = "Predictions:\n"
+        for res in result:
+             output += f"- {res['label']}: {res['score']:.4f}\n"
+        return output
     except Exception as e:
         return f"Error: {e}"
 
@@ -18,10 +25,10 @@ def process_input(context, question):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Violet\n**Field:** Neuropsychology\n\nAnswer specific questions about brain functions and neurological phenomena based on context.")
+        gr.Markdown(f"# Violet\n**Field:** Behavioral Psychology\n\nDetermine basic positive or negative reinforcement cues in text.")
 
     with gr.Row():
-        inp = [gr.Textbox(label='Context', lines=5), gr.Textbox(label='Question')]
+        inp = gr.Textbox(label='Input Text', lines=5)
         out = gr.Textbox(lines=5, label="Output", interactive=False)
 
     btn = gr.Button("Run Violet")

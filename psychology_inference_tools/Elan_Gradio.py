@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Elan\n**Field:** Sleep Psychology\n\nGenerate sleep hygiene tips and bedtime routines based on user descriptions of sleep issues.")
+        gr.Markdown(f"# Elan\n**Field:** Biopsychology\n\nExplain the biological and hormonal underpinnings of specific emotional states.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

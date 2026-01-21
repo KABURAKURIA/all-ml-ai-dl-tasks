@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Crisp\n**Field:** Biopsychology\n\nExplain the biological and hormonal underpinnings of specific emotional states.")
+        gr.Markdown(f"# Crisp\n**Field:** Positive Psychology\n\nGenerate gratitude prompts, positive affirmations, or strengths-based interventions.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

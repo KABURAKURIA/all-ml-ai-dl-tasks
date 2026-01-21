@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Delta\n**Field:** Sleep Psychology\n\nGenerate sleep hygiene tips and bedtime routines based on user descriptions of sleep issues.")
+        gr.Markdown(f"# Delta\n**Field:** Comparative Psychology\n\nCompare specific behaviors between humans and other animal species.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

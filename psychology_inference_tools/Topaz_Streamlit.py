@@ -65,7 +65,7 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Topaz</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe the potential psychological impact of different environmental settings on well-being.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Topaz</h1><p><b>Field:</b> Industrial-Organizational Psychology</p><p>Generate professional feedback, leadership scenarios, or workplace conflict resolution scripts.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -108,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Topaz - A tool for Environmental Psychology*")
+st.markdown(f"*Topaz - A tool for Industrial-Organizational Psychology*")

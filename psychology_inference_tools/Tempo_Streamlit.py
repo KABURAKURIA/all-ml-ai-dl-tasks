@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Tempo</h1><p><b>Field:</b> Cognitive Psychology</p><p>Summarize complex psychological texts or patient notes to aid in memory retention and comprehension.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Tempo</h1><p><b>Field:</b> Rehabilitation Psychology</p><p>Create personalized recovery plans and motivational support messages for rehabilitation patients.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("summarization", model="facebook/bart-large-cnn")
+    return pipeline("text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
@@ -70,8 +70,16 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input, max_length=150, min_length=30, do_sample=False)
-                    output = result[0]['summary_text']
+                    result = pipe(user_input, max_length=200, num_return_sequences=1)
+                    if isinstance(result, list):
+                        if 'generated_text' in result[0]:
+                            output = result[0]['generated_text']
+                        elif 'summary_text' in result[0]:
+                            output = result[0]['summary_text']
+                        else:
+                            output = str(result[0])
+                    else:
+                        output = str(result)
 
 
                     if output:
@@ -86,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Tempo - A tool for Cognitive Psychology*")
+st.markdown(f"*Tempo - A tool for Rehabilitation Psychology*")

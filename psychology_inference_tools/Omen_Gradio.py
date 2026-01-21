@@ -32,7 +32,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Omen\n**Field:** Family Psychology\n\nGenerate scripts for addressing family dynamics and conflict resolution using systemic approaches.")
+        gr.Markdown(f"# Omen\n**Field:** Biopsychology\n\nExplain the biological and hormonal underpinnings of specific emotional states.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

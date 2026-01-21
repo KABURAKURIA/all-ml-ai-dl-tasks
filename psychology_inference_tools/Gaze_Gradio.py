@@ -22,7 +22,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Gaze\n**Field:** Media Psychology\n\nAnalyze media content for themes like violence, prosocial behavior, or consumerism.")
+        gr.Markdown(f"# Gaze\n**Field:** Psychometrics\n\nCategorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
