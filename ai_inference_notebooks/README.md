@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **61** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **65** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -42,6 +42,9 @@ This folder contains **61** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 18. `NLP_18_Agents.ipynb`: AI Agents (smolagents).
 19. `NLP_19_Advanced_RAG.ipynb`: Advanced RAG with Re-ranking.
 20. `NLP_20_Reasoning.ipynb`: Chain-of-Thought Reasoning (CoT).
+21. `NLP_21_State_Space_Models.ipynb`: State Space Models (Mamba).
+22. `NLP_22_Function_Calling.ipynb`: Function Calling (Tool Use).
+23. `NLP_23_Synthetic_Data_Generation.ipynb`: Synthetic Data Generation.
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Monocular Depth.
@@ -65,6 +68,7 @@ This folder contains **61** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 19. `CV_19_Text_to_3D.ipynb`: 3D Generation (Shap-E).
 20. `CV_20_Image_to_3D.ipynb`: Image to 3D (Shap-E).
 21. `CV_21_Fast_Image_Generation_LCM.ipynb`: Fast Image Generation (LCM).
+22. `CV_22_Zero_Shot_Video_Classification.ipynb`: Zero-Shot Video Classification (X-CLIP).
 
 ### Audio
 1.  `Audio_01_Classification.ipynb`: Audio Keyword Spotting (SUPERB).
