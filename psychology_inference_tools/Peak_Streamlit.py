@@ -4,96 +4,74 @@ from transformers import pipeline
 # Configuration
 st.set_page_config(page_title="Peak", layout="centered")
 
-# Style: Neobrutalistic
+# Style: Glassmorphic
 st.markdown("""
 <style>
 .stApp {
-    background-color: #FFDEE9;
-    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
     background-attachment: fixed;
+    background-size: cover;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
-    background-color: #fff;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    border-radius: 0px;
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
 }
 .stButton > button {
-    background-color: #FF9A8B;
-    border: 3px solid black;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    font-weight: 900;
-    border-radius: 0px;
-    text-transform: uppercase;
-    font-family: 'Courier New', Courier, monospace;
-    transition: all 0.1s;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
 }
 .stButton > button:hover {
-    box-shadow: 2px 2px 0px 0px #000000;
-    transform: translate(3px, 3px);
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
 }
-h1, h2, h3 {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    text-transform: uppercase;
-    border: 3px solid black;
-    padding: 10px;
-    background-color: #FBAB7E;
-    box-shadow: 5px 5px 0px 0px #000000;
-    color: black;
-    display: inline-block;
-    margin-bottom: 20px;
+h1, h2, h3, p, label, .stMarkdown {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
-.neo-container {
-    background-color: #8BC6EC;
-    border: 3px solid black;
-    box-shadow: 8px 8px 0px 0px #000000;
-    padding: 20px;
-    margin-bottom: 20px;
-    font-family: 'Courier New', Courier, monospace;
-}
-p, label, .stMarkdown {
-    color: black;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 600;
+.glass-container {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 25px;
+    margin-bottom: 25px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Peak</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Peak</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological survey items or concepts to ensure cross-cultural validity (English to French).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("question-answering", model="deepset/roberta-base-squad2")
+    return pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
 
 pipe = load_model()
 
 # User Input
 with st.container():
-    st.markdown('<div class="neo-container">', unsafe_allow_html=True)
-
-    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
-    question = st.text_input("Enter Question:")
-    user_input = context and question # simple check
-
+    st.markdown('<div class="glass-container">', unsafe_allow_html=True)
+    user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Peak"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
 
-                    if context and question:
-                        result = pipe(question=question, context=context)
-                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
-                    else:
-                        st.warning("Please enter both context and question.")
-                        output = None
+                    result = pipe(user_input)
+                    output = result[0]['translation_text']
 
 
                     if output:
@@ -108,4 +86,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Peak - A tool for Neuropsychology*")
+st.markdown(f"*Peak - A tool for Cross-Cultural Psychology*")

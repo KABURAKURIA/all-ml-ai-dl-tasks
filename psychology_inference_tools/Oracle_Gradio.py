@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
+pipe = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
 
 
 def process_input(text):
@@ -25,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Oracle\n**Field:** Consumer Psychology\n\nAnalyze consumer reviews to determine sentiment towards products or services.")
+        gr.Markdown(f"# Oracle\n**Field:** Social Psychology (Complex Emotions)\n\nAnalyze text for a wide range of nuanced emotional states (27 categories).")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

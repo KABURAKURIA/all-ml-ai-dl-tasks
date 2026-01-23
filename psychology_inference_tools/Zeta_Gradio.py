@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
+pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 
 def process_input(text):
@@ -25,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Zeta\n**Field:** Behavioral Psychology\n\nDetermine basic positive or negative reinforcement cues in text.")
+        gr.Markdown(f"# Zeta\n**Field:** Cyberpsychology\n\nAnalyze online interactions for toxic sentiment or cyberbullying indicators.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

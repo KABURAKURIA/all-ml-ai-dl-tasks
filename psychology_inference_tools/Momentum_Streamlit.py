@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Momentum</h1><p><b>Field:</b> Crisis Intervention</p><p>Rapidly identify the dominant emotion in a crisis text to inform immediate response.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Momentum</h1><p><b>Field:</b> Behavioral Psychology</p><p>Determine basic positive or negative reinforcement cues in text.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
+    return pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 pipe = load_model()
 
@@ -98,4 +98,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Momentum - A tool for Crisis Intervention*")
+st.markdown(f"*Momentum - A tool for Behavioral Psychology*")
