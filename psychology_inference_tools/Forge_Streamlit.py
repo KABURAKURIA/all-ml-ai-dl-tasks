@@ -4,65 +4,79 @@ from transformers import pipeline
 # Configuration
 st.set_page_config(page_title="Forge", layout="centered")
 
-# Style: Glassmorphic
+# Style: Neobrutalistic
 st.markdown("""
 <style>
 .stApp {
-    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+    background-color: #FFDEE9;
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
     background-attachment: fixed;
-    background-size: cover;
 }
 .stTextInput > div > div > input, .stTextArea > div > div > textarea {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    border-radius: 15px;
+    background-color: #fff;
+    border: 3px solid black;
+    box-shadow: 5px 5px 0px 0px #000000;
+    border-radius: 0px;
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
 .stButton > button {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    border-radius: 15px;
-    padding: 10px 20px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+    background-color: #FF9A8B;
+    border: 3px solid black;
+    box-shadow: 5px 5px 0px 0px #000000;
+    color: black;
+    font-weight: 900;
+    border-radius: 0px;
+    text-transform: uppercase;
+    font-family: 'Courier New', Courier, monospace;
+    transition: all 0.1s;
 }
 .stButton > button:hover {
-    background: rgba(255, 255, 255, 0.5);
-    transform: scale(1.05);
+    box-shadow: 2px 2px 0px 0px #000000;
+    transform: translate(3px, 3px);
 }
-h1, h2, h3, p, label, .stMarkdown {
-    color: white !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+h1, h2, h3 {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: 3px solid black;
+    padding: 10px;
+    background-color: #FBAB7E;
+    box-shadow: 5px 5px 0px 0px #000000;
+    color: black;
+    display: inline-block;
+    margin-bottom: 20px;
 }
-.glass-container {
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 25px;
-    margin-bottom: 25px;
+.neo-container {
+    background-color: #8BC6EC;
+    border: 3px solid black;
+    box-shadow: 8px 8px 0px 0px #000000;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace;
+}
+p, label, .stMarkdown {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Forge</h1><p><b>Field:</b> Health Psychology</p><p>Generate relaxation scripts, mindfulness prompts, or health behavior nudges.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Forge</h1><p><b>Field:</b> Forensic Psychology</p><p>Classify statements for potential risk markers (e.g., deception, aggression, distress).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 pipe = load_model()
 
 # User Input
 with st.container():
-    st.markdown('<div class="glass-container">', unsafe_allow_html=True)
+    st.markdown('<div class="neo-container">', unsafe_allow_html=True)
     user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Forge"):
@@ -70,16 +84,12 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input, max_length=200, num_return_sequences=1)
-                    if isinstance(result, list):
-                        if 'generated_text' in result[0]:
-                            output = result[0]['generated_text']
-                        elif 'summary_text' in result[0]:
-                            output = result[0]['summary_text']
-                        else:
-                            output = str(result[0])
-                    else:
-                        output = str(result)
+                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
+                    result = pipe(user_input, candidate_labels=labels)
+
+                    output = "### Predictions:\n"
+                    for label, score in zip(result['labels'], result['scores']):
+                        output += f"- **{label}**: {score:.4f}\n"
 
 
                     if output:
@@ -94,4 +104,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Forge - A tool for Health Psychology*")
+st.markdown(f"*Forge - A tool for Forensic Psychology*")

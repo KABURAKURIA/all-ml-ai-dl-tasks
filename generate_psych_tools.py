@@ -29,7 +29,9 @@ names = [
     "Keen", "Lucid", "Muse", "Neon", "Pure", "Quiet", "Rave", "Soul", "True", "Wild",
     "Yore", "Zest", "Amber", "Coral", "Dusk", "Fern", "Glint", "Hush", "Ivory", "Jade",
     "Knack", "Lark", "Moss", "Opal", "Pearl", "Quartz", "Ruby", "Teal", "Umbra", "Vale",
-    "Wisp", "Onyx", "Azure", "Cyan", "Lime", "Rose", "Violet", "Indigo", "Topaz", "Garnet"
+    "Wisp", "Onyx", "Azure", "Cyan", "Lime", "Rose", "Violet", "Indigo", "Topaz", "Garnet",
+    "Bolt", "Dash", "Edge", "Fray", "Glee", "Haze", "Jolt", "Kith", "Lush", "Maze",
+    "Nook", "Pave", "Quip", "Rift", "Soar"
 ]
 
 # (Field, Task, Model, Description)
@@ -462,7 +464,7 @@ for i in range(len(names)):
         f.write(content)
 
     count += 1
-    if count >= 110: # Generate a few extra to be safe
+    if count >= 125: # Generate a few extra to be safe
         break
 
 print(f"Generated {count} tools in {TOOLS_DIR}")

@@ -2,18 +2,21 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+pipe = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        labels = ["risk", "safety", "neutral", "positive", "negative"]
-        result = pipe(text, candidate_labels=labels)
+        result = pipe(text, top_k=5)
+        if isinstance(result, list) and isinstance(result[0], list):
+             result = result[0]
+        # Sort
+        result = sorted(result, key=lambda x: x['score'], reverse=True)
         output = "Predictions:\n"
-        for label, score in zip(result['labels'], result['scores']):
-            output += f"- {label}: {score:.4f}\n"
+        for res in result:
+             output += f"- {res['label']}: {res['score']:.4f}\n"
         return output
     except Exception as e:
         return f"Error: {e}"
@@ -22,7 +25,7 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Gaze\n**Field:** Psychometrics\n\nCategorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).")
+        gr.Markdown(f"# Gaze\n**Field:** Social Psychology (Emotion)\n\nDetect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)

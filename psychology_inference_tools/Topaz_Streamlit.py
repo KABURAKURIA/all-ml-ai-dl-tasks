@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Topaz</h1><p><b>Field:</b> Industrial-Organizational Psychology</p><p>Generate professional feedback, leadership scenarios, or workplace conflict resolution scripts.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Topaz</h1><p><b>Field:</b> Sports Psychology</p><p>Generate visualization scripts, motivational speeches, or focus techniques for athletes.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
@@ -108,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Topaz - A tool for Industrial-Organizational Psychology*")
+st.markdown(f"*Topaz - A tool for Sports Psychology*")
