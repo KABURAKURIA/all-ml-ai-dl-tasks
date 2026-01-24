@@ -8,7 +8,7 @@ LICENSE_TEXT = """## License
 
 This notebook is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/huggingface/transformers/blob/main/LICENSE) file for more details.
 
-This notebook focuses on open-source models and is optimized to run on the Google Colab Free Tier."""
+This notebook focuses on open-source, lightweight, and updated models, and is optimized to run on the Google Colab Free Tier."""
 
 KITCHEN_SINK_CODE = """# Kitchen Sink: Save Results
 import os
@@ -159,7 +159,7 @@ def update_notebook(filepath):
     # Check if cell 1 is license
     if len(nb.cells) > 1:
         cell1 = nb.cells[1]
-        if cell1.cell_type != 'markdown' or 'Apache License 2.0' not in cell1.source:
+        if cell1.cell_type != 'markdown' or cell1.source.strip() != LICENSE_TEXT.strip():
             print("  Inserting/Updating License cell...")
             license_cell = nbformat.v4.new_markdown_cell(LICENSE_TEXT)
             # If cell 1 looks like a license but wrong, replace it. If it's something else, insert.

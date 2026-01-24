@@ -24,7 +24,7 @@ The **second cell** (Index 1) of every notebook must be a Markdown cell containi
 
 This notebook is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/huggingface/transformers/blob/main/LICENSE) file for more details.
 
-This notebook focuses on open-source models and is optimized to run on the Google Colab Free Tier.
+This notebook focuses on open-source, lightweight, and updated models, and is optimized to run on the Google Colab Free Tier.
 ```
 
 ## 3. "Kitchen Sink" Saving Logic
