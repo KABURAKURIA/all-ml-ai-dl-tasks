@@ -70,14 +70,6 @@ def verify_worker(worker_id, tools_chunk, results_list):
              results_list.append(entry)
              continue
 
-        # Limit actual execution to first 5 tools to save time
-        if verified_count >= 5:
-             print(f"[Worker {worker_id}] Skipping execution for {tool_name} (limit reached). Adding metadata only.")
-             field = get_tool_metadata(tool_path)
-             entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n*Screenshot skipped for optimization*\n\n---\n"
-             results_list.append(entry)
-             continue
-
         is_streamlit = "Streamlit" in tool_name
 
         print(f"[Worker {worker_id}] Verifying {tool_name}...")
@@ -102,7 +94,7 @@ def verify_worker(worker_id, tools_chunk, results_list):
 
         try:
             # Try simple request first to see if it's up
-            for _ in range(120):
+            for _ in range(180):
                 try:
                     requests.get(url, timeout=2)
                     verified = True
@@ -164,7 +156,7 @@ if __name__ == "__main__":
     tools = sorted(glob.glob(os.path.join(TOOLS_DIR, "*.py")))
     print(f"Found {len(tools)} tools.")
 
-    num_workers = 1 # Sequential to ensure stability
+    num_workers = 2 # Parallel for speed
 
     # Split tools
     chunks = [tools[i::num_workers] for i in range(num_workers)]
