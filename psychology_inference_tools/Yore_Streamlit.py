@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Yore</h1><p><b>Field:</b> Comparative Psychology</p><p>Compare specific behaviors between humans and other animal species.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Yore</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological survey items or concepts to ensure cross-cultural validity (English to French).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
 
 pipe = load_model()
 
@@ -70,16 +70,8 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input, max_length=200, num_return_sequences=1)
-                    if isinstance(result, list):
-                        if 'generated_text' in result[0]:
-                            output = result[0]['generated_text']
-                        elif 'summary_text' in result[0]:
-                            output = result[0]['summary_text']
-                        else:
-                            output = str(result[0])
-                    else:
-                        output = str(result)
+                    result = pipe(user_input)
+                    output = result[0]['translation_text']
 
 
                     if output:
@@ -94,4 +86,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Yore - A tool for Comparative Psychology*")
+st.markdown(f"*Yore - A tool for Cross-Cultural Psychology*")

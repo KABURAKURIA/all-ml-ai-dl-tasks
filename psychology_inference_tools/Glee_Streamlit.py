@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Glee</h1><p><b>Field:</b> Behavioral Psychology</p><p>Determine basic positive or negative reinforcement cues in text.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Glee</h1><p><b>Field:</b> Social Psychology (Sentiment)</p><p>Analyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
+    return pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 pipe = load_model()
 
@@ -112,4 +112,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Glee - A tool for Behavioral Psychology*")
+st.markdown(f"*Glee - A tool for Social Psychology (Sentiment)*")

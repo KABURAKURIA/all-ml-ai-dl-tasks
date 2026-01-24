@@ -63,7 +63,8 @@ domains = [
     ("Sleep Psychology", "text-generation", "gpt2", "Generate sleep hygiene tips and bedtime routines based on user descriptions of sleep issues."),
     ("Media Psychology", "zero-shot-classification", "facebook/bart-large-mnli", "Analyze media content for themes like violence, prosocial behavior, or consumerism."),
     ("Geropsychology", "text-generation", "google/flan-t5-large", "Generate cognitive exercises or reminiscence therapy prompts for older adults."),
-    ("Cyberpsychology", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze online interactions for toxic sentiment or cyberbullying indicators.")
+    ("Cyberpsychology", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze online interactions for toxic sentiment or cyberbullying indicators."),
+    ("Sound Therapy", "text-to-audio", "facebook/musicgen-small", "Generate ambient music and binaural beats for meditation and brainwave entrainment.")
 ]
 
 streamlit_glass_css = """
@@ -238,6 +239,24 @@ def generate_streamlit_code(name, field, task, model, description, style_css, st
                     result = pipe(user_input, max_length=150, min_length=30, do_sample=False)
                     output = result[0]['summary_text']
          """
+    elif task == "text-to-audio":
+         run_logic = f"""
+                    # MusicGen expects max_new_tokens for duration
+                    result = pipe(user_input, forward_params={{"max_new_tokens": 256}})
+                    if isinstance(result, list):
+                        result = result[0]
+
+                    audio_data = result["audio"]
+                    # Fix: Streamlit expects (samples, channels) or (samples,)
+                    # Pipeline output is often (channels, samples) e.g. (1, N)
+                    if audio_data.ndim > 1 and audio_data.shape[0] < audio_data.shape[1]:
+                        audio_data = audio_data.T
+
+                    sample_rate = result["sampling_rate"]
+
+                    st.audio(audio_data, sample_rate=sample_rate)
+                    output = "Audio generated successfully."
+         """
     else:
          run_logic = f"""
                     result = pipe(user_input)
@@ -377,6 +396,30 @@ def process_input(text):
     except Exception as e:
         return f"Error: {{e}}"
          """
+    elif task == "text-to-audio":
+        inputs = "gr.Textbox(label='Music Prompt', lines=2)"
+        process_func = f"""
+def process_input(text):
+    if not text:
+        return None
+    try:
+        # MusicGen
+        result = pipe(text, forward_params={{"max_new_tokens": 256}})
+        if isinstance(result, list):
+            result = result[0]
+
+        # Gradio expects (sample_rate, audio_array)
+        # result['audio'] is likely (channels, samples) or (samples,)
+        # If it's (1, samples), we might want to flatten it or transpose
+        audio = result["audio"]
+        if audio.ndim > 1 and audio.shape[0] < audio.shape[1]:
+             audio = audio.T # Transpose to (samples, channels)
+
+        return (result["sampling_rate"], audio)
+    except Exception as e:
+        print(f"Error: {{e}}")
+        return None
+        """
     else: # generation, summarization, translation
         inputs = "gr.Textbox(label='Input Text', lines=5)"
         process_func = f"""
@@ -404,6 +447,8 @@ def process_input(text):
         return f"Error: {{e}}"
         """
 
+    output_component = "gr.Audio(label='Generated Audio')" if task == "text-to-audio" else "gr.Textbox(lines=5, label='Output', interactive=False)"
+
     code = f"""import gradio as gr
 from transformers import pipeline
 
@@ -419,7 +464,7 @@ with gr.Blocks() as app:
 
     with gr.Row():
         inp = {inputs}
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = {output_component}
 
     btn = gr.Button("Run {name}")
     btn.click(fn=process_input, inputs=inp, outputs=out)
@@ -467,4 +512,73 @@ for i in range(len(names)):
     if count >= 125: # Generate a few extra to be safe
         break
 
-print(f"Generated {count} tools in {TOOLS_DIR}")
+def generate_readme():
+    content = """# Psychology Inference Tools
+
+This directory contains over 125 unique inference tools designed for various fields of general and applied psychology. Each tool is a standalone application built with either [Streamlit](https://streamlit.io/) or [Gradio](https://gradio.app/), featuring distinct "Glassmorphic" or "Neobrutalistic" user interface styles.
+
+## Overview
+
+The tools cover a wide range of psychological domains, including but not limited to:
+- Clinical Psychology
+- Cognitive Psychology
+- Social Psychology (Sentiment & Emotion Analysis)
+- Behavioral Psychology
+- Industrial-Organizational Psychology
+- Developmental Psychology
+- Forensic Psychology
+- Neuropsychology
+- Sports Psychology
+- Cyberpsychology
+- Sound Therapy (Meditation & Brainwave Entrainment)
+
+Each tool utilizes specific Hugging Face `transformers` models tailored to the task, such as text generation, classification, summarization, question-answering, and text-to-audio.
+
+## UI Styles
+
+The tools are designed with two unique visual themes:
+*   **Glassmorphic:** A modern, frosted-glass aesthetic with gradients and translucency.
+*   **Neobrutalistic:** A bold, high-contrast design with stark borders and vibrant colors.
+
+## Installation
+
+Ensure you have the required dependencies installed:
+
+```bash
+pip install -r ../requirements.txt
+```
+
+## How to Run
+
+### Streamlit Tools
+To run a Streamlit tool (files ending in `_Streamlit.py`), use the following command:
+
+```bash
+streamlit run <ToolName>_Streamlit.py
+```
+
+Example:
+```bash
+streamlit run Bolt_Streamlit.py
+```
+
+### Gradio Tools
+To run a Gradio tool (files ending in `_Gradio.py`), simply execute the Python script:
+
+```bash
+python <ToolName>_Gradio.py
+```
+
+Example:
+```bash
+python Haze_Gradio.py
+```
+
+## Disclaimer
+These tools are for educational and demonstration purposes only. They use AI models to simulate psychological insights and should not be used as a substitute for professional psychological advice, diagnosis, or treatment.
+"""
+    with open(os.path.join(TOOLS_DIR, "README.md"), "w") as f:
+        f.write(content)
+
+generate_readme()
+print(f"Generated {count} tools and README.md in {TOOLS_DIR}")

@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Vigil</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe the potential psychological impact of different environmental settings on well-being.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Vigil</h1><p><b>Field:</b> Consumer Psychology</p><p>Analyze consumer reviews to determine sentiment towards products or services.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 pipe = load_model()
 
@@ -70,16 +70,20 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input, max_length=200, num_return_sequences=1)
-                    if isinstance(result, list):
-                        if 'generated_text' in result[0]:
-                            output = result[0]['generated_text']
-                        elif 'summary_text' in result[0]:
-                            output = result[0]['summary_text']
-                        else:
-                            output = str(result[0])
-                    else:
-                        output = str(result)
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
+                    # Handle list of lists or single list
+                    if isinstance(result, list) and isinstance(result[0], list):
+                        result = result[0]
+
+                    # Sort by score if multiple
+                    result = sorted(result, key=lambda x: x['score'], reverse=True)
+
+                    output = "### Predictions:\n"
+                    for res in result:
+                        label = res['label']
+                        score = res['score']
+                        output += f"- **{label}**: {score:.4f}\n"
 
 
                     if output:
@@ -94,4 +98,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Vigil - A tool for Environmental Psychology*")
+st.markdown(f"*Vigil - A tool for Consumer Psychology*")

@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Sonic</h1><p><b>Field:</b> Evolutionary Psychology</p><p>Generate hypotheses about the evolutionary origins of specific human behaviors.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Sonic</h1><p><b>Field:</b> Educational Psychology</p><p>Simplify complex psychological concepts into easy-to-understand language for students.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="gpt2")
+    return pipeline("text2text-generation", model="google/flan-t5-small")
 
 pipe = load_model()
 
@@ -94,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Sonic - A tool for Evolutionary Psychology*")
+st.markdown(f"*Sonic - A tool for Educational Psychology*")

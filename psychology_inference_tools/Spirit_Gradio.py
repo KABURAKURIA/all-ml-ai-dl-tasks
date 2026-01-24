@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Spirit\n**Field:** Biopsychology\n\nExplain the biological and hormonal underpinnings of specific emotional states.")
+        gr.Markdown(f"# Spirit\n**Field:** Positive Psychology\n\nGenerate gratitude prompts, positive affirmations, or strengths-based interventions.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Spirit")
     btn.click(fn=process_input, inputs=inp, outputs=out)

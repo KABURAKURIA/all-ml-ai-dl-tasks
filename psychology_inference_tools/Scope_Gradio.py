@@ -25,11 +25,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Scope\n**Field:** Social Psychology (Sentiment)\n\nAnalyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue.")
+        gr.Markdown(f"# Scope\n**Field:** Cyberpsychology\n\nAnalyze online interactions for toxic sentiment or cyberbullying indicators.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Scope")
     btn.click(fn=process_input, inputs=inp, outputs=out)

@@ -2,19 +2,29 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+pipe = pipeline("text-generation", model="gpt2")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        labels = ["risk", "safety", "neutral", "positive", "negative"]
-        result = pipe(text, candidate_labels=labels)
-        output = "Predictions:\n"
-        for label, score in zip(result['labels'], result['scores']):
-            output += f"- {label}: {score:.4f}\n"
-        return output
+        if "text-generation" == "summarization":
+             result = pipe(text, max_length=150, min_length=30, do_sample=False)
+        else:
+             result = pipe(text, max_length=200, num_return_sequences=1)
+
+        if isinstance(result, list):
+            if 'generated_text' in result[0]:
+                return result[0]['generated_text']
+            elif 'summary_text' in result[0]:
+                return result[0]['summary_text']
+            elif 'translation_text' in result[0]:
+                return result[0]['translation_text']
+            else:
+                return str(result[0])
+        else:
+            return str(result)
     except Exception as e:
         return f"Error: {e}"
 
@@ -22,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Rave\n**Field:** Media Psychology\n\nAnalyze media content for themes like violence, prosocial behavior, or consumerism.")
+        gr.Markdown(f"# Rave\n**Field:** Sleep Psychology\n\nGenerate sleep hygiene tips and bedtime routines based on user descriptions of sleep issues.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Rave")
     btn.click(fn=process_input, inputs=inp, outputs=out)

@@ -2,29 +2,15 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="gpt2")
+pipe = pipeline("question-answering", model="deepset/roberta-base-squad2")
 
 
-def process_input(text):
-    if not text:
-        return "Please enter text."
+def process_input(context, question):
+    if not context or not question:
+        return "Please enter both context and question."
     try:
-        if "text-generation" == "summarization":
-             result = pipe(text, max_length=150, min_length=30, do_sample=False)
-        else:
-             result = pipe(text, max_length=200, num_return_sequences=1)
-
-        if isinstance(result, list):
-            if 'generated_text' in result[0]:
-                return result[0]['generated_text']
-            elif 'summary_text' in result[0]:
-                return result[0]['summary_text']
-            elif 'translation_text' in result[0]:
-                return result[0]['translation_text']
-            else:
-                return str(result[0])
-        else:
-            return str(result)
+        result = pipe(question=question, context=context)
+        return f"Answer: {result['answer']}\nScore: {result['score']:.4f}"
     except Exception as e:
         return f"Error: {e}"
 
@@ -32,11 +18,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Civic\n**Field:** Evolutionary Psychology\n\nGenerate hypotheses about the evolutionary origins of specific human behaviors.")
+        gr.Markdown(f"# Civic\n**Field:** Neuropsychology\n\nAnswer specific questions about brain functions and neurological phenomena based on context.")
 
     with gr.Row():
-        inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        inp = [gr.Textbox(label='Context', lines=5), gr.Textbox(label='Question')]
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Civic")
     btn.click(fn=process_input, inputs=inp, outputs=out)

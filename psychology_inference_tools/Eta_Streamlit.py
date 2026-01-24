@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Eta</h1><p><b>Field:</b> Social Psychology (Complex Emotions)</p><p>Analyze text for a wide range of nuanced emotional states (27 categories).</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Eta</h1><p><b>Field:</b> Social Psychology (Emotion)</p><p>Detect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
+    return pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
 
 pipe = load_model()
 
@@ -98,4 +98,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Eta - A tool for Social Psychology (Complex Emotions)*")
+st.markdown(f"*Eta - A tool for Social Psychology (Emotion)*")

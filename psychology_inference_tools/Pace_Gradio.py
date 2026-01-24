@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="google/flan-t5-large")
+pipe = pipeline("text-generation", model="gpt2")
 
 
 def process_input(text):
@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Pace\n**Field:** Developmental Psychology\n\nProvide descriptions of developmental milestones or parenting advice for specific age groups.")
+        gr.Markdown(f"# Pace\n**Field:** Industrial-Organizational Psychology\n\nGenerate professional feedback, leadership scenarios, or workplace conflict resolution scripts.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Pace")
     btn.click(fn=process_input, inputs=inp, outputs=out)

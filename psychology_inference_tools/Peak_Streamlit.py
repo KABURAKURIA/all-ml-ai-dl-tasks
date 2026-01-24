@@ -51,12 +51,12 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Peak</h1><p><b>Field:</b> Cross-Cultural Psychology</p><p>Translate psychological survey items or concepts to ensure cross-cultural validity (English to French).</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Peak</h1><p><b>Field:</b> Psychometrics</p><p>Categorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
+    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 pipe = load_model()
 
@@ -70,8 +70,12 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input)
-                    output = result[0]['translation_text']
+                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
+                    result = pipe(user_input, candidate_labels=labels)
+
+                    output = "### Predictions:\n"
+                    for label, score in zip(result['labels'], result['scores']):
+                        output += f"- **{label}**: {score:.4f}\n"
 
 
                     if output:
@@ -86,4 +90,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Peak - A tool for Cross-Cultural Psychology*")
+st.markdown(f"*Peak - A tool for Psychometrics*")

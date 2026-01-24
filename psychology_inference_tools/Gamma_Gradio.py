@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
+pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 
 def process_input(text):
@@ -25,11 +25,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Gamma\n**Field:** Social Psychology (Complex Emotions)\n\nAnalyze text for a wide range of nuanced emotional states (27 categories).")
+        gr.Markdown(f"# Gamma\n**Field:** Social Psychology (Sentiment)\n\nAnalyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Gamma")
     btn.click(fn=process_input, inputs=inp, outputs=out)

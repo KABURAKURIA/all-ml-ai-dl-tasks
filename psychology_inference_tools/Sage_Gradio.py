@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
+pipe = pipeline("text-classification", model="cardiffnlp/twitter-roberta-base-sentiment-latest")
 
 
 def process_input(text):
@@ -25,11 +25,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Sage\n**Field:** Social Psychology (Emotion)\n\nDetect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.")
+        gr.Markdown(f"# Sage\n**Field:** Social Psychology (Sentiment)\n\nAnalyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Sage")
     btn.click(fn=process_input, inputs=inp, outputs=out)

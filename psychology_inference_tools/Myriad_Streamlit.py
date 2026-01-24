@@ -65,7 +65,7 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Myriad</h1><p><b>Field:</b> Positive Psychology</p><p>Generate gratitude prompts, positive affirmations, or strengths-based interventions.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Myriad</h1><p><b>Field:</b> Environmental Psychology</p><p>Describe the potential psychological impact of different environmental settings on well-being.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -108,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Myriad - A tool for Positive Psychology*")
+st.markdown(f"*Myriad - A tool for Environmental Psychology*")

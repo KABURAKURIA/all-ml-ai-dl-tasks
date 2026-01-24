@@ -2,41 +2,39 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="google/flan-t5-large")
+pipe = pipeline("text-to-audio", model="facebook/musicgen-small")
 
 
 def process_input(text):
     if not text:
-        return "Please enter text."
+        return None
     try:
-        if "text-generation" == "summarization":
-             result = pipe(text, max_length=150, min_length=30, do_sample=False)
-        else:
-             result = pipe(text, max_length=200, num_return_sequences=1)
-
+        # MusicGen
+        result = pipe(text, forward_params={"max_new_tokens": 256})
         if isinstance(result, list):
-            if 'generated_text' in result[0]:
-                return result[0]['generated_text']
-            elif 'summary_text' in result[0]:
-                return result[0]['summary_text']
-            elif 'translation_text' in result[0]:
-                return result[0]['translation_text']
-            else:
-                return str(result[0])
-        else:
-            return str(result)
+            result = result[0]
+
+        # Gradio expects (sample_rate, audio_array)
+        # result['audio'] is likely (channels, samples) or (samples,)
+        # If it's (1, samples), we might want to flatten it or transpose
+        audio = result["audio"]
+        if audio.ndim > 1 and audio.shape[0] < audio.shape[1]:
+             audio = audio.T # Transpose to (samples, channels)
+
+        return (result["sampling_rate"], audio)
     except Exception as e:
-        return f"Error: {e}"
+        print(f"Error: {e}")
+        return None
 
 
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Yonder\n**Field:** Clinical Psychology\n\nSimulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles.")
+        gr.Markdown(f"# Yonder\n**Field:** Sound Therapy\n\nGenerate ambient music and binaural beats for meditation and brainwave entrainment.")
 
     with gr.Row():
-        inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        inp = gr.Textbox(label='Music Prompt', lines=2)
+        out = gr.Audio(label='Generated Audio')
 
     btn = gr.Button("Run Yonder")
     btn.click(fn=process_input, inputs=inp, outputs=out)

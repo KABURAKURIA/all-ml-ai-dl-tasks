@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Zest</h1><p><b>Field:</b> Cognitive Psychology</p><p>Summarize complex psychological texts or patient notes to aid in memory retention and comprehension.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Zest</h1><p><b>Field:</b> Sound Therapy</p><p>Generate ambient music and binaural beats for meditation and brainwave entrainment.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("summarization", model="facebook/bart-large-cnn")
+    return pipeline("text-to-audio", model="facebook/musicgen-small")
 
 pipe = load_model()
 
@@ -84,8 +84,21 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    result = pipe(user_input, max_length=150, min_length=30, do_sample=False)
-                    output = result[0]['summary_text']
+                    # MusicGen expects max_new_tokens for duration
+                    result = pipe(user_input, forward_params={"max_new_tokens": 256})
+                    if isinstance(result, list):
+                        result = result[0]
+
+                    audio_data = result["audio"]
+                    # Fix: Streamlit expects (samples, channels) or (samples,)
+                    # Pipeline output is often (channels, samples) e.g. (1, N)
+                    if audio_data.ndim > 1 and audio_data.shape[0] < audio_data.shape[1]:
+                        audio_data = audio_data.T
+
+                    sample_rate = result["sampling_rate"]
+
+                    st.audio(audio_data, sample_rate=sample_rate)
+                    output = "Audio generated successfully."
 
 
                     if output:
@@ -100,4 +113,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Zest - A tool for Cognitive Psychology*")
+st.markdown(f"*Zest - A tool for Sound Therapy*")

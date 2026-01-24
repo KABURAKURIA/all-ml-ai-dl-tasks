@@ -65,35 +65,31 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Origin</h1><p><b>Field:</b> Neuropsychology</p><p>Answer specific questions about brain functions and neurological phenomena based on context.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Origin</h1><p><b>Field:</b> Forensic Psychology</p><p>Classify statements for potential risk markers (e.g., deception, aggression, distress).</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("question-answering", model="deepset/roberta-base-squad2")
+    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
 
 pipe = load_model()
 
 # User Input
 with st.container():
     st.markdown('<div class="neo-container">', unsafe_allow_html=True)
-
-    context = st.text_area("Enter Context (e.g., a patient note or article):", height=150)
-    question = st.text_input("Enter Question:")
-    user_input = context and question # simple check
-
+    user_input = st.text_area("Enter text for analysis/generation:", height=150)
 
     if st.button("Run Origin"):
         if user_input:
             with st.spinner("Processing..."):
                 try:
 
-                    if context and question:
-                        result = pipe(question=question, context=context)
-                        output = f"**Answer:** {result['answer']}\n\n*Score:* {result['score']:.4f}"
-                    else:
-                        st.warning("Please enter both context and question.")
-                        output = None
+                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
+                    result = pipe(user_input, candidate_labels=labels)
+
+                    output = "### Predictions:\n"
+                    for label, score in zip(result['labels'], result['scores']):
+                        output += f"- **{label}**: {score:.4f}\n"
 
 
                     if output:
@@ -108,4 +104,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Origin - A tool for Neuropsychology*")
+st.markdown(f"*Origin - A tool for Forensic Psychology*")

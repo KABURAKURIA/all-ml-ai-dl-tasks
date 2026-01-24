@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Vivid</h1><p><b>Field:</b> Psychometrics</p><p>Categorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism).</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Vivid</h1><p><b>Field:</b> Sports Psychology</p><p>Generate visualization scripts, motivational speeches, or focus techniques for athletes.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    return pipeline("text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
@@ -84,12 +84,16 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
-                    result = pipe(user_input, candidate_labels=labels)
-
-                    output = "### Predictions:\n"
-                    for label, score in zip(result['labels'], result['scores']):
-                        output += f"- **{label}**: {score:.4f}\n"
+                    result = pipe(user_input, max_length=200, num_return_sequences=1)
+                    if isinstance(result, list):
+                        if 'generated_text' in result[0]:
+                            output = result[0]['generated_text']
+                        elif 'summary_text' in result[0]:
+                            output = result[0]['summary_text']
+                        else:
+                            output = str(result[0])
+                    else:
+                        output = str(result)
 
 
                     if output:
@@ -104,4 +108,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Vivid - A tool for Psychometrics*")
+st.markdown(f"*Vivid - A tool for Sports Psychology*")
