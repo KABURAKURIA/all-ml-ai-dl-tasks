@@ -19,7 +19,7 @@ This folder contains **65** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 7.  `Multimodal_07_Video_Content_Analysis.ipynb`: VideoMAE.
 8.  `Multimodal_08_Visual_Question_Answering.ipynb`: VQA.
 9.  `Multimodal_09_Text_to_Video.ipynb`: Text-to-Video Generation.
-10. `Multimodal_10_Vision_Language_Chat.ipynb`: Vision Language Chat (Moondream2).
+10. `Multimodal_10_Vision_Language_Chat.ipynb`: Vision Language Chat (Phi-3-Vision).
 
 ### Natural Language Processing (NLP)
 1.  `NLP_01_Feature_Extraction.ipynb`: Text Embeddings.
@@ -45,6 +45,7 @@ This folder contains **65** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 21. `NLP_21_State_Space_Models.ipynb`: State Space Models (Mamba).
 22. `NLP_22_Function_Calling.ipynb`: Function Calling (Tool Use).
 23. `NLP_23_Synthetic_Data_Generation.ipynb`: Synthetic Data Generation.
+24. `NLP_24_Graph_RAG.ipynb`: Graph RAG (Graph Retrieval Augmented Generation).
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Monocular Depth.
