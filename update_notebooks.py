@@ -238,6 +238,15 @@ def update_notebook(filepath):
         if fix_nlp_09(nb):
             changes_made = True
 
+    # 5. Teaching Tip (Step 8)
+    if 8 in step_indices:
+        step8_idx = step_indices[8]
+        step8_cell = nb.cells[step8_idx]
+        if "Teaching Tip:" not in step8_cell.source:
+             print("  Adding Teaching Tip to Step 8...")
+             step8_cell.source += "\n\n**Teaching Tip:** Try varying the input parameters or prompts to see how the model's output changes. This helps build intuition about the model's capabilities and limitations."
+             changes_made = True
+
     if changes_made:
         nbformat.write(nb, filepath)
         print(f"  Saved changes to {filepath}")
