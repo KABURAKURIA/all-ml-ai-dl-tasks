@@ -2,34 +2,39 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base")
+pipe = pipeline("text-to-audio", model="facebook/musicgen-small")
 
 
 def process_input(text):
     if not text:
-        return "Please enter text."
+        return None
     try:
-        result = pipe(text, top_k=5)
-        if isinstance(result, list) and isinstance(result[0], list):
-             result = result[0]
-        # Sort
-        result = sorted(result, key=lambda x: x['score'], reverse=True)
-        output = "Predictions:\n"
-        for res in result:
-             output += f"- {res['label']}: {res['score']:.4f}\n"
-        return output
+        # MusicGen
+        result = pipe(text, forward_params={"max_new_tokens": 256})
+        if isinstance(result, list):
+            result = result[0]
+
+        # Gradio expects (sample_rate, audio_array)
+        # result['audio'] is likely (channels, samples) or (samples,)
+        # If it's (1, samples), we might want to flatten it or transpose
+        audio = result["audio"]
+        if audio.ndim > 1 and audio.shape[0] < audio.shape[1]:
+             audio = audio.T # Transpose to (samples, channels)
+
+        return (result["sampling_rate"], audio)
     except Exception as e:
-        return f"Error: {e}"
+        print(f"Error: {e}")
+        return None
 
 
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Gaze\n**Field:** Social Psychology (Emotion)\n\nDetect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions.")
+        gr.Markdown(f"# Gaze\n**Field:** Sound Therapy\n\nGenerate ambient music and binaural beats for meditation and brainwave entrainment.")
 
     with gr.Row():
-        inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        inp = gr.Textbox(label='Music Prompt', lines=2)
+        out = gr.Audio(label='Generated Audio')
 
     btn = gr.Button("Run Gaze")
     btn.click(fn=process_input, inputs=inp, outputs=out)

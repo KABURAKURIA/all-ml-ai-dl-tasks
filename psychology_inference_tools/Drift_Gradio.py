@@ -29,7 +29,7 @@ with gr.Blocks() as app:
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Drift")
     btn.click(fn=process_input, inputs=inp, outputs=out)

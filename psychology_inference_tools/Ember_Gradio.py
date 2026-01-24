@@ -2,7 +2,7 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="gpt2")
+pipe = pipeline("text-generation", model="google/flan-t5-large")
 
 
 def process_input(text):
@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Ember\n**Field:** Health Psychology\n\nGenerate relaxation scripts, mindfulness prompts, or health behavior nudges.")
+        gr.Markdown(f"# Ember\n**Field:** Developmental Psychology\n\nProvide descriptions of developmental milestones or parenting advice for specific age groups.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Ember")
     btn.click(fn=process_input, inputs=inp, outputs=out)

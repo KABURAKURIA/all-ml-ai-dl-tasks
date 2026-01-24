@@ -2,14 +2,14 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="gpt2")
+pipe = pipeline("translation_en_to_fr", model="Helsinki-NLP/opus-mt-en-fr")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "text-generation" == "summarization":
+        if "translation_en_to_fr" == "summarization":
              result = pipe(text, max_length=150, min_length=30, do_sample=False)
         else:
              result = pipe(text, max_length=200, num_return_sequences=1)
@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Dash\n**Field:** Family Psychology\n\nGenerate scripts for addressing family dynamics and conflict resolution using systemic approaches.")
+        gr.Markdown(f"# Dash\n**Field:** Cross-Cultural Psychology\n\nTranslate psychological survey items or concepts to ensure cross-cultural validity (English to French).")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Dash")
     btn.click(fn=process_input, inputs=inp, outputs=out)

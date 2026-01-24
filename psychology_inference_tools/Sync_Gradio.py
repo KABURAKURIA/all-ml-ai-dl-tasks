@@ -2,14 +2,14 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("summarization", model="facebook/bart-large-cnn")
+pipe = pipeline("text-generation", model="google/flan-t5-large")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "summarization" == "summarization":
+        if "text-generation" == "summarization":
              result = pipe(text, max_length=150, min_length=30, do_sample=False)
         else:
              result = pipe(text, max_length=200, num_return_sequences=1)
@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Sync\n**Field:** Cognitive Psychology\n\nSummarize complex psychological texts or patient notes to aid in memory retention and comprehension.")
+        gr.Markdown(f"# Sync\n**Field:** Clinical Psychology\n\nSimulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Sync")
     btn.click(fn=process_input, inputs=inp, outputs=out)

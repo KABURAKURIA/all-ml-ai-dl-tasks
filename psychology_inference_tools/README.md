@@ -15,8 +15,9 @@ The tools cover a wide range of psychological domains, including but not limited
 - Neuropsychology
 - Sports Psychology
 - Cyberpsychology
+- Sound Therapy (Meditation & Brainwave Entrainment)
 
-Each tool utilizes specific Hugging Face `transformers` models tailored to the task, such as text generation, classification, summarization, and question-answering.
+Each tool utilizes specific Hugging Face `transformers` models tailored to the task, such as text generation, classification, summarization, question-answering, and text-to-audio.
 
 ## UI Styles
 

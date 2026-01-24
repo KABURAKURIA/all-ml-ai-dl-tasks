@@ -32,11 +32,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Quartz\n**Field:** Family Psychology\n\nGenerate scripts for addressing family dynamics and conflict resolution using systemic approaches.")
+        gr.Markdown(f"# Quartz\n**Field:** Comparative Psychology\n\nCompare specific behaviors between humans and other animal species.")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Quartz")
     btn.click(fn=process_input, inputs=inp, outputs=out)

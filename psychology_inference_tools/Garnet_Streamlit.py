@@ -51,7 +51,7 @@ h1, h2, h3, p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="glass-container"><h1>Garnet</h1><p><b>Field:</b> Health Psychology</p><p>Generate relaxation scripts, mindfulness prompts, or health behavior nudges.</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="glass-container"><h1>Garnet</h1><p><b>Field:</b> Industrial-Organizational Psychology</p><p>Generate professional feedback, leadership scenarios, or workplace conflict resolution scripts.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
@@ -94,4 +94,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Garnet - A tool for Health Psychology*")
+st.markdown(f"*Garnet - A tool for Industrial-Organizational Psychology*")

@@ -2,18 +2,21 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+pipe = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        labels = ["risk", "safety", "neutral", "positive", "negative"]
-        result = pipe(text, candidate_labels=labels)
+        result = pipe(text, top_k=5)
+        if isinstance(result, list) and isinstance(result[0], list):
+             result = result[0]
+        # Sort
+        result = sorted(result, key=lambda x: x['score'], reverse=True)
         output = "Predictions:\n"
-        for label, score in zip(result['labels'], result['scores']):
-            output += f"- {label}: {score:.4f}\n"
+        for res in result:
+             output += f"- {res['label']}: {res['score']:.4f}\n"
         return output
     except Exception as e:
         return f"Error: {e}"
@@ -22,11 +25,11 @@ def process_input(text):
 # Interface
 with gr.Blocks() as app:
     with gr.Row():
-        gr.Markdown(f"# Jade\n**Field:** Forensic Psychology\n\nClassify statements for potential risk markers (e.g., deception, aggression, distress).")
+        gr.Markdown(f"# Jade\n**Field:** Social Psychology (Complex Emotions)\n\nAnalyze text for a wide range of nuanced emotional states (27 categories).")
 
     with gr.Row():
         inp = gr.Textbox(label='Input Text', lines=5)
-        out = gr.Textbox(lines=5, label="Output", interactive=False)
+        out = gr.Textbox(lines=5, label='Output', interactive=False)
 
     btn = gr.Button("Run Jade")
     btn.click(fn=process_input, inputs=inp, outputs=out)

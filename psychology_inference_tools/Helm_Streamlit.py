@@ -65,12 +65,12 @@ p, label, .stMarkdown {
 """, unsafe_allow_html=True)
 
 # Application Header
-st.markdown('<div class="neo-container"><h1>Helm</h1><p><b>Field:</b> Forensic Psychology</p><p>Classify statements for potential risk markers (e.g., deception, aggression, distress).</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="neo-container"><h1>Helm</h1><p><b>Field:</b> Behavioral Psychology</p><p>Determine basic positive or negative reinforcement cues in text.</p></div>', unsafe_allow_html=True)
 
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    return pipeline("text-classification", model="distilbert-base-uncased-finetuned-sst-2-english")
 
 pipe = load_model()
 
@@ -84,11 +84,19 @@ with st.container():
             with st.spinner("Processing..."):
                 try:
 
-                    labels = ["risk", "safety", "neutral", "positive", "negative"] # Default labels, could be customized
-                    result = pipe(user_input, candidate_labels=labels)
+                    # Get top 5 predictions
+                    result = pipe(user_input, top_k=5)
+                    # Handle list of lists or single list
+                    if isinstance(result, list) and isinstance(result[0], list):
+                        result = result[0]
+
+                    # Sort by score if multiple
+                    result = sorted(result, key=lambda x: x['score'], reverse=True)
 
                     output = "### Predictions:\n"
-                    for label, score in zip(result['labels'], result['scores']):
+                    for res in result:
+                        label = res['label']
+                        score = res['score']
                         output += f"- **{label}**: {score:.4f}\n"
 
 
@@ -104,4 +112,4 @@ with st.container():
 
 # Footer
 st.markdown("---")
-st.markdown(f"*Helm - A tool for Forensic Psychology*")
+st.markdown(f"*Helm - A tool for Behavioral Psychology*")
