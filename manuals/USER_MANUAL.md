@@ -12,7 +12,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 # Tools Catalog
 
 ## Aether_Streamlit
-**Field:** Positive Psychology
+**Field:** Rehabilitation Psychology
 
 **File:** `psychology_inference_tools/Aether_Streamlit.py`
 
@@ -20,62 +20,71 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Alpha_Streamlit
+## Alpha_Gradio
 **Field:** Positive Psychology
 
-**File:** `psychology_inference_tools/Alpha_Streamlit.py`
+**File:** `psychology_inference_tools/Alpha_Gradio.py`
 
-![Alpha_Streamlit](screenshots/Alpha_Streamlit.png)
-
----
-
-## Apex_Streamlit
-**Field:** Sports Psychology
-
-**File:** `psychology_inference_tools/Apex_Streamlit.py`
-
-![Apex_Streamlit](screenshots/Apex_Streamlit.png)
+![Alpha_Gradio](screenshots/Alpha_Gradio.png)
 
 ---
 
-## Arcane_Streamlit
+## Apex_Gradio
+**Field:** Social Psychology (Sentiment)
+
+**File:** `psychology_inference_tools/Apex_Gradio.py`
+
+![Apex_Gradio](screenshots/Apex_Gradio.png)
+
+---
+
+## Arcane_Gradio
 **Field:** Clinical Psychology
 
-**File:** `psychology_inference_tools/Arcane_Streamlit.py`
+**File:** `psychology_inference_tools/Arcane_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
-## Aura_Gradio
-**Field:** Forensic Psychology
-
-**File:** `psychology_inference_tools/Aura_Gradio.py`
-
-![Aura_Gradio](screenshots/Aura_Gradio.png)
-
----
-
-## Axis_Streamlit
-**Field:** Health Psychology
-
-**File:** `psychology_inference_tools/Axis_Streamlit.py`
-
-![Axis_Streamlit](screenshots/Axis_Streamlit.png)
-
----
-
-## Beacon_Streamlit
+## Aura_Streamlit
 **Field:** Educational Psychology
 
-**File:** `psychology_inference_tools/Beacon_Streamlit.py`
+**File:** `psychology_inference_tools/Aura_Streamlit.py`
 
-![Beacon_Streamlit](screenshots/Beacon_Streamlit.png)
+![Aura_Streamlit](screenshots/Aura_Streamlit.png)
+
+---
+
+## Axis_Gradio
+**Field:** Educational Psychology
+
+**File:** `psychology_inference_tools/Axis_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Azure_Gradio
+**Field:** Forensic Psychology
+
+**File:** `psychology_inference_tools/Azure_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Beacon_Gradio
+**Field:** Comparative Psychology
+
+**File:** `psychology_inference_tools/Beacon_Gradio.py`
+
+*Screenshot not available*
 
 ---
 
 ## Beta_Streamlit
-**Field:** Environmental Psychology
+**Field:** Cyberpsychology
 
 **File:** `psychology_inference_tools/Beta_Streamlit.py`
 
@@ -83,62 +92,98 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Clarity_Streamlit
-**Field:** Clinical Psychology
+## Brave_Gradio
+**Field:** Biopsychology
 
-**File:** `psychology_inference_tools/Clarity_Streamlit.py`
-
-![Clarity_Streamlit](screenshots/Clarity_Streamlit.png)
-
----
-
-## Coral_Gradio
-**Field:** Sports Psychology
-
-**File:** `psychology_inference_tools/Coral_Gradio.py`
+**File:** `psychology_inference_tools/Brave_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
-## Crisp_Gradio
-**Field:** Biopsychology
+## Civic_Gradio
+**Field:** Neuropsychology
 
-**File:** `psychology_inference_tools/Crisp_Gradio.py`
+**File:** `psychology_inference_tools/Civic_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Clarity_Gradio
+**Field:** Social Psychology (Sentiment)
+
+**File:** `psychology_inference_tools/Clarity_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Coral_Streamlit
+**Field:** Social Psychology (Emotion)
+
+**File:** `psychology_inference_tools/Coral_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Core_Gradio
+**Field:** Health Psychology
+
+**File:** `psychology_inference_tools/Core_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Crisp_Streamlit
+**Field:** Crisis Intervention
+
+**File:** `psychology_inference_tools/Crisp_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Dash_Gradio
+**Field:** Cross-Cultural Psychology
+
+**File:** `psychology_inference_tools/Dash_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Delta_Gradio
-**Field:** Sleep Psychology
+**Field:** Rehabilitation Psychology
 
 **File:** `psychology_inference_tools/Delta_Gradio.py`
-
-![Delta_Gradio](screenshots/Delta_Gradio.png)
-
----
-
-## Drive_Streamlit
-**Field:** Family Psychology
-
-**File:** `psychology_inference_tools/Drive_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Dusk_Streamlit
-**Field:** Sports Psychology
+## Drift_Gradio
+**Field:** Behavioral Psychology
 
-**File:** `psychology_inference_tools/Dusk_Streamlit.py`
+**File:** `psychology_inference_tools/Drift_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Drive_Gradio
+**Field:** Sleep Psychology
+
+**File:** `psychology_inference_tools/Drive_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Echo_Streamlit
-**Field:** Industrial-Organizational Psychology
+**Field:** Developmental Psychology
 
 **File:** `psychology_inference_tools/Echo_Streamlit.py`
 
@@ -146,8 +191,17 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
+## Edge_Streamlit
+**Field:** Neuropsychology
+
+**File:** `psychology_inference_tools/Edge_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
 ## Elan_Gradio
-**Field:** Sleep Psychology
+**Field:** Biopsychology
 
 **File:** `psychology_inference_tools/Elan_Gradio.py`
 
@@ -156,52 +210,52 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Ember_Gradio
-**Field:** Consumer Psychology
+**Field:** Developmental Psychology
 
 **File:** `psychology_inference_tools/Ember_Gradio.py`
 
-![Ember_Gradio](screenshots/Ember_Gradio.png)
+*Screenshot not available*
 
 ---
 
 ## Epsilon_Streamlit
-**Field:** Cognitive Psychology
+**Field:** Cross-Cultural Psychology
 
 **File:** `psychology_inference_tools/Epsilon_Streamlit.py`
 
-![Epsilon_Streamlit](screenshots/Epsilon_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Essence_Streamlit
-**Field:** Social Psychology (Sentiment)
+## Essence_Gradio
+**Field:** Sports Psychology
 
-**File:** `psychology_inference_tools/Essence_Streamlit.py`
+**File:** `psychology_inference_tools/Essence_Gradio.py`
 
-![Essence_Streamlit](screenshots/Essence_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Eta_Streamlit
-**Field:** Comparative Psychology
+**Field:** Social Psychology (Emotion)
 
 **File:** `psychology_inference_tools/Eta_Streamlit.py`
 
-![Eta_Streamlit](screenshots/Eta_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Ethos_Gradio
-**Field:** Biopsychology
+## Ethos_Streamlit
+**Field:** Crisis Intervention
 
-**File:** `psychology_inference_tools/Ethos_Gradio.py`
+**File:** `psychology_inference_tools/Ethos_Streamlit.py`
 
-![Ethos_Gradio](screenshots/Ethos_Gradio.png)
+*Screenshot not available*
 
 ---
 
 ## Fern_Gradio
-**Field:** Industrial-Organizational Psychology
+**Field:** Social Psychology (Complex Emotions)
 
 **File:** `psychology_inference_tools/Fern_Gradio.py`
 
@@ -210,34 +264,34 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Focus_Streamlit
-**Field:** Crisis Intervention
+**Field:** Media Psychology
 
 **File:** `psychology_inference_tools/Focus_Streamlit.py`
 
-![Focus_Streamlit](screenshots/Focus_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Forge_Streamlit
-**Field:** Neuropsychology
+**Field:** Industrial-Organizational Psychology
 
 **File:** `psychology_inference_tools/Forge_Streamlit.py`
 
-![Forge_Streamlit](screenshots/Forge_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Gamma_Streamlit
-**Field:** Educational Psychology
+## Gamma_Gradio
+**Field:** Social Psychology (Sentiment)
 
-**File:** `psychology_inference_tools/Gamma_Streamlit.py`
+**File:** `psychology_inference_tools/Gamma_Gradio.py`
 
-![Gamma_Streamlit](screenshots/Gamma_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Garnet_Streamlit
-**Field:** Rehabilitation Psychology
+**Field:** Industrial-Organizational Psychology
 
 **File:** `psychology_inference_tools/Garnet_Streamlit.py`
 
@@ -246,11 +300,20 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Gaze_Gradio
-**Field:** Media Psychology
+**Field:** Sound Therapy
 
 **File:** `psychology_inference_tools/Gaze_Gradio.py`
 
-![Gaze_Gradio](screenshots/Gaze_Gradio.png)
+*Screenshot not available*
+
+---
+
+## Glee_Streamlit
+**Field:** Social Psychology (Sentiment)
+
+**File:** `psychology_inference_tools/Glee_Streamlit.py`
+
+*Screenshot not available*
 
 ---
 
@@ -263,44 +326,35 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Grace_Gradio
-**Field:** Industrial-Organizational Psychology
+## Grace_Streamlit
+**Field:** Health Psychology
 
-**File:** `psychology_inference_tools/Grace_Gradio.py`
-
-*Screenshot not available*
-
----
-
-## Halo_Streamlit
-**Field:** Sleep Psychology
-
-**File:** `psychology_inference_tools/Halo_Streamlit.py`
+**File:** `psychology_inference_tools/Grace_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Haptic_Streamlit
-**Field:** Social Psychology (Emotion)
+## Haptic_Gradio
+**Field:** Consumer Psychology
 
-**File:** `psychology_inference_tools/Haptic_Streamlit.py`
+**File:** `psychology_inference_tools/Haptic_Gradio.py`
 
-![Haptic_Streamlit](screenshots/Haptic_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Helm_Streamlit
-**Field:** Social Psychology (Sentiment)
+**Field:** Behavioral Psychology
 
 **File:** `psychology_inference_tools/Helm_Streamlit.py`
 
-![Helm_Streamlit](screenshots/Helm_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Hush_Streamlit
-**Field:** Media Psychology
+**Field:** Cognitive Psychology
 
 **File:** `psychology_inference_tools/Hush_Streamlit.py`
 
@@ -308,30 +362,39 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Icon_Gradio
-**Field:** Consumer Psychology
+## Icon_Streamlit
+**Field:** Psychometrics
 
-**File:** `psychology_inference_tools/Icon_Gradio.py`
+**File:** `psychology_inference_tools/Icon_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Ionic_Streamlit
-**Field:** Social Psychology (Emotion)
+## Insight_Gradio
+**Field:** Neuropsychology
 
-**File:** `psychology_inference_tools/Ionic_Streamlit.py`
+**File:** `psychology_inference_tools/Insight_Gradio.py`
 
-![Ionic_Streamlit](screenshots/Ionic_Streamlit.png)
+*Screenshot not available*
+
+---
+
+## Ionic_Gradio
+**Field:** Behavioral Psychology
+
+**File:** `psychology_inference_tools/Ionic_Gradio.py`
+
+*Screenshot not available*
 
 ---
 
 ## Iota_Streamlit
-**Field:** Psychometrics
+**Field:** Sports Psychology
 
 **File:** `psychology_inference_tools/Iota_Streamlit.py`
 
-![Iota_Streamlit](screenshots/Iota_Streamlit.png)
+*Screenshot not available*
 
 ---
 
@@ -340,39 +403,21 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Iris_Streamlit.py`
 
-![Iris_Streamlit](screenshots/Iris_Streamlit.png)
-
----
-
-## Ivory_Streamlit
-**Field:** Social Psychology (Emotion)
-
-**File:** `psychology_inference_tools/Ivory_Streamlit.py`
-
 *Screenshot not available*
 
 ---
 
-## Jade_Streamlit
-**Field:** Cross-Cultural Psychology
+## Jade_Gradio
+**Field:** Social Psychology (Complex Emotions)
 
-**File:** `psychology_inference_tools/Jade_Streamlit.py`
-
-*Screenshot not available*
-
----
-
-## Joy_Streamlit
-**Field:** Crisis Intervention
-
-**File:** `psychology_inference_tools/Joy_Streamlit.py`
+**File:** `psychology_inference_tools/Jade_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Kairos_Streamlit
-**Field:** Evolutionary Psychology
+**Field:** Behavioral Psychology
 
 **File:** `psychology_inference_tools/Kairos_Streamlit.py`
 
@@ -381,7 +426,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Keen_Streamlit
-**Field:** Family Psychology
+**Field:** Forensic Psychology
 
 **File:** `psychology_inference_tools/Keen_Streamlit.py`
 
@@ -389,53 +434,53 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Kinetic_Gradio
-**Field:** Family Psychology
+## Kinetic_Streamlit
+**Field:** Sleep Psychology
 
-**File:** `psychology_inference_tools/Kinetic_Gradio.py`
+**File:** `psychology_inference_tools/Kinetic_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Knack_Streamlit
-**Field:** Biopsychology
+## Knack_Gradio
+**Field:** Developmental Psychology
 
-**File:** `psychology_inference_tools/Knack_Streamlit.py`
+**File:** `psychology_inference_tools/Knack_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Lambda_Streamlit
-**Field:** Rehabilitation Psychology
+**Field:** Comparative Psychology
 
 **File:** `psychology_inference_tools/Lambda_Streamlit.py`
 
-![Lambda_Streamlit](screenshots/Lambda_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Lens_Gradio
-**Field:** Industrial-Organizational Psychology
+## Lens_Streamlit
+**Field:** Developmental Psychology
 
-**File:** `psychology_inference_tools/Lens_Gradio.py`
+**File:** `psychology_inference_tools/Lens_Streamlit.py`
 
-![Lens_Gradio](screenshots/Lens_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Lime_Streamlit
-**Field:** Rehabilitation Psychology
+## Lime_Gradio
+**Field:** Geropsychology
 
-**File:** `psychology_inference_tools/Lime_Streamlit.py`
+**File:** `psychology_inference_tools/Lime_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Logic_Gradio
-**Field:** Environmental Psychology
+**Field:** Rehabilitation Psychology
 
 **File:** `psychology_inference_tools/Logic_Gradio.py`
 
@@ -444,70 +489,88 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Lotus_Streamlit
-**Field:** Cognitive Psychology
+**Field:** Psychometrics
 
 **File:** `psychology_inference_tools/Lotus_Streamlit.py`
 
-![Lotus_Streamlit](screenshots/Lotus_Streamlit.png)
+*Screenshot not available*
+
+---
+
+## Lumen_Streamlit
+**Field:** Geropsychology
+
+**File:** `psychology_inference_tools/Lumen_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Lush_Gradio
+**Field:** Cyberpsychology
+
+**File:** `psychology_inference_tools/Lush_Gradio.py`
+
+*Screenshot not available*
 
 ---
 
 ## Matrix_Streamlit
-**Field:** Media Psychology
+**Field:** Cognitive Psychology
 
 **File:** `psychology_inference_tools/Matrix_Streamlit.py`
 
-![Matrix_Streamlit](screenshots/Matrix_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Mind_Streamlit
-**Field:** Evolutionary Psychology
+## Maze_Streamlit
+**Field:** Developmental Psychology
 
-**File:** `psychology_inference_tools/Mind_Streamlit.py`
+**File:** `psychology_inference_tools/Maze_Streamlit.py`
 
-![Mind_Streamlit](screenshots/Mind_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Mode_Gradio
-**Field:** Cyberpsychology
+## Mode_Streamlit
+**Field:** Cognitive Psychology
 
-**File:** `psychology_inference_tools/Mode_Gradio.py`
+**File:** `psychology_inference_tools/Mode_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Momentum_Streamlit
-**Field:** Cyberpsychology
+**Field:** Social Psychology (Emotion)
 
 **File:** `psychology_inference_tools/Momentum_Streamlit.py`
 
-![Momentum_Streamlit](screenshots/Momentum_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Mosaic_Gradio
-**Field:** Developmental Psychology
+## Mosaic_Streamlit
+**Field:** Cross-Cultural Psychology
 
-**File:** `psychology_inference_tools/Mosaic_Gradio.py`
+**File:** `psychology_inference_tools/Mosaic_Streamlit.py`
 
-![Mosaic_Gradio](screenshots/Mosaic_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Moss_Streamlit
-**Field:** Comparative Psychology
+## Moss_Gradio
+**Field:** Consumer Psychology
 
-**File:** `psychology_inference_tools/Moss_Streamlit.py`
+**File:** `psychology_inference_tools/Moss_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Mu_Gradio
-**Field:** Health Psychology
+**Field:** Biopsychology
 
 **File:** `psychology_inference_tools/Mu_Gradio.py`
 
@@ -515,10 +578,55 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
+## Myriad_Streamlit
+**Field:** Environmental Psychology
+
+**File:** `psychology_inference_tools/Myriad_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Mythic_Streamlit
+**Field:** Clinical Psychology
+
+**File:** `psychology_inference_tools/Mythic_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
 ## Neon_Gradio
-**Field:** Comparative Psychology
+**Field:** Social Psychology (Emotion)
 
 **File:** `psychology_inference_tools/Neon_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Nexus_Gradio
+**Field:** Evolutionary Psychology
+
+**File:** `psychology_inference_tools/Nexus_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Nook_Streamlit
+**Field:** Sports Psychology
+
+**File:** `psychology_inference_tools/Nook_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Nova_Gradio
+**Field:** Family Psychology
+
+**File:** `psychology_inference_tools/Nova_Gradio.py`
 
 *Screenshot not available*
 
@@ -534,45 +642,54 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Optic_Gradio
-**Field:** Psychometrics
+**Field:** Environmental Psychology
 
 **File:** `psychology_inference_tools/Optic_Gradio.py`
 
-![Optic_Gradio](screenshots/Optic_Gradio.png)
+*Screenshot not available*
 
 ---
 
 ## Oracle_Gradio
-**Field:** Rehabilitation Psychology
+**Field:** Social Psychology (Complex Emotions)
 
 **File:** `psychology_inference_tools/Oracle_Gradio.py`
 
-![Oracle_Gradio](screenshots/Oracle_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Origin_Gradio
-**Field:** Developmental Psychology
+## Origin_Streamlit
+**Field:** Forensic Psychology
 
-**File:** `psychology_inference_tools/Origin_Gradio.py`
+**File:** `psychology_inference_tools/Origin_Streamlit.py`
 
-![Origin_Gradio](screenshots/Origin_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Pace_Streamlit
-**Field:** Health Psychology
+## Pace_Gradio
+**Field:** Industrial-Organizational Psychology
 
-**File:** `psychology_inference_tools/Pace_Streamlit.py`
+**File:** `psychology_inference_tools/Pace_Gradio.py`
 
-![Pace_Streamlit](screenshots/Pace_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Path_Gradio
-**Field:** Forensic Psychology
+**Field:** Rehabilitation Psychology
 
 **File:** `psychology_inference_tools/Path_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Pave_Streamlit
+**Field:** Family Psychology
+
+**File:** `psychology_inference_tools/Pave_Streamlit.py`
 
 *Screenshot not available*
 
@@ -583,12 +700,12 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Peak_Streamlit.py`
 
-![Peak_Streamlit](screenshots/Peak_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Pure_Gradio
-**Field:** Developmental Psychology
+**Field:** Media Psychology
 
 **File:** `psychology_inference_tools/Pure_Gradio.py`
 
@@ -596,17 +713,17 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Quartz_Streamlit
-**Field:** Neuropsychology
+## Quartz_Gradio
+**Field:** Comparative Psychology
 
-**File:** `psychology_inference_tools/Quartz_Streamlit.py`
+**File:** `psychology_inference_tools/Quartz_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Quiet_Streamlit
-**Field:** Neuropsychology
+**Field:** Geropsychology
 
 **File:** `psychology_inference_tools/Quiet_Streamlit.py`
 
@@ -615,52 +732,61 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Radius_Gradio
-**Field:** Media Psychology
+**Field:** Educational Psychology
 
 **File:** `psychology_inference_tools/Radius_Gradio.py`
-
-![Radius_Gradio](screenshots/Radius_Gradio.png)
-
----
-
-## Rave_Streamlit
-**Field:** Sports Psychology
-
-**File:** `psychology_inference_tools/Rave_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Realm_Gradio
-**Field:** Cognitive Psychology
+## Rave_Gradio
+**Field:** Sleep Psychology
 
-**File:** `psychology_inference_tools/Realm_Gradio.py`
+**File:** `psychology_inference_tools/Rave_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Realm_Streamlit
+**Field:** Comparative Psychology
+
+**File:** `psychology_inference_tools/Realm_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Rhythm_Streamlit
-**Field:** Geropsychology
+**Field:** Clinical Psychology
 
 **File:** `psychology_inference_tools/Rhythm_Streamlit.py`
 
-![Rhythm_Streamlit](screenshots/Rhythm_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Ripple_Streamlit
-**Field:** Social Psychology (Sentiment)
+## Rift_Gradio
+**Field:** Psychometrics
 
-**File:** `psychology_inference_tools/Ripple_Streamlit.py`
+**File:** `psychology_inference_tools/Rift_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Ripple_Gradio
+**Field:** Sleep Psychology
+
+**File:** `psychology_inference_tools/Ripple_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
 ## Root_Gradio
-**Field:** Geropsychology
+**Field:** Neuropsychology
 
 **File:** `psychology_inference_tools/Root_Gradio.py`
 
@@ -668,26 +794,17 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Rose_Streamlit
-**Field:** Forensic Psychology
+## Ruby_Streamlit
+**Field:** Environmental Psychology
 
-**File:** `psychology_inference_tools/Rose_Streamlit.py`
-
-*Screenshot not available*
-
----
-
-## Ruby_Gradio
-**Field:** Social Psychology (Emotion)
-
-**File:** `psychology_inference_tools/Ruby_Gradio.py`
+**File:** `psychology_inference_tools/Ruby_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Sage_Gradio
-**Field:** Educational Psychology
+**Field:** Social Psychology (Sentiment)
 
 **File:** `psychology_inference_tools/Sage_Gradio.py`
 
@@ -696,115 +813,124 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Scope_Gradio
-**Field:** Sleep Psychology
+**Field:** Cyberpsychology
 
 **File:** `psychology_inference_tools/Scope_Gradio.py`
 
-![Scope_Gradio](screenshots/Scope_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Sense_Gradio
-**Field:** Cross-Cultural Psychology
+## Sense_Streamlit
+**Field:** Health Psychology
 
-**File:** `psychology_inference_tools/Sense_Gradio.py`
+**File:** `psychology_inference_tools/Sense_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Soar_Streamlit
+**Field:** Health Psychology
+
+**File:** `psychology_inference_tools/Soar_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Sonic_Streamlit
-**Field:** Geropsychology
+**Field:** Educational Psychology
 
 **File:** `psychology_inference_tools/Sonic_Streamlit.py`
 
-![Sonic_Streamlit](screenshots/Sonic_Streamlit.png)
+*Screenshot not available*
 
 ---
 
-## Soul_Gradio
-**Field:** Social Psychology (Sentiment)
+## Spark_Streamlit
+**Field:** Social Psychology (Complex Emotions)
 
-**File:** `psychology_inference_tools/Soul_Gradio.py`
+**File:** `psychology_inference_tools/Spark_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Spark_Gradio
-**Field:** Cognitive Psychology
+## Spectrum_Streamlit
+**Field:** Media Psychology
 
-**File:** `psychology_inference_tools/Spark_Gradio.py`
-
-![Spark_Gradio](screenshots/Spark_Gradio.png)
-
----
-
-## Spectrum_Gradio
-**Field:** Educational Psychology
-
-**File:** `psychology_inference_tools/Spectrum_Gradio.py`
+**File:** `psychology_inference_tools/Spectrum_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Sphere_Gradio
-**Field:** Crisis Intervention
+## Spirit_Gradio
+**Field:** Positive Psychology
 
-**File:** `psychology_inference_tools/Sphere_Gradio.py`
+**File:** `psychology_inference_tools/Spirit_Gradio.py`
 
-![Sphere_Gradio](screenshots/Sphere_Gradio.png)
-
----
-
-## Spirit_Streamlit
-**Field:** Consumer Psychology
-
-**File:** `psychology_inference_tools/Spirit_Streamlit.py`
-
-![Spirit_Streamlit](screenshots/Spirit_Streamlit.png)
+*Screenshot not available*
 
 ---
 
 ## Surge_Gradio
-**Field:** Cyberpsychology
+**Field:** Cognitive Psychology
 
 **File:** `psychology_inference_tools/Surge_Gradio.py`
 
-![Surge_Gradio](screenshots/Surge_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Sync_Streamlit
-**Field:** Social Psychology (Sentiment)
+## Sync_Gradio
+**Field:** Clinical Psychology
 
-**File:** `psychology_inference_tools/Sync_Streamlit.py`
+**File:** `psychology_inference_tools/Sync_Gradio.py`
 
-![Sync_Streamlit](screenshots/Sync_Streamlit.png)
-
----
-
-## Synergy_Gradio
-**Field:** Biopsychology
-
-**File:** `psychology_inference_tools/Synergy_Gradio.py`
-
-![Synergy_Gradio](screenshots/Synergy_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Synthesis_Gradio
-**Field:** Cyberpsychology
+## Synergy_Streamlit
+**Field:** Industrial-Organizational Psychology
 
-**File:** `psychology_inference_tools/Synthesis_Gradio.py`
+**File:** `psychology_inference_tools/Synergy_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Synthesis_Streamlit
+**Field:** Crisis Intervention
+
+**File:** `psychology_inference_tools/Synthesis_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Tact_Streamlit
+**Field:** Clinical Psychology
+
+**File:** `psychology_inference_tools/Tact_Streamlit.py`
+
+*Screenshot not available*
+
+---
+
+## Teal_Streamlit
+**Field:** Evolutionary Psychology
+
+**File:** `psychology_inference_tools/Teal_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Tempo_Streamlit
-**Field:** Cognitive Psychology
+**Field:** Social Psychology (Emotion)
 
 **File:** `psychology_inference_tools/Tempo_Streamlit.py`
 
@@ -812,26 +938,44 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Terra_Gradio
-**Field:** Positive Psychology
+## Terra_Streamlit
+**Field:** Cognitive Psychology
 
-**File:** `psychology_inference_tools/Terra_Gradio.py`
+**File:** `psychology_inference_tools/Terra_Streamlit.py`
 
-![Terra_Gradio](screenshots/Terra_Gradio.png)
+*Screenshot not available*
 
 ---
 
-## Tide_Streamlit
-**Field:** Clinical Psychology
+## Theta_Gradio
+**Field:** Positive Psychology
 
-**File:** `psychology_inference_tools/Tide_Streamlit.py`
+**File:** `psychology_inference_tools/Theta_Gradio.py`
 
-![Tide_Streamlit](screenshots/Tide_Streamlit.png)
+*Screenshot not available*
+
+---
+
+## Tide_Gradio
+**Field:** Family Psychology
+
+**File:** `psychology_inference_tools/Tide_Gradio.py`
+
+*Screenshot not available*
+
+---
+
+## Tonic_Gradio
+**Field:** Geropsychology
+
+**File:** `psychology_inference_tools/Tonic_Gradio.py`
+
+*Screenshot not available*
 
 ---
 
 ## Topaz_Streamlit
-**Field:** Environmental Psychology
+**Field:** Evolutionary Psychology
 
 **File:** `psychology_inference_tools/Topaz_Streamlit.py`
 
@@ -840,16 +984,16 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Trace_Gradio
-**Field:** Developmental Psychology
+**Field:** Forensic Psychology
 
 **File:** `psychology_inference_tools/Trace_Gradio.py`
 
-![Trace_Gradio](screenshots/Trace_Gradio.png)
+*Screenshot not available*
 
 ---
 
 ## Umbra_Streamlit
-**Field:** Forensic Psychology
+**Field:** Crisis Intervention
 
 **File:** `psychology_inference_tools/Umbra_Streamlit.py`
 
@@ -857,17 +1001,17 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Vale_Gradio
-**Field:** Comparative Psychology
+## Vale_Streamlit
+**Field:** Social Psychology (Complex Emotions)
 
-**File:** `psychology_inference_tools/Vale_Gradio.py`
+**File:** `psychology_inference_tools/Vale_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
 ## Valence_Gradio
-**Field:** Social Psychology (Emotion)
+**Field:** Industrial-Organizational Psychology
 
 **File:** `psychology_inference_tools/Valence_Gradio.py`
 
@@ -875,80 +1019,62 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Vector_Streamlit
-**Field:** Environmental Psychology
+## Vector_Gradio
+**Field:** Forensic Psychology
 
-**File:** `psychology_inference_tools/Vector_Streamlit.py`
+**File:** `psychology_inference_tools/Vector_Gradio.py`
 
 *Screenshot not available*
 
 ---
 
-## Vigil_Gradio
+## Vigil_Streamlit
 **Field:** Consumer Psychology
 
-**File:** `psychology_inference_tools/Vigil_Gradio.py`
+**File:** `psychology_inference_tools/Vigil_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Violet_Gradio
-**Field:** Neuropsychology
+## Vivid_Streamlit
+**Field:** Sports Psychology
 
-**File:** `psychology_inference_tools/Violet_Gradio.py`
-
-*Screenshot not available*
-
----
-
-## Vision_Streamlit
-**Field:** Crisis Intervention
-
-**File:** `psychology_inference_tools/Vision_Streamlit.py`
-
-![Vision_Streamlit](screenshots/Vision_Streamlit.png)
-
----
-
-## Vital_Gradio
-**Field:** Industrial-Organizational Psychology
-
-**File:** `psychology_inference_tools/Vital_Gradio.py`
+**File:** `psychology_inference_tools/Vivid_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Vivid_Gradio
-**Field:** Health Psychology
+## Weave_Streamlit
+**Field:** Environmental Psychology
 
-**File:** `psychology_inference_tools/Vivid_Gradio.py`
-
-![Vivid_Gradio](screenshots/Vivid_Gradio.png)
-
----
-
-## Warden_Streamlit
-**Field:** Geropsychology
-
-**File:** `psychology_inference_tools/Warden_Streamlit.py`
+**File:** `psychology_inference_tools/Weave_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Will_Streamlit
-**Field:** Clinical Psychology
+## Will_Gradio
+**Field:** Consumer Psychology
 
-**File:** `psychology_inference_tools/Will_Streamlit.py`
+**File:** `psychology_inference_tools/Will_Gradio.py`
 
-![Will_Streamlit](screenshots/Will_Streamlit.png)
+*Screenshot not available*
+
+---
+
+## Wisp_Gradio
+**Field:** Sound Therapy
+
+**File:** `psychology_inference_tools/Wisp_Gradio.py`
+
+*Screenshot not available*
 
 ---
 
 ## Yonder_Gradio
-**Field:** Psychometrics
+**Field:** Sound Therapy
 
 **File:** `psychology_inference_tools/Yonder_Gradio.py`
 
@@ -957,7 +1083,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 ---
 
 ## Yore_Streamlit
-**Field:** Clinical Psychology
+**Field:** Cross-Cultural Psychology
 
 **File:** `psychology_inference_tools/Yore_Streamlit.py`
 
@@ -965,26 +1091,35 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Zenith_Gradio
-**Field:** Cross-Cultural Psychology
+## Zenith_Streamlit
+**Field:** Biopsychology
 
-**File:** `psychology_inference_tools/Zenith_Gradio.py`
+**File:** `psychology_inference_tools/Zenith_Streamlit.py`
 
 *Screenshot not available*
 
 ---
 
-## Zephyr_Streamlit
-**Field:** Cross-Cultural Psychology
+## Zephyr_Gradio
+**Field:** Behavioral Psychology
 
-**File:** `psychology_inference_tools/Zephyr_Streamlit.py`
+**File:** `psychology_inference_tools/Zephyr_Gradio.py`
 
-![Zephyr_Streamlit](screenshots/Zephyr_Streamlit.png)
+*Screenshot not available*
+
+---
+
+## Zest_Streamlit
+**Field:** Sound Therapy
+
+**File:** `psychology_inference_tools/Zest_Streamlit.py`
+
+*Screenshot not available*
 
 ---
 
 ## Zeta_Gradio
-**Field:** Developmental Psychology
+**Field:** Cyberpsychology
 
 **File:** `psychology_inference_tools/Zeta_Gradio.py`
 
@@ -992,11 +1127,11 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 ---
 
-## Zone_Streamlit
-**Field:** Evolutionary Psychology
+## Zone_Gradio
+**Field:** Media Psychology
 
-**File:** `psychology_inference_tools/Zone_Streamlit.py`
+**File:** `psychology_inference_tools/Zone_Gradio.py`
 
-![Zone_Streamlit](screenshots/Zone_Streamlit.png)
+*Screenshot not available*
 
 ---
