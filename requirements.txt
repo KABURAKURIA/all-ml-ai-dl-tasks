@@ -12,10 +12,12 @@ langchain
 librosa
 matplotlib
 nbformat
+networkx
 pandas
 peft
 pillow
 requests
+sacremoses
 scikit-learn
 sentence-transformers
 sentencepiece
