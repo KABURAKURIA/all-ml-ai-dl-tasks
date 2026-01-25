@@ -50,6 +50,8 @@ with open('results.txt', 'w') as f:
         f.write(str(transcription))
     elif 'text' in locals():
         f.write(str(text))
+    elif 'triplets' in locals():
+        f.write(str(triplets))
     else:
         f.write("Task completed.")
 print("Saved results.txt")
@@ -63,6 +65,24 @@ elif 'images' in locals() and isinstance(images, list) and len(images) > 0:
     if hasattr(images[0], 'save'):
         images[0].save('generated_image.png')
         print("Saved generated_image.png (first image)")
+    # Try to save as GIF if it's a list of images (for video/3D)
+    try:
+        from diffusers.utils import export_to_gif
+        export_to_gif(images, "generated_video.gif")
+        print("Saved generated_video.gif")
+    except:
+        # Fallback for standard list of PIL images
+        try:
+            images[0].save("generated_video.gif", save_all=True, append_images=images[1:], duration=100, loop=0)
+            print("Saved generated_video.gif")
+        except:
+            pass
+
+# Graph Visualization (specific to Graph RAG)
+if os.path.exists("graph_visualization.png"):
+    import shutil
+    shutil.copy("graph_visualization.png", "generated_image.png")
+    print("Saved generated_image.png from graph_visualization.png")
 
 # 3. Audio
 if 'audio' in locals():
@@ -81,12 +101,12 @@ if 'audio' in locals():
         except:
             pass
 elif 'audio_data' in locals():
-     rate = save_rate if 'save_rate' in locals() else 16000
-     try:
-         wavfile.write('generated_audio.wav', rate, audio_data)
-         print("Saved generated_audio.wav")
-     except:
-         pass
+    rate = save_rate if 'save_rate' in locals() else 16000
+    try:
+        wavfile.write('generated_audio.wav', rate, audio_data)
+        print("Saved generated_audio.wav")
+    except:
+        pass
 """
 
 EXPECTED_HEADERS = {
@@ -220,12 +240,16 @@ def update_notebook(filepath):
         if step7_idx + 1 < len(nb.cells):
             next_cell = nb.cells[step7_idx + 1]
             if next_cell.cell_type == 'code':
-                # Check if it already has kitchen sink
-                if 'if \'results\' in locals():' not in next_cell.source:
-                    print("  Appending Kitchen Sink logic...")
-                    # Append, don't overwrite if there's manual save
-                    next_cell.source += "\n\n" + KITCHEN_SINK_CODE
-                    changes_made = True
+                # Check for old Kitchen Sink (has "with open('results.txt'" but no "wavfile")
+                is_old_sink = "with open('results.txt'" in next_cell.source and "import scipy.io.wavfile" not in next_cell.source
+
+                # Update if old, OR if it doesn't match the current canonical code exactly
+                # We strip to avoid issues with extra newlines, but generally we want strict adherence now.
+                if next_cell.source.strip() != KITCHEN_SINK_CODE.strip():
+                     print("  Updating Kitchen Sink to latest version...")
+                     next_cell.source = KITCHEN_SINK_CODE
+                     changes_made = True
+
             else:
                  # Insert new code cell
                  print("  Inserting Kitchen Sink code cell...")
