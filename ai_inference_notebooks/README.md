@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **69** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **72** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -48,6 +48,7 @@ This folder contains **69** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 24.  `NLP_24_Graph_RAG.ipynb`: Perform Graph RAG by extracting a Knowledge Graph from text and using it to answer questions.
 25.  `NLP_25_LLM_Evaluation.ipynb`: Evaluate the quality of generated answers.
 26.  `NLP_26_Explainable_AI.ipynb`: Sentiment Analysis & Explainability
+27.  `NLP_27_Structured_Output.ipynb`: Force an LLM to generate valid JSON output adhering to a specific schema using `outlines`.
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Estimate the depth of each pixel in an image to create a depth map using the state-of-the-art **Depth Anything** model.
@@ -80,13 +81,15 @@ This folder contains **69** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 3.  `Audio_03_ASR.ipynb`: Transcribe spoken English into text using state-of-the-art models.
 4.  `Audio_04_TTS.ipynb`: Synthesize speech from text using the Bark model.
 5.  `Audio_05_Music_Generation.ipynb`: Generate music from a text description.
+6.  `Audio_06_Voice_Cloning.ipynb`: Convert an input voice to a target speaker's voice using Zero-Shot Voice Conversion with `microsoft/speecht5_vc`.
 
 ### Tabular, Graphs & RL
 1.  `Graph_01_Node_Classification.ipynb`: Classify nodes in a graph using a Graph Convolutional Network (GCN).
 2.  `RL_01_Reinforcement_Learning.ipynb`: Train an agent to balance a pole on a cart (CartPole) using Proximal Policy Optimization.
-3.  `Tabular_01_Classification.ipynb`: Classify data points in a table (e.g., predicting flower species) using Random Forest.
-4.  `Tabular_02_Regression.ipynb`: Predict a continuous value based on input features using Linear Regression.
-5.  `Tabular_03_Time_Series_Forecasting.ipynb`: Perform zero-shot time series forecasting using the Chronos model.
+3.  `RL_02_Preference_Optimization.ipynb`: Fine-tune an LLM to align with human preferences using DPO (Direct Preference Optimization), a stable alternative to RLHF.
+4.  `Tabular_01_Classification.ipynb`: Classify data points in a table (e.g., predicting flower species) using Random Forest.
+5.  `Tabular_02_Regression.ipynb`: Predict a continuous value based on input features using Linear Regression.
+6.  `Tabular_03_Time_Series_Forecasting.ipynb`: Perform zero-shot time series forecasting using the Chronos model.
 
 ## Usage
 Run the installation cell at the top of each notebook.
