@@ -2,14 +2,14 @@ import gradio as gr
 from transformers import pipeline
 
 # Model
-pipe = pipeline("text-generation", model="google/flan-t5-large")
+pipe = pipeline("text2text-generation", model="google/flan-t5-large")
 
 
 def process_input(text):
     if not text:
         return "Please enter text."
     try:
-        if "text-generation" == "summarization":
+        if "text2text-generation" == "summarization":
              result = pipe(text, max_length=150, min_length=30, do_sample=False)
         else:
              result = pipe(text, max_length=200, num_return_sequences=1)
