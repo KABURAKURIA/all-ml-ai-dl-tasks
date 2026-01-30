@@ -49,7 +49,7 @@ def get_tool_metadata(tool_path):
 
     return field
 
-def verify_worker(worker_id, tools_chunk, results_list):
+def verify_worker(worker_id, tools_chunk, results_list, fast_mode=False):
     print(f"Worker {worker_id} started with {len(tools_chunk)} tools.")
 
     # Define ports for this worker
@@ -62,6 +62,13 @@ def verify_worker(worker_id, tools_chunk, results_list):
     for tool_path in tools_chunk:
         tool_name = os.path.basename(tool_path).replace(".py", "")
         screenshot_path = os.path.join(SCREENSHOT_DIR, f"{tool_name}.png")
+
+        if fast_mode:
+             print(f"[Worker {worker_id}] Fast mode: Scanning {tool_name}...")
+             field = get_tool_metadata(tool_path)
+             entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n*Screenshot not available (Fast Mode)*\n\n---\n"
+             results_list.append(entry)
+             continue
 
         if os.path.exists(screenshot_path):
              print(f"[Worker {worker_id}] Skipping {tool_name}, already verified.")
@@ -164,9 +171,13 @@ if __name__ == "__main__":
     manager = Manager()
     results_list = manager.list()
 
+    fast_mode = "--fast" in sys.argv
+    if fast_mode:
+        print("Fast mode enabled: Skipping tool execution and screenshots.")
+
     processes = []
     for i in range(num_workers):
-        p = Process(target=verify_worker, args=(i, chunks[i], results_list))
+        p = Process(target=verify_worker, args=(i, chunks[i], results_list, fast_mode))
         p.start()
         processes.append(p)
 

@@ -36,14 +36,14 @@ names = [
 
 # (Field, Task, Model, Description)
 domains = [
-    ("Clinical Psychology", "text-generation", "google/flan-t5-large", "Simulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles."),
+    ("Clinical Psychology", "text2text-generation", "google/flan-t5-large", "Simulate therapeutic responses or generate coping strategies based on cognitive behavioral therapy principles."),
     ("Cognitive Psychology", "summarization", "facebook/bart-large-cnn", "Summarize complex psychological texts or patient notes to aid in memory retention and comprehension."),
     ("Social Psychology (Sentiment)", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze the social tone and emotional valence (positive/negative/neutral) in social media text or dialogue."),
     ("Social Psychology (Emotion)", "text-classification", "j-hartmann/emotion-english-distilroberta-base", "Detect specific emotions (anger, disgust, fear, joy, neutral, sadness, surprise) in social interactions."),
     ("Social Psychology (Complex Emotions)", "text-classification", "SamLowe/roberta-base-go_emotions", "Analyze text for a wide range of nuanced emotional states (27 categories)."),
     ("Behavioral Psychology", "text-classification", "distilbert-base-uncased-finetuned-sst-2-english", "Determine basic positive or negative reinforcement cues in text."),
     ("Industrial-Organizational Psychology", "text-generation", "gpt2", "Generate professional feedback, leadership scenarios, or workplace conflict resolution scripts."),
-    ("Developmental Psychology", "text-generation", "google/flan-t5-large", "Provide descriptions of developmental milestones or parenting advice for specific age groups."),
+    ("Developmental Psychology", "text2text-generation", "google/flan-t5-large", "Provide descriptions of developmental milestones or parenting advice for specific age groups."),
     ("Forensic Psychology", "zero-shot-classification", "facebook/bart-large-mnli", "Classify statements for potential risk markers (e.g., deception, aggression, distress)."),
     ("Health Psychology", "text-generation", "gpt2", "Generate relaxation scripts, mindfulness prompts, or health behavior nudges."),
     ("Educational Psychology", "text2text-generation", "google/flan-t5-small", "Simplify complex psychological concepts into easy-to-understand language for students."),
@@ -51,18 +51,18 @@ domains = [
     ("Evolutionary Psychology", "text-generation", "gpt2", "Generate hypotheses about the evolutionary origins of specific human behaviors."),
     ("Consumer Psychology", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze consumer reviews to determine sentiment towards products or services."),
     ("Environmental Psychology", "text-generation", "gpt2", "Describe the potential psychological impact of different environmental settings on well-being."),
-    ("Sports Psychology", "text-generation", "google/flan-t5-large", "Generate visualization scripts, motivational speeches, or focus techniques for athletes."),
+    ("Sports Psychology", "text2text-generation", "google/flan-t5-large", "Generate visualization scripts, motivational speeches, or focus techniques for athletes."),
     ("Positive Psychology", "text-generation", "gpt2", "Generate gratitude prompts, positive affirmations, or strengths-based interventions."),
     ("Psychometrics", "zero-shot-classification", "facebook/bart-large-mnli", "Categorize personality descriptions into Big Five traits (Openness, Conscientiousness, Extraversion, Agreeableness, Neuroticism)."),
     ("Biopsychology", "text-generation", "gpt2", "Explain the biological and hormonal underpinnings of specific emotional states."),
     ("Cross-Cultural Psychology", "translation_en_to_fr", "Helsinki-NLP/opus-mt-en-fr", "Translate psychological survey items or concepts to ensure cross-cultural validity (English to French)."),
     ("Comparative Psychology", "text-generation", "gpt2", "Compare specific behaviors between humans and other animal species."),
-    ("Rehabilitation Psychology", "text-generation", "google/flan-t5-large", "Create personalized recovery plans and motivational support messages for rehabilitation patients."),
+    ("Rehabilitation Psychology", "text2text-generation", "google/flan-t5-large", "Create personalized recovery plans and motivational support messages for rehabilitation patients."),
     ("Family Psychology", "text-generation", "gpt2", "Generate scripts for addressing family dynamics and conflict resolution using systemic approaches."),
     ("Crisis Intervention", "text-classification", "j-hartmann/emotion-english-distilroberta-base", "Rapidly identify the dominant emotion in a crisis text to inform immediate response."),
     ("Sleep Psychology", "text-generation", "gpt2", "Generate sleep hygiene tips and bedtime routines based on user descriptions of sleep issues."),
     ("Media Psychology", "zero-shot-classification", "facebook/bart-large-mnli", "Analyze media content for themes like violence, prosocial behavior, or consumerism."),
-    ("Geropsychology", "text-generation", "google/flan-t5-large", "Generate cognitive exercises or reminiscence therapy prompts for older adults."),
+    ("Geropsychology", "text2text-generation", "google/flan-t5-large", "Generate cognitive exercises or reminiscence therapy prompts for older adults."),
     ("Cyberpsychology", "text-classification", "cardiffnlp/twitter-roberta-base-sentiment-latest", "Analyze online interactions for toxic sentiment or cyberbullying indicators."),
     ("Sound Therapy", "text-to-audio", "facebook/musicgen-small", "Generate ambient music and binaural beats for meditation and brainwave entrainment.")
 ]

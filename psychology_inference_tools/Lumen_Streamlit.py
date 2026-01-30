@@ -56,7 +56,7 @@ st.markdown('<div class="glass-container"><h1>Lumen</h1><p><b>Field:</b> Geropsy
 # Model Pipeline
 @st.cache_resource
 def load_model():
-    return pipeline("text-generation", model="google/flan-t5-large")
+    return pipeline("text2text-generation", model="google/flan-t5-large")
 
 pipe = load_model()
 
