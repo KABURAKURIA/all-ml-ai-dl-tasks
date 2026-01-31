@@ -4,11 +4,20 @@ import glob
 import re
 
 NOTEBOOKS_DIR = "ai_inference_notebooks"
+
 LICENSE_TEXT = """## License
 
 This notebook is licensed under the Apache License 2.0. See the [LICENSE](https://github.com/huggingface/transformers/blob/main/LICENSE) file for more details.
 
 This notebook focuses on open-source, lightweight, and updated models, and is optimized to run on the Google Colab Free Tier."""
+
+LEARNING_OBJECTIVES_TEXT = """## Learning Objectives
+
+*   **Practical:** Gain hands-on experience with this model.
+*   **Theory:** Understand the underlying concepts and architecture."""
+
+GPU_CHECK_CODE = """# Check for GPU
+!nvidia-smi"""
 
 KITCHEN_SINK_CODE = """# Kitchen Sink: Save Results
 import os
@@ -124,6 +133,14 @@ def clean_header(source):
     """Normalize header text to check against expected."""
     return source.strip().lstrip('#').strip()
 
+def check_for_heavy_models(nb, filepath):
+    heavy_keywords = ["70b", "405b", "gpt-4", "claude-3", "gemini-1.5", "Mixtral"]
+    for cell in nb.cells:
+        if cell.cell_type == 'code':
+            for kw in heavy_keywords:
+                if kw in cell.source:
+                    print(f"  WARNING: Potential heavy model '{kw}' detected in {filepath}. Ensure compatibility with Colab Free Tier.")
+
 def fix_nlp_09(nb):
     """Specific fix for NLP_09_Text_Generation.ipynb"""
     # Find Step 3 and Step 6 code cells
@@ -189,7 +206,25 @@ def update_notebook(filepath):
                 nb.cells.insert(1, license_cell)
             changes_made = True
 
-    # 2. Header Standardization
+    # 2. Learning Objectives (Index 2)
+    if len(nb.cells) > 2:
+        cell2 = nb.cells[2]
+        if cell2.cell_type != 'markdown' or "Learning Objectives" not in cell2.source:
+             print("  Inserting Learning Objectives at Index 2...")
+             lo_cell = nbformat.v4.new_markdown_cell(LEARNING_OBJECTIVES_TEXT)
+             nb.cells.insert(2, lo_cell)
+             changes_made = True
+
+    # 3. GPU Check (Index 3)
+    if len(nb.cells) > 3:
+        cell3 = nb.cells[3]
+        if cell3.cell_type != 'code' or "!nvidia-smi" not in cell3.source:
+             print("  Inserting GPU Check at Index 3...")
+             gpu_cell = nbformat.v4.new_code_cell(GPU_CHECK_CODE)
+             nb.cells.insert(3, gpu_cell)
+             changes_made = True
+
+    # 4. Header Standardization
     # Iterate and try to match headers
     step_indices = {}
     for idx, cell in enumerate(nb.cells):
@@ -212,7 +247,6 @@ def update_notebook(filepath):
                 # Also check for numbers like "3. Load Model" which might be wrong step
                 match = re.search(r'(\d+)\.', clean)
                 if match and not step_num:
-                    # Fallback to number if name doesn't match, but be careful
                     pass
 
                 if step_num:
@@ -233,7 +267,7 @@ def update_notebook(filepath):
                         changes_made = True
                     step_indices[step_num] = idx
 
-    # 3. Kitchen Sink (Step 7)
+    # 5. Kitchen Sink (Step 7)
     if 7 in step_indices:
         step7_idx = step_indices[7]
         # Look for the code cell after Step 7 header
@@ -257,12 +291,12 @@ def update_notebook(filepath):
                  nb.cells.insert(step7_idx + 1, new_cell)
                  changes_made = True
 
-    # 4. Fix NLP_09
+    # 6. Fix NLP_09
     if "NLP_09_Text_Generation.ipynb" in filepath:
         if fix_nlp_09(nb):
             changes_made = True
 
-    # 5. Teaching Tip (Step 8)
+    # 7. Teaching Tip (Step 8)
     if 8 in step_indices:
         step8_idx = step_indices[8]
         step8_cell = nb.cells[step8_idx]
@@ -270,6 +304,9 @@ def update_notebook(filepath):
              print("  Adding Teaching Tip to Step 8...")
              step8_cell.source += "\n\n**Teaching Tip:** Try varying the input parameters or prompts to see how the model's output changes. This helps build intuition about the model's capabilities and limitations."
              changes_made = True
+
+    # 8. Heavy Model Check
+    check_for_heavy_models(nb, filepath)
 
     if changes_made:
         nbformat.write(nb, filepath)

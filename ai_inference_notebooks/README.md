@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **72** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -20,6 +20,7 @@ This folder contains **72** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 8.  `Multimodal_08_Visual_Question_Answering.ipynb`: Answer open-ended questions about an image.
 9.  `Multimodal_09_Text_to_Video.ipynb`: Generate a video from a text description.
 10.  `Multimodal_10_Vision_Language_Chat.ipynb`: Chat with an image using a Vision Language Model (VLM).
+11.  `Multimodal_11_Visual_Document_Understanding.ipynb`: Extract structured information from document images using a Vision-Language Model (VLM).
 
 ### Natural Language Processing (NLP)
 1.  `NLP_01_Feature_Extraction.ipynb`: Convert text into vector representations (embeddings) suitable for downstream tasks like clustering or search.
