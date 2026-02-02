@@ -66,7 +66,10 @@ def verify_worker(worker_id, tools_chunk, results_list, fast_mode=False):
         if fast_mode:
              print(f"[Worker {worker_id}] Fast mode: Scanning {tool_name}...")
              field = get_tool_metadata(tool_path)
-             entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n*Screenshot not available (Fast Mode)*\n\n---\n"
+             if os.path.exists(screenshot_path):
+                 entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n![{tool_name}](screenshots/{tool_name}.png)\n\n---\n"
+             else:
+                 entry = f"## {tool_name}\n**Field:** {field}\n\n**File:** `{tool_path}`\n\n*Screenshot not available (Fast Mode)*\n\n---\n"
              results_list.append(entry)
              continue
 
