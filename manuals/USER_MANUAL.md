@@ -61,7 +61,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Axis_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Axis_Gradio](screenshots/Axis_Gradio.png)
 
 ---
 
@@ -79,7 +79,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Beacon_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Beacon_Gradio](screenshots/Beacon_Gradio.png)
 
 ---
 
@@ -97,7 +97,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Brave_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Brave_Gradio](screenshots/Brave_Gradio.png)
 
 ---
 
@@ -106,7 +106,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Civic_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Civic_Gradio](screenshots/Civic_Gradio.png)
 
 ---
 
@@ -115,7 +115,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Clarity_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Clarity_Gradio](screenshots/Clarity_Gradio.png)
 
 ---
 
@@ -124,7 +124,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Coral_Streamlit.py`
 
-*Screenshot not available (Fast Mode)*
+![Coral_Streamlit](screenshots/Coral_Streamlit.png)
 
 ---
 
@@ -142,7 +142,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Crisp_Streamlit.py`
 
-*Screenshot not available (Fast Mode)*
+![Crisp_Streamlit](screenshots/Crisp_Streamlit.png)
 
 ---
 
@@ -151,7 +151,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Dash_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Dash_Gradio](screenshots/Dash_Gradio.png)
 
 ---
 
@@ -160,7 +160,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Delta_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Delta_Gradio](screenshots/Delta_Gradio.png)
 
 ---
 
@@ -169,7 +169,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Drift_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Drift_Gradio](screenshots/Drift_Gradio.png)
 
 ---
 
@@ -178,7 +178,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Drive_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Drive_Gradio](screenshots/Drive_Gradio.png)
 
 ---
 
@@ -187,7 +187,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Echo_Streamlit.py`
 
-*Screenshot not available (Fast Mode)*
+![Echo_Streamlit](screenshots/Echo_Streamlit.png)
 
 ---
 
@@ -196,7 +196,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Edge_Streamlit.py`
 
-*Screenshot not available (Fast Mode)*
+![Edge_Streamlit](screenshots/Edge_Streamlit.png)
 
 ---
 
@@ -205,7 +205,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Elan_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Elan_Gradio](screenshots/Elan_Gradio.png)
 
 ---
 
@@ -214,7 +214,7 @@ This manual provides a comprehensive guide to the AI-powered psychology inferenc
 
 **File:** `psychology_inference_tools/Ember_Gradio.py`
 
-*Screenshot not available (Fast Mode)*
+![Ember_Gradio](screenshots/Ember_Gradio.png)
 
 ---
 

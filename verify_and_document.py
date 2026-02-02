@@ -105,6 +105,9 @@ def verify_worker(worker_id, tools_chunk, results_list, fast_mode=False):
         try:
             # Try simple request first to see if it's up
             for _ in range(180):
+                if process.poll() is not None:
+                    print(f"[Worker {worker_id}] Tool {tool_name} exited early with code {process.returncode}")
+                    break
                 try:
                     requests.get(url, timeout=2)
                     verified = True
