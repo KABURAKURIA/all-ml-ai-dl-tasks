@@ -19,6 +19,12 @@ LEARNING_OBJECTIVES_TEXT = """## Learning Objectives
 GPU_CHECK_CODE = """# Check for GPU
 !nvidia-smi"""
 
+TROUBLESHOOTING_TEXT = """## 9. Troubleshooting
+
+*   **Out of Memory (OOM):** If you encounter OOM errors, try reducing the batch size or input length. On the Free Tier, you are limited to T4 GPUs with 16GB VRAM.
+*   **GPU Not Found:** Ensure your runtime type is set to GPU. Go to *Runtime > Change runtime type* and select *T4 GPU*.
+*   **Missing Packages:** If you see `ModuleNotFoundError`, make sure you have run the **Installation** step (Step 1)."""
+
 KITCHEN_SINK_CODE = """# Kitchen Sink: Save Results
 import os
 import numpy as np
@@ -305,7 +311,20 @@ def update_notebook(filepath):
              step8_cell.source += "\n\n**Teaching Tip:** Try varying the input parameters or prompts to see how the model's output changes. This helps build intuition about the model's capabilities and limitations."
              changes_made = True
 
-    # 8. Heavy Model Check
+    # 8. Troubleshooting (Step 9)
+    has_step9 = False
+    for cell in nb.cells:
+        if cell.cell_type == 'markdown' and '## 9. Troubleshooting' in cell.source:
+            has_step9 = True
+            break
+
+    if not has_step9:
+        print("  Appending Troubleshooting (Step 9)...")
+        trouble_cell = nbformat.v4.new_markdown_cell(TROUBLESHOOTING_TEXT)
+        nb.cells.append(trouble_cell)
+        changes_made = True
+
+    # 9. Heavy Model Check
     check_for_heavy_models(nb, filepath)
 
     if changes_made:
