@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **78** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -21,6 +21,7 @@ This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 9.  `Multimodal_09_Text_to_Video.ipynb`: Generate a video from a text description.
 10.  `Multimodal_10_Vision_Language_Chat.ipynb`: Chat with an image using a Vision Language Model (VLM).
 11.  `Multimodal_11_Visual_Document_Understanding.ipynb`: Extract structured information from document images using a Vision-Language Model (VLM).
+12.  `Multimodal_12_Video_Understanding.ipynb`: Use a Vision-Language Model (Qwen2-VL) to analyze and describe video content.
 
 ### Natural Language Processing (NLP)
 1.  `NLP_01_Feature_Extraction.ipynb`: Convert text into vector representations (embeddings) suitable for downstream tasks like clustering or search.
@@ -50,6 +51,8 @@ This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 25.  `NLP_25_LLM_Evaluation.ipynb`: Evaluate the quality of generated answers.
 26.  `NLP_26_Explainable_AI.ipynb`: Sentiment Analysis & Explainability
 27.  `NLP_27_Structured_Output.ipynb`: Force an LLM to generate valid JSON output adhering to a specific schema using `outlines`.
+28.  `NLP_28_Quantization.ipynb`: Load a large model (7B+) on a free-tier GPU using 4-bit quantization with `bitsandbytes`.
+29.  `NLP_29_Reasoning_Verification.ipynb`: Implement a 'System 2' reasoning loop where the model critiques and corrects its own output.
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Estimate the depth of each pixel in an image to create a depth map using the state-of-the-art **Depth Anything** model.
@@ -75,6 +78,7 @@ This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 21.  `CV_21_Fast_Image_Generation_LCM.ipynb`: Generate images in seconds using Latent Consistency Models (LCM).
 22.  `CV_22_Zero_Shot_Video_Classification.ipynb`: Classify a video into arbitrary categories without specific training, using a Zero-Shot model.
 23.  `CV_23_Explainable_AI.ipynb`: Image Classification & Explainability
+24.  `CV_24_ControlNet.ipynb`: Generate images with structural control using ControlNet and Stable Diffusion.
 
 ### Audio
 1.  `Audio_01_Classification.ipynb`: Classify the category of a sound or perform Keyword Spotting.
@@ -83,6 +87,7 @@ This folder contains **73** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 4.  `Audio_04_TTS.ipynb`: Synthesize speech from text using the Bark model.
 5.  `Audio_05_Music_Generation.ipynb`: Generate music from a text description.
 6.  `Audio_06_Voice_Cloning.ipynb`: Convert an input voice to a target speaker's voice using Zero-Shot Voice Conversion with `microsoft/speecht5_vc`.
+7.  `Audio_07_Speech_Emotion_Recognition.ipynb`: Classify the emotion of a speaker in an audio file using SpeechBrain.
 
 ### Tabular, Graphs & RL
 1.  `Graph_01_Node_Classification.ipynb`: Classify nodes in a graph using a Graph Convolutional Network (GCN).
