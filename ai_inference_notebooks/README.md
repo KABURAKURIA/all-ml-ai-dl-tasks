@@ -1,6 +1,6 @@
 # AI Inference Notebooks
 
-This folder contains **78** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
+This folder contains **81** "In-Depth" Jupyter Notebooks. Each notebook is dedicated to a specific AI/ML task, using real-world datasets and models from the Hugging Face ecosystem.
 
 **Features:**
 - **No programming experience required**: Each step is explained.
@@ -22,6 +22,7 @@ This folder contains **78** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 10.  `Multimodal_10_Vision_Language_Chat.ipynb`: Chat with an image using a Vision Language Model (VLM).
 11.  `Multimodal_11_Visual_Document_Understanding.ipynb`: Extract structured information from document images using a Vision-Language Model (VLM).
 12.  `Multimodal_12_Video_Understanding.ipynb`: Use a Vision-Language Model (Qwen2-VL) to analyze and describe video content.
+13.  `Multimodal_13_Visual_Agents.ipynb`: Simulate a Visual Agent that can look at a user interface (UI) and locate specific elements (buttons, fields) by coordinates. This is the foundation of "Computer Use" agents.
 
 ### Natural Language Processing (NLP)
 1.  `NLP_01_Feature_Extraction.ipynb`: Convert text into vector representations (embeddings) suitable for downstream tasks like clustering or search.
@@ -53,6 +54,7 @@ This folder contains **78** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 27.  `NLP_27_Structured_Output.ipynb`: Force an LLM to generate valid JSON output adhering to a specific schema using `outlines`.
 28.  `NLP_28_Quantization.ipynb`: Load a large model (7B+) on a free-tier GPU using 4-bit quantization with `bitsandbytes`.
 29.  `NLP_29_Reasoning_Verification.ipynb`: Implement a 'System 2' reasoning loop where the model critiques and corrects its own output.
+30.  `NLP_30_Context_Caching.ipynb`: Demonstrate how to reuse the Key-Value (KV) cache to speed up generation when the prompt shares a common prefix. This is essential for "Chat with Data" or RAG applications where the system prompt (context) is long and static.
 
 ### Computer Vision (CV)
 1.  `CV_01_Depth_Estimation.ipynb`: Estimate the depth of each pixel in an image to create a depth map using the state-of-the-art **Depth Anything** model.
@@ -88,6 +90,7 @@ This folder contains **78** "In-Depth" Jupyter Notebooks. Each notebook is dedic
 5.  `Audio_05_Music_Generation.ipynb`: Generate music from a text description.
 6.  `Audio_06_Voice_Cloning.ipynb`: Convert an input voice to a target speaker's voice using Zero-Shot Voice Conversion with `microsoft/speecht5_vc`.
 7.  `Audio_07_Speech_Emotion_Recognition.ipynb`: Classify the emotion of a speaker in an audio file using SpeechBrain.
+8.  `Audio_08_Audio_LDM.ipynb`: Generate sound effects and short audio clips from text descriptions using Latent Diffusion Models.
 
 ### Tabular, Graphs & RL
 1.  `Graph_01_Node_Classification.ipynb`: Classify nodes in a graph using a Graph Convolutional Network (GCN).
