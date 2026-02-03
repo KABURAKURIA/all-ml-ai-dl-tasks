@@ -2,9 +2,9 @@
 
 The scope of this `AGENTS.md` file is the `ai_inference_notebooks/` directory. All Jupyter Notebooks in this folder must adhere to the following strict guidelines to ensure consistency, quality, and teachability.
 
-## 1. The 8-Step Structure
+## 1. The 9-Step Structure
 
-Every notebook must follow this exact 8-step structure. Sections must be numbered clearly in Markdown headers.
+Every notebook must follow this exact 9-step structure. Sections must be numbered clearly in Markdown headers.
 
 1.  **Installation**: Install all necessary libraries. Always include `!pip install` commands. Use `-q` for quiet installation where appropriate.
 2.  **Imports**: Import all Python libraries.
@@ -14,6 +14,7 @@ Every notebook must follow this exact 8-step structure. Sections must be numbere
 6.  **Inference**: Run the model on the data.
 7.  **Save Results**: Save the output using the "Kitchen Sink" pattern.
 8.  **Advanced Usage**: Provide suggestions for further exploration (e.g., different models, hyperparameters).
+9.  **Troubleshooting**: Common issues like OOM errors, GPU not found, or missing packages.
 
 ## 2. Mandatory License Cell
 
