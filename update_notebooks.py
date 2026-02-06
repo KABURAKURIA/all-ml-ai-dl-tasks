@@ -2,6 +2,7 @@ import nbformat
 import os
 import glob
 import re
+import ast
 
 NOTEBOOKS_DIR = "ai_inference_notebooks"
 
@@ -139,54 +140,157 @@ def clean_header(source):
     """Normalize header text to check against expected."""
     return source.strip().lstrip('#').strip()
 
+def clean_empty_cells(nb):
+    """Remove empty code or markdown cells."""
+    new_cells = []
+    removed = False
+    for cell in nb.cells:
+        if cell.source.strip() == "":
+            removed = True
+        else:
+            new_cells.append(cell)
+
+    if removed:
+        nb.cells = new_cells
+        return True
+    return False
+
+def check_title(nb, filepath):
+    """Ensure the first cell is a markdown Title."""
+    if not nb.cells:
+        return False
+
+    first_cell = nb.cells[0]
+    if first_cell.cell_type != 'markdown' or not first_cell.source.strip().startswith('# '):
+        print(f"  WARNING: {filepath} missing proper Title in first cell.")
+        # We don't auto-fix this easily as we don't know the title, but we warn.
+        # Could potentially infer from filename but better to let user handle or just warn.
+        # For now, we will prepend a generic title if completely missing to enforce structure
+        filename = os.path.basename(filepath).replace(".ipynb", "").replace("_", " ")
+        print(f"  Prepending generic title: # {filename}")
+        nb.cells.insert(0, nbformat.v4.new_markdown_cell(f"# {filename}\n\n## Task Description\nAutomated description."))
+        return True
+    return False
+
+def check_syntax(nb, filepath):
+    """Check for Python syntax errors in code cells."""
+    for idx, cell in enumerate(nb.cells):
+        if cell.cell_type == 'code':
+            source = cell.source
+            # Filter out magic commands
+            clean_source = []
+            for line in source.split('\n'):
+                if line.strip().startswith('!') or line.strip().startswith('%'):
+                    pass
+                else:
+                    clean_source.append(line)
+            clean_source = '\n'.join(clean_source)
+
+            if clean_source.strip():
+                try:
+                    ast.parse(clean_source)
+                except SyntaxError as e:
+                    print(f"  ERROR: Syntax error in {filepath} (Cell {idx}): {e}")
+
+def check_optimization(nb, filepath):
+    """Check for optimization flags when loading models."""
+    for cell in nb.cells:
+        if cell.cell_type == 'code':
+            if 'from_pretrained' in cell.source:
+                # Check for quantization or float16
+                optimized = False
+                keywords = ['load_in_4bit', 'load_in_8bit', 'torch.float16', 'torch.bfloat16']
+                for kw in keywords:
+                    if kw in cell.source:
+                        optimized = True
+                        break
+
+                if not optimized:
+                    print(f"  WARNING: 'from_pretrained' used without optimization in {filepath}. Consider 'load_in_4bit' or 'torch.float16'.")
+
 def check_for_heavy_models(nb, filepath):
-    heavy_keywords = ["70b", "405b", "gpt-4", "claude-3", "gemini-1.5", "Mixtral"]
+    heavy_keywords = ["70b", "405b", "gpt-4", "claude-3", "gemini-1.5", "Mixtral", "Grok", "DeepSeek-V3"]
     for cell in nb.cells:
         if cell.cell_type == 'code':
             for kw in heavy_keywords:
                 if kw in cell.source:
                     print(f"  WARNING: Potential heavy model '{kw}' detected in {filepath}. Ensure compatibility with Colab Free Tier.")
 
-def fix_nlp_09(nb):
-    """Specific fix for NLP_09_Text_Generation.ipynb"""
-    # Find Step 3 and Step 6 code cells
-    step3_idx = -1
-    step6_idx = -1
+def fix_regressions(nb, filepath):
+    """Apply specific fixes for known regressions."""
+    changes = False
 
-    current_step = 0
-    for idx, cell in enumerate(nb.cells):
-        if cell.cell_type == 'markdown':
-            content = cell.source.strip()
-            if content.startswith('## 3. Load Data'):
-                current_step = 3
-            elif content.startswith('## 6. Inference'):
-                current_step = 6
+    # NLP_09 Fix
+    if "NLP_09_Text_Generation.ipynb" in filepath:
+        # Move chat template logic if needed (simplified from original script)
+        # We will iterate to find steps
+        step3_idx = -1
+        step6_idx = -1
+        current_step = 0
+        for idx, cell in enumerate(nb.cells):
+            if cell.cell_type == 'markdown':
+                if '## 3. Load Data' in cell.source: current_step = 3
+                elif '## 6. Inference' in cell.source: current_step = 6
+            if cell.cell_type == 'code':
+                if current_step == 3 and 'tokenizer.apply_chat_template' in cell.source: step3_idx = idx
+                if current_step == 6 and step6_idx == -1: step6_idx = idx
 
-        if cell.cell_type == 'code':
-            if current_step == 3 and 'tokenizer.apply_chat_template' in cell.source:
-                step3_idx = idx
-            if current_step == 6 and step6_idx == -1: # First code cell of step 6
-                step6_idx = idx
+        if step3_idx != -1 and step6_idx != -1:
+            print("  Applying fix for NLP_09...")
+            lines = nb.cells[step3_idx].source.split('\n')
+            new_step3 = []
+            moved = []
+            for line in lines:
+                if 'tokenizer.apply_chat_template' in line or 'input_text =' in line: moved.append(line)
+                else: new_step3.append(line)
+            nb.cells[step3_idx].source = '\n'.join(new_step3).strip()
+            nb.cells[step6_idx].source = '\n'.join(moved) + "\n" + nb.cells[step6_idx].source
+            changes = True
 
-    if step3_idx != -1 and step6_idx != -1:
-        print("  Applying fix for NLP_09: Moving chat template logic...")
-        # Extract lines
-        lines = nb.cells[step3_idx].source.split('\n')
-        new_step3_lines = []
-        moved_lines = []
-        for line in lines:
-            if 'tokenizer.apply_chat_template' in line or 'input_text =' in line:
-                moved_lines.append(line)
-            else:
-                new_step3_lines.append(line)
+    # CV_23 Fix
+    if "CV_23_Explainable_AI.ipynb" in filepath:
+        # Ensure image is assigned for Kitchen Sink
+        found_inference = False
+        for idx, cell in enumerate(nb.cells):
+            if cell.cell_type == 'markdown' and '## 6. Inference' in cell.source:
+                found_inference = True
+            elif found_inference and cell.cell_type == 'code':
+                if "image = result_image" not in cell.source:
+                    print("  Fixing CV_23: Assigning result_image to image...")
+                    cell.source += "\n\n# Assign to 'image' for Kitchen Sink saver\nimage = result_image"
+                    changes = True
+                break
 
-        nb.cells[step3_idx].source = '\n'.join(new_step3_lines).strip()
+    # NLP_26 Fix
+    if "NLP_26_Explainable_AI.ipynb" in filepath:
+        # Ensure SHAP plot is saved
+        found_inference = False
+        for idx, cell in enumerate(nb.cells):
+            if cell.cell_type == 'markdown' and '## 6. Inference' in cell.source:
+                found_inference = True
+            elif found_inference and cell.cell_type == 'code':
+                if "shap.plots.bar" not in cell.source:
+                    print("  Fixing NLP_26: Adding SHAP plot saving...")
+                    addition = """
+# 3. Generate and Save Plot
+shap.plots.bar(shap_values[0], show=False)
+plt.savefig("shap_bar.png", bbox_inches='tight')
+print("Saved shap_bar.png")
 
-        # Insert into Step 6
-        current_step6_source = nb.cells[step6_idx].source
-        nb.cells[step6_idx].source = '\n'.join(moved_lines) + "\n" + current_step6_source
-        return True
-    return False
+# Load for Kitchen Sink
+try:
+    from PIL import Image
+    image = Image.open("shap_bar.png")
+except:
+    pass
+
+results = str(shap_values)
+"""
+                    cell.source += addition
+                    changes = True
+                break
+
+    return changes
 
 def update_notebook(filepath):
     print(f"Updating {filepath}...")
@@ -198,14 +302,20 @@ def update_notebook(filepath):
 
     changes_made = False
 
+    # 0. Clean Empty Cells
+    if clean_empty_cells(nb):
+        changes_made = True
+
+    # 0.5 Check Title
+    if check_title(nb, filepath):
+        changes_made = True
+
     # 1. License Cell (Index 1)
-    # Check if cell 1 is license
     if len(nb.cells) > 1:
         cell1 = nb.cells[1]
         if cell1.cell_type != 'markdown' or cell1.source.strip() != LICENSE_TEXT.strip():
             print("  Inserting/Updating License cell...")
             license_cell = nbformat.v4.new_markdown_cell(LICENSE_TEXT)
-            # If cell 1 looks like a license but wrong, replace it. If it's something else, insert.
             if cell1.cell_type == 'markdown' and 'License' in cell1.source:
                 nb.cells[1] = license_cell
             else:
@@ -231,7 +341,6 @@ def update_notebook(filepath):
              changes_made = True
 
     # 4. Header Standardization
-    # Iterate and try to match headers
     step_indices = {}
     for idx, cell in enumerate(nb.cells):
         if cell.cell_type == 'markdown':
@@ -239,7 +348,6 @@ def update_notebook(filepath):
             header_line = next((l for l in lines if l.startswith('##')), None)
             if header_line:
                 clean = clean_header(header_line)
-                # Try to identify step
                 step_num = None
                 if 'Installation' in clean: step_num = 1
                 elif 'Imports' in clean: step_num = 2
@@ -250,17 +358,10 @@ def update_notebook(filepath):
                 elif 'Save Results' in clean: step_num = 7
                 elif 'Advanced Usage' in clean: step_num = 8
 
-                # Also check for numbers like "3. Load Model" which might be wrong step
-                match = re.search(r'(\d+)\.', clean)
-                if match and not step_num:
-                    pass
-
                 if step_num:
                     expected = EXPECTED_HEADERS[step_num]
-                    # Update header if it doesn't match exactly (e.g. wrong number)
                     if not header_line.startswith(f"## {expected}"):
                         print(f"  Updating header: {header_line} -> ## {expected}")
-                        # Replace the header line in the source
                         new_lines = []
                         replaced = False
                         for l in lines:
@@ -276,31 +377,22 @@ def update_notebook(filepath):
     # 5. Kitchen Sink (Step 7)
     if 7 in step_indices:
         step7_idx = step_indices[7]
-        # Look for the code cell after Step 7 header
         if step7_idx + 1 < len(nb.cells):
             next_cell = nb.cells[step7_idx + 1]
             if next_cell.cell_type == 'code':
-                # Check for old Kitchen Sink (has "with open('results.txt'" but no "wavfile")
-                is_old_sink = "with open('results.txt'" in next_cell.source and "import scipy.io.wavfile" not in next_cell.source
-
-                # Update if old, OR if it doesn't match the current canonical code exactly
-                # We strip to avoid issues with extra newlines, but generally we want strict adherence now.
                 if next_cell.source.strip() != KITCHEN_SINK_CODE.strip():
                      print("  Updating Kitchen Sink to latest version...")
                      next_cell.source = KITCHEN_SINK_CODE
                      changes_made = True
-
             else:
-                 # Insert new code cell
                  print("  Inserting Kitchen Sink code cell...")
                  new_cell = nbformat.v4.new_code_cell(KITCHEN_SINK_CODE)
                  nb.cells.insert(step7_idx + 1, new_cell)
                  changes_made = True
 
-    # 6. Fix NLP_09
-    if "NLP_09_Text_Generation.ipynb" in filepath:
-        if fix_nlp_09(nb):
-            changes_made = True
+    # 6. Regressions & Fixes
+    if fix_regressions(nb, filepath):
+        changes_made = True
 
     # 7. Teaching Tip (Step 8)
     if 8 in step_indices:
@@ -317,15 +409,15 @@ def update_notebook(filepath):
         if cell.cell_type == 'markdown' and '## 9. Troubleshooting' in cell.source:
             has_step9 = True
             break
-
     if not has_step9:
         print("  Appending Troubleshooting (Step 9)...")
-        trouble_cell = nbformat.v4.new_markdown_cell(TROUBLESHOOTING_TEXT)
-        nb.cells.append(trouble_cell)
+        nb.cells.append(nbformat.v4.new_markdown_cell(TROUBLESHOOTING_TEXT))
         changes_made = True
 
-    # 9. Heavy Model Check
+    # 9. Checks (No changes, just warnings)
     check_for_heavy_models(nb, filepath)
+    check_optimization(nb, filepath)
+    check_syntax(nb, filepath)
 
     if changes_made:
         nbformat.write(nb, filepath)

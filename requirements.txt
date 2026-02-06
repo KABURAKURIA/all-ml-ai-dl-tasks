@@ -6,6 +6,7 @@ datasets
 diffusers
 einops
 faiss-cpu
+grad-cam
 gradio
 gymnasium
 langchain
@@ -13,12 +14,17 @@ librosa
 matplotlib
 nbformat
 networkx
+opencv-python
+outlines
 pandas
 peft
 pillow
+playwright
+qwen-vl-utils
 requests
 sacremoses
 scikit-learn
+scipy
 sentence-transformers
 sentencepiece
 shimmy
