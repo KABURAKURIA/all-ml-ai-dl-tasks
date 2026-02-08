@@ -46,139 +46,161 @@ def create_notebook(filename, title, task_desc, steps_content):
         nbf.write(nb, f)
     print(f"Created {filepath}")
 
-# 1. Audio_06_Voice_Cloning
-audio_steps = {
-    'installation': "!pip install git+https://github.com/huggingface/transformers sentencepiece datasets torch soundfile librosa -q",
+# 1. Speculative Decoding
+spec_steps = {
+    'installation': "!pip install transformers torch accelerate bitsandbytes -q",
     'imports': """import torch
-import soundfile as sf
-from transformers import SpeechT5Processor, SpeechT5ForSpeechToSpeech, SpeechT5HifiGan
-from datasets import load_dataset""",
-    'load_data': """# Load a sample audio from the validation split of the dataset
-dataset = load_dataset("hf-internal-testing/librispeech_asr_demo", "clean", split="validation")
-example_speech = dataset[0]["audio"]["array"]
-sampling_rate = dataset[0]["audio"]["sampling_rate"]
-print(f"Loaded audio with sampling rate: {sampling_rate}")""",
-    'data_cleaning': """# No specific cleaning needed for this demo, ensuring format
-import numpy as np
-if len(example_speech) == 0:
-    print("Empty audio!")""",
-    'load_model': """processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_vc")
-model = SpeechT5ForSpeechToSpeech.from_pretrained("microsoft/speecht5_vc")
-vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
-print("Models loaded.")""",
-    'inference': """# Load Speaker Embeddings (xvectors)
-embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
-speaker_embeddings = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
-
-# Process Input
-inputs = processor(audio=example_speech, sampling_rate=sampling_rate, return_tensors="pt")
-
-# Generate
-speech = model.generate_speech(inputs["input_values"], speaker_embeddings, vocoder=vocoder)
-audio = (16000, speech.numpy()) # tuple for kitchen sink
-print("Voice conversion complete.")"""
-}
-
-create_notebook(
-    "Audio_06_Voice_Cloning.ipynb",
-    "Audio: Zero-Shot Voice Cloning",
-    "Convert an input voice to a target speaker's voice using Zero-Shot Voice Conversion with `microsoft/speecht5_vc`.",
-    audio_steps
-)
-
-# 2. RL_02_Preference_Optimization
-rl_steps = {
-    'installation': "!pip install trl peft bitsandbytes accelerate datasets transformers -q",
-    'imports': """from transformers import AutoTokenizer, TrainingArguments
-from trl import DPOTrainer
-from datasets import load_dataset""",
-    'load_data': """# Load a small DPO dataset
-dataset = load_dataset("trilogy/queer-diff", split="train[:100]") # Small subset for demo
-print(f"Loaded {len(dataset)} examples.")
-print(dataset[0])""",
-    'data_cleaning': """# Format dataset for DPO (prompt, chosen, rejected)
-def process(row):
-    return {
-        "prompt": row["prompt"],
-        "chosen": row["chosen"],
-        "rejected": row["rejected"]
-    }
-dataset = dataset.map(process)""",
-    'load_model': """# Use a tiny model for demonstration purposes on Colab
-model_id = "Qwen/Qwen2.5-0.5B-Instruct"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-if tokenizer.pad_token is None:
-    tokenizer.pad_token = tokenizer.eos_token
-print(f"Loaded {model_id}")""",
-    'inference': """# We simulate a DPO training setup (Inference here is effectively 'Run Training')
-# Note: Real training takes time. We set steps to 1 for demonstration.
-training_args = TrainingArguments(
-    output_dir="./dpo_results",
-    per_device_train_batch_size=1,
-    max_steps=1, # Demo only
-    learning_rate=1e-3,
-    logging_steps=1,
-    report_to="none"
-)
-
-trainer = DPOTrainer(
-    model=model_id, # passing ID allows TRL to load it
-    ref_model=None, # TRL will load a copy
-    args=training_args,
-    train_dataset=dataset,
-    tokenizer=tokenizer,
-    beta=0.1,
-)
-
-print("Starting DPO step...")
-trainer.train()
-results = "Training complete (1 step demo)."
-print(results)"""
-}
-
-create_notebook(
-    "RL_02_Preference_Optimization.ipynb",
-    "RL: Direct Preference Optimization (DPO)",
-    "Fine-tune an LLM to align with human preferences using DPO (Direct Preference Optimization), a stable alternative to RLHF.",
-    rl_steps
-)
-
-# 3. NLP_27_Structured_Output
-nlp_steps = {
-    'installation': "!pip install outlines transformers accelerate torch -q",
-    'imports': """import outlines
-import torch
+import time
 from transformers import AutoModelForCausalLM, AutoTokenizer""",
-    'load_data': """prompt = "Generate a character profile for a RPG game."
+    'load_data': """prompt = "Write a short story about a robot discovering a flower in a post-apocalyptic wasteland."
 print(f"Prompt: {prompt}")""",
-    'data_cleaning': """# Define the schema
-schema = '''
-{
-  "title": "Character",
-  "type": "object",
-  "properties": {
-    "name": { "type": "string" },
-    "class": { "type": "string", "enum": ["Warrior", "Mage", "Thief"] },
-    "level": { "type": "integer" }
-  },
-  "required": ["name", "class", "level"]
-}
-'''
-print("Schema defined.")""",
-    'load_model': """model_id = "HuggingFaceTB/SmolLM2-1.7B-Instruct"
-model = outlines.models.transformers(model_id, device="cuda" if torch.cuda.is_available() else "cpu")
-print(f"Loaded {model_id} with Outlines.")""",
-    'inference': """# Generate structured output
-generator = outlines.generate.json(model, schema)
-result = generator(prompt)
-print("Generated Result:")
-print(result)
-results = str(result) # For Kitchen Sink"""
+    'data_cleaning': """pass""",
+    'load_model': """# We use a larger target model and a smaller draft model
+target_model_id = "Qwen/Qwen2.5-3B-Instruct"
+draft_model_id = "Qwen/Qwen2.5-0.5B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(target_model_id)
+
+# Load Target (optimized for T4)
+target_model = AutoModelForCausalLM.from_pretrained(
+    target_model_id,
+    torch_dtype=torch.float16,
+    device_map="auto"
+)
+
+# Load Draft
+draft_model = AutoModelForCausalLM.from_pretrained(
+    draft_model_id,
+    torch_dtype=torch.float16,
+    device_map="auto"
+)
+
+print("Models loaded.")""",
+    'inference': """inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
+
+# 1. Standard Generation
+print("Running Standard Generation...")
+start_time = time.time()
+output_standard = target_model.generate(**inputs, max_new_tokens=100)
+standard_time = time.time() - start_time
+print(f"Standard Time: {standard_time:.4f}s")
+
+# 2. Speculative Decoding
+print("\\nRunning Speculative Decoding...")
+start_time = time.time()
+output_spec = target_model.generate(**inputs, max_new_tokens=100, assistant_model=draft_model)
+spec_time = time.time() - start_time
+print(f"Speculative Time: {spec_time:.4f}s")
+
+# Check speedup
+speedup = standard_time / spec_time
+print(f"\\nSpeedup: {speedup:.2f}x")
+print("Generated Text:")
+print(tokenizer.decode(output_spec[0], skip_special_tokens=True))
+
+results = f"Speedup: {speedup:.2f}x"
+"""
 }
 
 create_notebook(
-    "NLP_27_Structured_Output.ipynb",
-    "NLP: Structured Output Generation",
-    "Force an LLM to generate valid JSON output adhering to a specific schema using `outlines`.",
-    nlp_steps
+    "NLP_31_Speculative_Decoding.ipynb",
+    "NLP: Speculative Decoding",
+    "Accelerate text generation using a small 'draft' model to predict tokens for a larger 'target' model.",
+    spec_steps
+)
+
+# 2. ModernBERT
+mbert_steps = {
+    'installation': """# ModernBERT requires recent transformers
+!pip install -q "transformers>=4.48.0" torch accelerate""",
+    'imports': """from transformers import pipeline, AutoTokenizer, AutoModelForMaskedLM""",
+    'load_data': """text = "ModernBERT is a powerful model that can process [MASK] sequences efficiently."
+print(f"Input: {text}")""",
+    'data_cleaning': """pass""",
+    'load_model': """model_id = "answerdotai/ModernBERT-base"
+# ModernBERT supports 8k context natively
+pipe = pipeline("fill-mask", model=model_id, device=0) # device=0 for GPU
+print(f"Loaded {model_id}")""",
+    'inference': """# Basic Inference
+outputs = pipe(text)
+for out in outputs:
+    print(f"Prediction: {out['token_str']} (Score: {out['score']:.4f})")
+
+# Long Context Demo (Simulated)
+long_text = "The " * 4000 + "ModernBERT is a powerful model that can process [MASK] sequences efficiently."
+# Note: In a real notebook we might not run full 4000 tokens to save time, but it works.
+# outputs_long = pipe(long_text)
+# print("Long context processed.")
+
+results = str(outputs)
+""",
+}
+
+create_notebook(
+    "NLP_32_ModernBERT.ipynb",
+    "NLP: ModernBERT (8k Context)",
+    "Explore ModernBERT, a replacement for BERT/RoBERTa with 8k context window and improved architectural efficiency.",
+    mbert_steps
+)
+
+# 3. DeepSeek Reasoning
+deepseek_steps = {
+    'installation': "!pip install transformers torch accelerate -q",
+    'imports': """import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer""",
+    'load_data': """prompt = "If a train travels 60mph for 2 hours and then 30mph for 1 hour, what is the average speed?"
+# Chat template format is handled by tokenizer typically, but R1-Distill is a CausalLM often used directly or with chat template.
+# We will use the chat template.
+messages = [
+    {"role": "user", "content": prompt}
+]
+print(f"Prompt: {prompt}")""",
+    'data_cleaning': """pass""",
+    'load_model': """model_id = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype=torch.float16,
+    device_map="auto"
+)
+print("Loaded DeepSeek-R1-Distill-Qwen-1.5B")""",
+    'inference': """text = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True
+)
+model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
+generated_ids = model.generate(
+    model_inputs.input_ids,
+    max_new_tokens=512
+)
+generated_ids = [
+    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
+]
+
+response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
+
+# Parse <think> tags
+if "<think>" in response and "</think>" in response:
+    parts = response.split("</think>")
+    reasoning = parts[0].replace("<think>", "").strip()
+    answer = parts[1].strip()
+    print("=== Reasoning Process ===")
+    print(reasoning)
+    print("\\n=== Final Answer ===")
+    print(answer)
+else:
+    print("=== Response ===")
+    print(response)
+
+results = response
+""",
+}
+
+create_notebook(
+    "NLP_33_DeepSeek_Reasoning.ipynb",
+    "NLP: DeepSeek Reasoning (Chain-of-Thought)",
+    "Use DeepSeek-R1 Distill to generate Chain-of-Thought reasoning, extracting the internal `<think>` process.",
+    deepseek_steps
 )
