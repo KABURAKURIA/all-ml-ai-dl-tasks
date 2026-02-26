@@ -1,1 +1,3 @@
 # manuals/screenshots/ is tracked
+__pycache__/
+*.pyc
