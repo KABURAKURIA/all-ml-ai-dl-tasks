@@ -169,7 +169,7 @@ if __name__ == "__main__":
     tools = sorted(glob.glob(os.path.join(TOOLS_DIR, "*.py")))
     print(f"Found {len(tools)} tools.")
 
-    num_workers = 2 # Parallel for speed
+    num_workers = 1 # Parallel for speed
 
     # Split tools
     chunks = [tools[i::num_workers] for i in range(num_workers)]
