@@ -35,5 +35,5 @@ stable-baselines3
 streamlit
 torch
 torch_geometric
-transformers
+transformers<5
 trl
