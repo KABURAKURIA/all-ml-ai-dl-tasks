@@ -143,6 +143,8 @@ def verify_worker(worker_id, tools_chunk, results_list, fast_mode=False):
                 process.wait(timeout=5)
             except:
                 process.kill()
+            # Prevent port contention
+            os.system(f'kill -9 $(lsof -t -i:{port}) 2>/dev/null || true')
             # Wait for port to clear
             time.sleep(1)
 
